@@ -6,7 +6,8 @@
     this.y = y;
   }
 }*/
-
+const TRADIUS = 100;
+const STROKE_WIDTH = 1;
 const DASH = 6;
 
 class NotGate {
@@ -30,10 +31,7 @@ class NotGate {
         t.y = Math.floor(this.height / 2) - this.tradius;
         this.container.addChild(t);
 
-        const r1 = this.resistorGraphic.container.clone(true);
-        r1.x = t.x;
-        r1.y = t.y;
-        this.container.addChild(r1);
+        
 
         const dash = DASH;
 
@@ -53,9 +51,25 @@ class NotGate {
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
             .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius)
-            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius * 2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius * 1.2)
             .endStroke();
         this.container.addChild(plusWire);
+
+        const r1 = this.resistorGraphic.container.clone(true);
+        r1.x = Math.floor(this.width / 2) + this.tradius - this.resistorGraphic.stepwidth;
+        r1.y = Math.floor(this.height / 2) - this.tradius * 1.2 - this.resistorGraphic.height;
+        this.container.addChild(r1);
+
+
+        const plusWire2 = new createjs.Shape();
+        plusWire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(r1.x + this.resistorGraphic.stepwidth, r1.y)
+            .lineTo(r1.x + this.resistorGraphic.stepwidth, r1.y - this.tradius * 0.4)
+            .endStroke();
+        this.container.addChild(plusWire2);
 
         //const plusLen = Math.floor(this.tradius / 2.5)
 
@@ -121,11 +135,15 @@ class ResistorGraphic {
         const step = Math.floor(this.tradius * 2 / 15);
         const centerx = stepwidth;
 
+        this.stepwidth = stepwidth;
+        this.step = step;
+        this.centerx = centerx;
         this.width = stepwidth * 2;
         this.height = step * 11;
 
         this.container = new createjs.Container();
-        const dash = DASH;
+       
+        /*const dash = DASH;
         const outline = new createjs.Shape();
         outline
             .graphics
@@ -134,6 +152,7 @@ class ResistorGraphic {
             .setStrokeDash([dash, dash], 0)
             .drawRect(0, 0, this.width, this.height);
         this.container.addChild(outline);
+        */
 
 
 
@@ -264,8 +283,7 @@ class Circuit {
 }
 
 function main() {
-    const TRADIUS = 100;
-    const STROKE_WIDTH = 1;
+
     const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
