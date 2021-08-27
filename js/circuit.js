@@ -8,7 +8,7 @@
 }*/
 const LIGHT_ON_COLOR = "#f66";
 const TRADIUS = 30;
-const STROKE_WIDTH = 2;
+const STROKE_WIDTH = 1;
 const DASH = 6;
 
 class NotGate {
@@ -480,7 +480,6 @@ class Circuit {
     this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
     this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
     this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
-    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
 
     //this.stage.scale = 1/2;
   }
@@ -490,10 +489,44 @@ class Circuit {
   }*/
 }
 
-let circuit1;
-function main() {
+class NotNotChip {
+    constructor(tradius, strokeWidth) {
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
 
-    circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+        
+        this.container = new createjs.Container();
+        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.notGate2 = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+
+        const n = this.notGate.container.clone(true);
+        n.x = 0;
+        n.y = 100;
+        this.container.addChild(n);
+
+        const n2 = this.notGate2.container.clone(true);
+        n2.x = 400;
+        n2.y = 100;
+        this.container.addChild(n2);
+
+    }
+}
+
+const canvasId = "circuit-canvas-1";
+const stage = new createjs.Stage(canvasId);
+const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
+notNotChip.container.x = 100;
+stage.addChild(notNotChip.container);
+stage.update();
+
+
+//let circuit1;
+//function main() {
+
+    //circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
 
@@ -502,15 +535,16 @@ function main() {
     t.y = 100;
     //circuit1.stage.addChild(t);*/
 
-    const n = circuit1.notGate.container.clone(true);
+    /*
+    const n = circuit1.notGateGraphic.container.clone(true);
     n.x = 200;
     n.y = 100;
     circuit1.stage.addChild(n);
 
-    const n2 = circuit1.notGate.container.clone(true);
+    const n2 = circuit1.notGateGraphic.container.clone(true);
     n2.x = 500;
     n2.y = 100;
-    circuit1.stage.addChild(n2);
+    circuit1.stage.addChild(n2);*/
 
-    circuit1.stage.update();
-}
+    //circuit1.stage.update();
+//}
