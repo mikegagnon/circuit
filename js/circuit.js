@@ -7,14 +7,39 @@
   }
 }*/
 
-/*
+const DASH = 6;
+
 class NotGate {
-    constructor(strokeWidth) {
+    constructor(tradius, strokeWidth, transistorGraphic) {
+        this.tradius = tradius;
         this.strokeWidth = strokeWidth;
-        this.width = TRADIUS * 4;
-        this.height = TRADIUS * 4;
+        this.transistorGraphic = transistorGraphic;
+        this.width = this.tradius * 4;
+        this.height = this.tradius * 4;
+        this.draw();
     }
-}*/
+
+    draw() {
+        this.container = new createjs.Container();
+
+        const t = this.transistorGraphic.container.clone(true);
+        t.x = this.tradius;
+        t.y = this.tradius;
+        this.container.addChild(t);
+
+        const dash = DASH;
+
+        const outline = new createjs.Shape();
+        outline
+            .graphics
+            .beginStroke("black")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .drawRect(0, 0, this.width, this.height);
+
+        this.container.addChild(outline);
+    }
+}
 
 class TransistorGraphic {
 
@@ -113,7 +138,8 @@ class Circuit {
     this.strokeWidth = strokeWidth;
     this.stage = new createjs.Stage(canvasId);
 
-    this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth)
+    this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic);
     //this.stage.scale = 1/2;
   }
 
@@ -124,7 +150,7 @@ class Circuit {
 
 function main() {
     const TRADIUS = 50;
-    const STROKE_WIDTH = 2;
+    const STROKE_WIDTH = 1;
     const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
@@ -133,6 +159,11 @@ function main() {
     t.x = 100;
     t.y = 100;
     circuit1.stage.addChild(t);
+
+    const n = circuit1.notGate.container.clone(true);
+    n.x = 200;
+    n.y = 200;
+    circuit1.stage.addChild(n);
 
     circuit1.stage.update();
 }
