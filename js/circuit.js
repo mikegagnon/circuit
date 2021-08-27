@@ -210,14 +210,14 @@ class NotGate {
 
 
 
-        /*this.container.regX = this.width / 2;
+        this.container.regX = this.width / 2;
         this.container.regY = this.width / 2;
         this.container.rotation = -90;
         const oldContainer = this.container;
         this.container = new createjs.Container();
         this.container.addChild(oldContainer);
         oldContainer.x = this.width / 2; 
-        oldContainer.y = this.height / 2;*/
+        oldContainer.y = this.height / 2;
 
 
 
@@ -497,10 +497,10 @@ function main() {
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
 
-    const t = circuit1.transistorGraphic.container.clone(true);
+    /*const t = circuit1.transistorGraphic.container.clone(true);
     t.x = 100;
     t.y = 100;
-    //circuit1.stage.addChild(t);
+    //circuit1.stage.addChild(t);*/
 
     const n = circuit1.notGate.container.clone(true);
     n.x = 200;
