@@ -7,12 +7,13 @@
   }
 }*/
 const LIGHT_ON_COLOR = "#f66";
-const TRADIUS = 40;
+const TRADIUS = 30;
 const STROKE_WIDTH = 2;
 const DASH = 6;
 
 class NotGate {
-    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic) {
+    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.useLights = useLights;
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
         this.transistorGraphic = transistorGraphic;
@@ -170,17 +171,42 @@ class NotGate {
             .endStroke();
         this.container.addChild(outwire);
 
+        if (this.useLights) {
+            this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+
+            const inLightWire = new createjs.Shape();
+            inLightWire
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(Math.floor(this.tradius * 0.2) + this.inputLight.radius, Math.floor(this.height / 2))
+                .lineTo(Math.floor(this.tradius * 0.2) + this.inputLight.radius, Math.floor(this.height / 2) - this.inputLight.radius)
+                .endStroke();
+            this.container.addChild(inLightWire);
+
+            this.inputLight.container.x = Math.floor(this.tradius * 0.2);
+            this.inputLight.container.y = Math.floor(this.height / 2) - this.inputLight.radius * 2.5;
+            this.container.addChild(this.inputLight.container);
 
 
-        this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
-        this.inputLight.container.x = Math.floor(this.tradius * 0.2);
-        this.inputLight.container.y = Math.floor(this.height / 2) - this.inputLight.radius * 2.5;
-        this.container.addChild(this.inputLight.container);
 
-        this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
-        this.outputLight.container.x = this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2);
-        this.outputLight.container.y = Math.floor(this.height / 2) - this.outputLight.radius * 2.5;
-        this.container.addChild(this.outputLight.container);
+            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            
+            const outLightWire = new createjs.Shape();
+            outLightWire
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.inputLight.radius, Math.floor(this.height / 2))
+                .lineTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.inputLight.radius, Math.floor(this.height / 2) - this.outputLight.radius)
+                .endStroke();
+            this.container.addChild(outLightWire);
+
+
+            this.outputLight.container.x = this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2);
+            this.outputLight.container.y = Math.floor(this.height / 2) - this.outputLight.radius * 2.5;
+            this.container.addChild(this.outputLight.container);
+        }
 
 
 
@@ -454,7 +480,7 @@ class Circuit {
     this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
     this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
     this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
-    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic);
+    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
     //this.stage.scale = 1/2;
   }
 
