@@ -12,6 +12,122 @@ const TRADIUS = 30;
 const STROKE_WIDTH = 1;
 const DASH = 6;
 
+class OrGate {
+    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.input1 = false;
+        this.input2 = false;
+        this.output = false;
+        this.useLights = useLights;
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
+        this.transistorGraphic = transistorGraphic;
+        this.resistorGraphic = resistorGraphic;
+        this.groundGraphic = groundGraphic;
+        this.width = this.tradius * 8;
+        this.height = this.tradius * 16;
+        this.plusStrokeWidth = Math.floor(this.tradius / 7);
+        this.bulbSize = 0.5;
+        this.draw();
+        //console.log(this.plusStrokeWidth);
+
+        this.setInput(this.input1, this.input2);
+    }
+
+    setInput(value1, value2) {
+    }
+
+    getOutput() {
+        return this.output;
+    }
+
+    draw() {
+        this.container = new createjs.Container();
+
+        const t = this.transistorGraphic.container.clone(true);
+        t.x = Math.floor(this.width / 2) - this.tradius;
+        t.y = Math.floor(this.height / 4) - this.tradius;
+        this.container.addChild(t);
+
+        const t2 = this.transistorGraphic.container.clone(true);
+        t2.x = Math.floor(this.width / 2) - this.tradius;
+        t2.y = Math.floor(this.height / 4 * 3) - this.tradius;
+        this.container.addChild(t2);
+
+        const r1 = this.resistorGraphic.container.clone(true);
+        r1.x = Math.floor(this.width / 2) + this.tradius - this.resistorGraphic.stepwidth;
+        r1.y = Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2);
+        this.container.addChild(r1);
+
+        const r1wiretop = new createjs.Shape();
+        r1wiretop
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1))
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2))
+            .endStroke();
+        this.container.addChild(r1wiretop);
+
+        const r1wirebottom = new createjs.Shape();
+        r1wirebottom
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2) + this.resistorGraphic.height)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.4) + this.resistorGraphic.height)
+            .endStroke();
+        this.container.addChild(r1wirebottom);
+
+        const g1 = this.groundGraphic.container.clone(true);
+        g1.x = Math.floor(this.width / 2) + this.tradius - Math.floor(this.groundGraphic.width / 2);
+        g1.y = Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.4) + this.resistorGraphic.height
+        this.container.addChild(g1);
+
+        const r2 = this.resistorGraphic.container.clone(true);
+        r2.regX = this.resistorGraphic.width / 2;
+        r2.regY = this.resistorGraphic.height / 2;
+        r2.rotation = 90
+        r2.x = this.resistorGraphic.height / 2;
+        r2.y = this.resistorGraphic.width / 2;
+
+        const r2wrap = new createjs.Container();
+        r2wrap.addChild(r2);
+
+        r2wrap.x = Math.floor(this.width / 2) - this.tradius - this.resistorGraphic.height - Math.floor(this.tradius * 0.2);
+        r2wrap.y = Math.floor(this.height / 4) - Math.floor(this.resistorGraphic.width / 2);
+        this.container.addChild(r2wrap);
+
+
+
+        const r3 = this.resistorGraphic.container.clone(true);
+        r3.regX = this.resistorGraphic.width / 2;
+        r3.regY = this.resistorGraphic.height / 2;
+        r3.rotation = 90
+        r3.x = this.resistorGraphic.height / 2;
+        r3.y = this.resistorGraphic.width / 2;
+
+        const r3wrap = new createjs.Container();
+        r3wrap.addChild(r3);
+
+        r3wrap.x = Math.floor(this.width / 2) - this.tradius - this.resistorGraphic.height - Math.floor(this.tradius * 0.2);
+        r3wrap.y = Math.floor(this.height / 4 * 3) - Math.floor(this.resistorGraphic.width / 2);
+        this.container.addChild(r3wrap);
+
+
+
+        const dash = DASH;
+
+        const outline = new createjs.Shape();
+        outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .drawRect(0, 0, this.width, this.height);
+        this.container.addChild(outline);
+    }
+}
+
 class NotGate {
     constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
         this.input = false;
@@ -512,6 +628,26 @@ class Circuit {
   }*/
 }
 
+class OrChip {
+    constructor(tradius, strokeWidth) {
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+        
+        this.container = new createjs.Container();
+        this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+
+        const og = this.orGate.container.clone(true);
+        og.x = 100;
+        og.y = 100;
+        this.container.addChild(og);
+        //this.setInput(this.input);
+    }
+}
+
 class NotNotChip {
     constructor(tradius, strokeWidth) {
         this.input = false;
@@ -554,11 +690,16 @@ class NotNotChip {
     }
 }
 
+
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
-const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
-notNotChip.container.x = 100;
-stage.addChild(notNotChip.container);
+//const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
+//notNotChip.container.x = 100;
+//stage.addChild(notNotChip.container);
+
+const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
+stage.addChild(orChip.container)
+
 stage.update();
 
 
