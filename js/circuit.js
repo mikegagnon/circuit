@@ -114,6 +114,49 @@ class OrGate {
         this.container.addChild(r3wrap);
 
 
+        const inputWire1 = new createjs.Shape();
+        inputWire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) - this.tradius, Math.floor(this.height / 4))
+            .lineTo(Math.floor(this.width / 2) - this.tradius - Math.floor(this.tradius * 0.2), Math.floor(this.height / 4))
+            .endStroke();
+        this.container.addChild(inputWire1);
+
+        const inputWire1b = new createjs.Shape();
+        inputWire1b
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) - this.tradius, Math.floor(this.height / 4 * 3))
+            .lineTo(Math.floor(this.width / 2) - this.tradius - Math.floor(this.tradius * 0.2), Math.floor(this.height / 4 * 3))
+            .endStroke();
+        this.container.addChild(inputWire1b);
+
+
+        const inputWire2 = new createjs.Shape();
+        inputWire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(0, Math.floor(this.height / 4))
+            .lineTo(r2wrap.x, Math.floor(this.height / 4))
+            .endStroke();
+        this.container.addChild(inputWire2);
+
+        const inputWire2b = new createjs.Shape();
+        inputWire2b
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(0, Math.floor(this.height / 4 * 3))
+            .lineTo(r2wrap.x, Math.floor(this.height / 4 * 3))
+            .endStroke();
+        this.container.addChild(inputWire2b);
+
+
+
 
         const dash = DASH;
 
