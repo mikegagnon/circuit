@@ -99,6 +99,25 @@ class NotGate {
         this.container.addChild(plusHorz);
 
 
+
+
+        const inputWire1 = new createjs.Shape();
+        inputWire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) - this.tradius, Math.floor(this.height / 2))
+            .lineTo(Math.floor(this.width / 2) - this.tradius - this.tradius * 0.2, Math.floor(this.height / 2))
+            .endStroke();
+        this.container.addChild(inputWire1);
+
+        const r2 = this.resistorGraphic.container.clone(true);
+        r2.rotation = 90
+
+        r2.x = Math.floor(this.width / 2) - this.tradius - this.tradius * 0.2 - this.resistorGraphic.width;
+        r2.y = Math.floor(this.height / 2) - this.tradius * 1.2 - this.resistorGraphic.height;
+        this.container.addChild(r2);
+
         /*this.container.regX = this.width / 2;
         this.container.regY = this.width / 2;
         this.container.rotation = -90;
@@ -139,7 +158,7 @@ class ResistorGraphic {
         this.step = step;
         this.centerx = centerx;
         this.width = stepwidth * 2;
-        this.height = step * 11;
+        this.height = step * 12;
 
         this.container = new createjs.Container();
        
@@ -162,13 +181,13 @@ class ResistorGraphic {
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
             .moveTo(centerx, 0)
-            .lineTo(centerx - stepwidth, step)
-            .lineTo(centerx + stepwidth, step * 2)
-            .lineTo(centerx - stepwidth, step * 4)
-            .lineTo(centerx + stepwidth, step * 6)
-            .lineTo(centerx - stepwidth, step * 8)
-            .lineTo(centerx + stepwidth, step * 10)
-            .lineTo(centerx, step * 11)
+            .lineTo(centerx - stepwidth, step * 1)
+            .lineTo(centerx + stepwidth, step * 3)
+            .lineTo(centerx - stepwidth, step * 5)
+            .lineTo(centerx + stepwidth, step * 7)
+            .lineTo(centerx - stepwidth, step * 9)
+            .lineTo(centerx + stepwidth, step * 11)
+            .lineTo(centerx, step * 12)
             .endStroke();
         this.container.addChild(zig);
     }
