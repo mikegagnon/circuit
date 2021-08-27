@@ -34,8 +34,28 @@ class OrGate {
     }
 
     setInput(value1, value2) {
-    }
+        this.input1 = value1;
+        this.input2 = value2;
+        this.output = value1 || value2;
 
+        if (this.input1) {
+            this.inputLight1.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inputLight1.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.input2) {
+            this.inputLight2.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inputLight2.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output) {
+            this.outputLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outputLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+    }
     getOutput() {
         return this.output;
     }
@@ -832,6 +852,10 @@ class Circuit {
 
 class OrChip {
     constructor(tradius, strokeWidth) {
+        this.input1 = false;
+        this.input2 = false;
+        this.outut = false;
+
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
 
@@ -846,7 +870,19 @@ class OrChip {
         og.x = 100;
         og.y = 100;
         this.container.addChild(og);
-        //this.setInput(this.input);
+
+        this.setInput(this.input1, this.input2);
+    }
+
+    setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
+        this.orGate.setInput(value1, value2);
+        this.output = this.orGate.getOutput();
+    }
+
+    getOutput() {
+        return this.output;
     }
 }
 
