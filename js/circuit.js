@@ -75,7 +75,20 @@ class NotGate {
             .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5)
             .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5)
             .endStroke();
+
         this.container.addChild(plusHorz);
+
+
+        this.container.regX = this.width / 2;
+        this.container.regY = this.width / 2;
+        this.container.rotation = -90;
+
+
+        const oldContainer = this.container;
+        this.container = new createjs.Container();
+        this.container.addChild(oldContainer);
+        oldContainer.x = this.width / 2; 
+        oldContainer.y = this.height / 2;
 
         /*const plusHorz = new createjs.Shape();
         plusHorz
@@ -206,11 +219,11 @@ function main() {
     const t = circuit1.transistorGraphic.container.clone(true);
     t.x = 100;
     t.y = 100;
-    circuit1.stage.addChild(t);
+    //circuit1.stage.addChild(t);
 
     const n = circuit1.notGate.container.clone(true);
     n.x = 200;
-    n.y = 200;
+    n.y = 100;
     circuit1.stage.addChild(n);
 
     circuit1.stage.update();
