@@ -7,22 +7,31 @@
   }
 }*/
 
-const TRADIUS = 50;
+/*
+class NotGate {
+    constructor(strokeWidth) {
+        this.strokeWidth = strokeWidth;
+        this.width = TRADIUS * 4;
+        this.height = TRADIUS * 4;
+    }
+}*/
 
 class TransistorGraphic {
 
     // Absolute x y coordinates
-    constructor(strokeWidth) {
+    constructor(tradius, strokeWidth) {
         this.x = 0;
         this.y = 0;
+        this.tradius = tradius;
         this.strokeWidth = strokeWidth;
-        this.width = TRADIUS * 2;
-        this.height = TRADIUS * 2;
-        this.radius = TRADIUS;
+        this.width = this.tradius * 2;
+        this.height = this.tradius * 2;
         this.draw();
     }
 
     draw() {
+
+        const TRADIUS = this.tradius;
 
         this.container = new createjs.Container();
 
@@ -31,7 +40,7 @@ class TransistorGraphic {
             .graphics
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
-            .drawCircle(this.radius, this.radius, this.radius);
+            .drawCircle(this.tradius, this.tradius, this.tradius);
         circle.x = this.x;
         circle.y = this.y;
         this.container.addChild(circle);
@@ -96,14 +105,15 @@ class TransistorGraphic {
 }
 
 class Circuit {
-  constructor(width, height, canvasId, strokeWidth) {
+  constructor(width, height, canvasId, tradius, strokeWidth) {
     this.width = width;
     this.height = height;
     this.canvasId = canvasId;
+    this.tradius = tradius;
     this.strokeWidth = strokeWidth;
     this.stage = new createjs.Stage(canvasId);
 
-    this.transistorGraphic = new TransistorGraphic(this.strokeWidth)
+    this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth)
     //this.stage.scale = 1/2;
   }
 
@@ -113,8 +123,9 @@ class Circuit {
 }
 
 function main() {
-    const STROKE_WIDTH = 1;
-    const circuit1 = new Circuit(500, 300, "circuit-canvas-1", STROKE_WIDTH);
+    const TRADIUS = 50;
+    const STROKE_WIDTH = 2;
+    const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
 
