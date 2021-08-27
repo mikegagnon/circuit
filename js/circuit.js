@@ -481,6 +481,7 @@ class Circuit {
     this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
     this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
     this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+
     //this.stage.scale = 1/2;
   }
 
@@ -505,6 +506,11 @@ function main() {
     n.x = 200;
     n.y = 100;
     circuit1.stage.addChild(n);
+
+    const n2 = circuit1.notGate.container.clone(true);
+    n2.x = 500;
+    n2.y = 100;
+    circuit1.stage.addChild(n2);
 
     circuit1.stage.update();
 }
