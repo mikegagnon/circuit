@@ -7,7 +7,7 @@
   }
 }*/
 const LIGHT_ON_COLOR = "#f66";
-const LIGHT_OFF_COLOR = "#fcc";
+const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 30;
 const STROKE_WIDTH = 1;
 const DASH = 6;
