@@ -158,6 +158,64 @@ class OrGate {
 
 
 
+
+
+
+
+        const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
+//        console.log(this.plusStrokeWidth)
+
+        const plusVert = new createjs.Shape();
+        plusVert
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4 + this.tradius * 2)//Math.floor(this.height / 2) - this.tradius *2.2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen + this.tradius * 2)
+            .endStroke();
+        this.container.addChild(plusVert);
+
+
+        const plusHorz = new createjs.Shape();
+        plusHorz
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5  + this.tradius * 2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5 + this.tradius * 2)
+            .endStroke();
+
+        this.container.addChild(plusHorz);
+
+
+
+        const plusVert2 = new createjs.Shape();
+        plusVert2
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4 + this.tradius * 10)//Math.floor(this.height / 2) - this.tradius *2.2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen + this.tradius * 10)
+            .endStroke();
+        this.container.addChild(plusVert2);
+
+
+        const plusHorz2 = new createjs.Shape();
+        plusHorz2
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5  + this.tradius * 10)
+            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5 + this.tradius * 10)
+            .endStroke();
+
+        this.container.addChild(plusHorz2);
+
+
+
+
+
+
         const dash = DASH;
 
         const outline = new createjs.Shape();
