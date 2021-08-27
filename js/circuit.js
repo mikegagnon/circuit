@@ -211,7 +211,7 @@ class Circuit {
 
 function main() {
     const TRADIUS = 100;
-    const STROKE_WIDTH = 1;
+    const STROKE_WIDTH = 2;
     const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
