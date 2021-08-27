@@ -6,6 +6,7 @@
     this.y = y;
   }
 }*/
+const LIGHT_ON_COLOR = "#f66";
 const TRADIUS = 40;
 const STROKE_WIDTH = 2;
 const DASH = 6;
@@ -20,6 +21,7 @@ class NotGate {
         this.width = this.tradius * 8;
         this.height = this.tradius * 8;
         this.plusStrokeWidth = Math.floor(this.tradius / 7);
+        this.bulbSize = 0.5;
         this.draw();
         console.log(this.plusStrokeWidth)
     }
@@ -168,6 +170,20 @@ class NotGate {
             .endStroke();
         this.container.addChild(outwire);
 
+
+
+        this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+        this.inputLight.container.x = Math.floor(this.tradius * 0.2);
+        this.inputLight.container.y = Math.floor(this.height / 2) - this.inputLight.radius * 2.5;
+        this.container.addChild(this.inputLight.container);
+
+        this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+        this.outputLight.container.x = this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2);
+        this.outputLight.container.y = Math.floor(this.height / 2) - this.outputLight.radius * 2.5;
+        this.container.addChild(this.outputLight.container);
+
+
+
         /*this.container.regX = this.width / 2;
         this.container.regY = this.width / 2;
         this.container.rotation = -90;
@@ -189,6 +205,30 @@ class NotGate {
             .endStroke();
         this.container.addChild(plusVert);*/
     }
+}
+
+class Light {
+
+    constructor(tradius, strokeWidth, size) {
+        this.tradius = tradius;
+        this.radius = Math.floor(this.tradius * size);
+        this.strokeWidth = strokeWidth;
+        this.size = size;
+        this.draw();
+    }
+
+    draw() {
+        this.container = new createjs.Container();
+        this.bulb = new createjs.Shape();
+        this.bulb
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .beginFill(LIGHT_ON_COLOR)
+            .drawCircle(this.radius, this.radius, this.radius);
+        this.container.addChild(this.bulb);
+    }
+
 }
 
 class GroundGraphic {
