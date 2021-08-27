@@ -7,12 +7,16 @@
   }
 }*/
 const LIGHT_ON_COLOR = "#f66";
+const LIGHT_OFF_COLOR = "#fcc";
 const TRADIUS = 30;
 const STROKE_WIDTH = 1;
 const DASH = 6;
 
 class NotGate {
     constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.input = false;
+        this.output = false;
+
         this.useLights = useLights;
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
@@ -24,7 +28,26 @@ class NotGate {
         this.plusStrokeWidth = Math.floor(this.tradius / 7);
         this.bulbSize = 0.5;
         this.draw();
-        console.log(this.plusStrokeWidth)
+        //console.log(this.plusStrokeWidth);
+
+        this.setInput(this.input)
+    }
+
+    setInput(value) {
+        this.input = value;
+        this.output = !value;
+
+        if (this.input) {
+            this.inputLight.fillCommand.style = LIGHT_ON_COLOR;
+            this.outputLight.fillCommand.style = LIGHT_OFF_COLOR;
+        } else {
+            this.inputLight.fillCommand.style = LIGHT_OFF_COLOR;
+            this.outputLight.fillCommand.style = LIGHT_ON_COLOR;
+        }
+    }
+
+    getOutput() {
+        return this.output;
     }
 
     draw() {
@@ -491,6 +514,10 @@ class Circuit {
 
 class NotNotChip {
     constructor(tradius, strokeWidth) {
+        this.input = false;
+        this.outut = false;
+
+
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
 
@@ -512,6 +539,18 @@ class NotNotChip {
         n2.y = 100;
         this.container.addChild(n2);
 
+        this.setInput(this.input);
+    }
+
+    setInput(value) {
+        this.input = value;
+        this.notGate.setInput(value);
+        this.notGate2.setInput(this.notGate.getOutput());
+        this.output = this.notGate2.getOutput();
+    }
+
+    getOutput() {
+        return this.output;
     }
 }
 
