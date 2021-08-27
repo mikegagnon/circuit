@@ -258,6 +258,62 @@ class OrGate {
 
 
 
+        if (this.useLights) {
+            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+
+            const inLightWire1 = new createjs.Shape();
+            inLightWire1
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(Math.floor(this.tradius * 0.2) + this.inputLight1.radius, Math.floor(this.height / 4 ))
+                .lineTo(Math.floor(this.tradius * 0.2) + this.inputLight1.radius, Math.floor(this.height / 4 ) - this.inputLight1.radius)
+                .endStroke();
+            this.container.addChild(inLightWire1);
+
+            this.inputLight1.container.x = Math.floor(this.tradius * 0.2);
+            this.inputLight1.container.y = Math.floor(this.height / 4) - this.inputLight1.radius * 2.5;
+            this.container.addChild(this.inputLight1.container);
+
+
+            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            const inLightWire2 = new createjs.Shape();
+            inLightWire2
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(Math.floor(this.tradius * 0.2) + this.inputLight2.radius, Math.floor(this.height / 4 * 3))
+                .lineTo(Math.floor(this.tradius * 0.2) + this.inputLight2.radius, Math.floor(this.height / 4 * 3) - this.inputLight2.radius)
+                .endStroke();
+            this.container.addChild(inLightWire2);
+
+            this.inputLight2.container.x = Math.floor(this.tradius * 0.2);
+            this.inputLight2.container.y = Math.floor(this.height / 4 * 3) - this.inputLight2.radius * 2.5;
+            this.container.addChild(this.inputLight2.container);
+
+
+
+
+
+
+            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            
+            const outLightWire = new createjs.Shape();
+            outLightWire
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.outputLight.radius, Math.floor(this.height / 2))
+                .lineTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.outputLight.radius, Math.floor(this.height / 2) - this.outputLight.radius)
+                .endStroke();
+            this.container.addChild(outLightWire);
+
+
+            this.outputLight.container.x = this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2);
+            this.outputLight.container.y = Math.floor(this.height / 2) - this.outputLight.radius * 2.5;
+            this.container.addChild(this.outputLight.container);
+        }
+
 
 
 
