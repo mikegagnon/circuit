@@ -207,6 +207,8 @@ class NotGate {
     }
 }
 
+
+// circuit1.notGate.inputLight.fillCommand.style = "pink";
 class Light {
 
     constructor(tradius, strokeWidth, size) {
@@ -220,11 +222,14 @@ class Light {
     draw() {
         this.container = new createjs.Container();
         this.bulb = new createjs.Shape();
-        this.bulb
+        this.fillCommand = this.bulb
             .graphics
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
             .beginFill(LIGHT_ON_COLOR)
+            .command;
+
+        this.bulb.graphics
             .drawCircle(this.radius, this.radius, this.radius);
         this.container.addChild(this.bulb);
     }
