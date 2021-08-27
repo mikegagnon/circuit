@@ -32,12 +32,44 @@ class NotGate {
         const outline = new createjs.Shape();
         outline
             .graphics
-            .beginStroke("black")
+            .beginStroke("gray")
             .setStrokeStyle(this.strokeWidth)
             .setStrokeDash([dash, dash], 0)
             .drawRect(0, 0, this.width, this.height);
-
         this.container.addChild(outline);
+
+
+        const plusWire = new createjs.Shape();
+        plusWire
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 3, this.tradius)
+            .lineTo(this.tradius * 3, Math.floor(this.tradius / 2))
+            .endStroke();
+        this.container.addChild(plusWire);
+
+        //const plusLen = Math.floor(this.tradius / 2.5)
+
+        const plusVert = new createjs.Shape();
+        plusVert
+            .graphics
+            .setStrokeStyle(this.strokeWidth * 5)
+            .beginStroke("black")
+            .moveTo(this.tradius * 3, Math.floor(this.tradius / 2.5))
+            .lineTo(this.tradius * 3, Math.floor(this.tradius / 10))
+            .endStroke();
+        this.container.addChild(plusVert);
+
+        /*const plusHorz = new createjs.Shape();
+        plusHorz
+            .graphics
+            .setStrokeStyle(this.strokeWidth * 2)
+            .beginStroke("black")
+            .moveTo(this.tradius * 3, Math.floor(this.tradius / 2.5))
+            .lineTo(this.tradius * 3, 0)
+            .endStroke();
+        this.container.addChild(plusVert);*/
     }
 }
 
