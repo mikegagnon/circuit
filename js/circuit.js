@@ -14,17 +14,19 @@ class NotGate {
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
         this.transistorGraphic = transistorGraphic;
-        this.width = this.tradius * 4;
-        this.height = this.tradius * 4;
+        this.width = this.tradius * 6;
+        this.height = this.tradius * 6;
+        this.plusStrokeWidth = Math.floor(this.tradius / 7);
         this.draw();
+        console.log(this.plusStrokeWidth)
     }
 
     draw() {
         this.container = new createjs.Container();
 
         const t = this.transistorGraphic.container.clone(true);
-        t.x = this.tradius;
-        t.y = this.tradius;
+        t.x = Math.floor(this.width / 2) - this.tradius;
+        t.y = Math.floor(this.height / 2) - this.tradius;
         this.container.addChild(t);
 
         const dash = DASH;
@@ -44,22 +46,36 @@ class NotGate {
             .graphics
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
-            .moveTo(this.tradius * 3, this.tradius)
-            .lineTo(this.tradius * 3, Math.floor(this.tradius / 2))
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius * 2)
             .endStroke();
         this.container.addChild(plusWire);
 
         //const plusLen = Math.floor(this.tradius / 2.5)
 
+        const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
+        console.log(this.plusStrokeWidth)
+
         const plusVert = new createjs.Shape();
         plusVert
             .graphics
-            .setStrokeStyle(this.strokeWidth * 5)
+            .setStrokeStyle(this.plusStrokeWidth)
             .beginStroke("black")
-            .moveTo(this.tradius * 3, Math.floor(this.tradius / 2.5))
-            .lineTo(this.tradius * 3, Math.floor(this.tradius / 10))
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius *2.2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen)
             .endStroke();
         this.container.addChild(plusVert);
+
+
+        const plusHorz = new createjs.Shape();
+        plusHorz
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5)
+            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5)
+            .endStroke();
+        this.container.addChild(plusHorz);
 
         /*const plusHorz = new createjs.Shape();
         plusHorz
@@ -181,7 +197,7 @@ class Circuit {
 }
 
 function main() {
-    const TRADIUS = 50;
+    const TRADIUS = 100;
     const STROKE_WIDTH = 1;
     const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
