@@ -9,7 +9,7 @@
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 30;
-const STROKE_WIDTH = 1;
+const STROKE_WIDTH = 2;
 const DASH = 6;
 
 class OrGate {
@@ -210,6 +210,51 @@ class OrGate {
             .endStroke();
 
         this.container.addChild(plusHorz2);
+
+
+
+
+        const outwire1 = new createjs.Shape();
+        outwire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5, this.tradius * 13)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
+            .endStroke();
+        this.container.addChild(outwire1);
+
+        const outwire2 = new createjs.Shape();
+        outwire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5, this.tradius * 5)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
+            .endStroke();
+        this.container.addChild(outwire2);
+
+        const outwire3 = new createjs.Shape();
+        outwire3
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
+            .endStroke();
+        this.container.addChild(outwire3);
+
+
+        const outwire4 = new createjs.Shape();
+        outwire4
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5 + Math.floor(this.tradius), Math.floor(this.height / 2))
+            .lineTo(this.width, Math.floor(this.height / 2))
+            .endStroke();
+        this.container.addChild(outwire4);
+
 
 
 
