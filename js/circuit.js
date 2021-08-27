@@ -10,12 +10,13 @@
 const DASH = 6;
 
 class NotGate {
-    constructor(tradius, strokeWidth, transistorGraphic) {
+    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic) {
         this.tradius = tradius;
         this.strokeWidth = strokeWidth;
         this.transistorGraphic = transistorGraphic;
-        this.width = this.tradius * 6;
-        this.height = this.tradius * 6;
+        this.resistorGraphic = resistorGraphic;
+        this.width = this.tradius * 8;
+        this.height = this.tradius * 8;
         this.plusStrokeWidth = Math.floor(this.tradius / 7);
         this.draw();
         console.log(this.plusStrokeWidth)
@@ -28,6 +29,11 @@ class NotGate {
         t.x = Math.floor(this.width / 2) - this.tradius;
         t.y = Math.floor(this.height / 2) - this.tradius;
         this.container.addChild(t);
+
+        const r1 = this.resistorGraphic.container.clone(true);
+        r1.x = t.x;
+        r1.y = t.y;
+        this.container.addChild(r1);
 
         const dash = DASH;
 
@@ -61,7 +67,7 @@ class NotGate {
             .graphics
             .setStrokeStyle(this.plusStrokeWidth)
             .beginStroke("black")
-            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 2) - this.tradius *2.2)
+            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4)//Math.floor(this.height / 2) - this.tradius *2.2)
             .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen)
             .endStroke();
         this.container.addChild(plusVert);
@@ -79,16 +85,16 @@ class NotGate {
         this.container.addChild(plusHorz);
 
 
-        this.container.regX = this.width / 2;
+        /*this.container.regX = this.width / 2;
         this.container.regY = this.width / 2;
         this.container.rotation = -90;
-
-
         const oldContainer = this.container;
         this.container = new createjs.Container();
         this.container.addChild(oldContainer);
         oldContainer.x = this.width / 2; 
-        oldContainer.y = this.height / 2;
+        oldContainer.y = this.height / 2;*/
+
+
 
         /*const plusHorz = new createjs.Shape();
         plusHorz
@@ -99,6 +105,53 @@ class NotGate {
             .lineTo(this.tradius * 3, 0)
             .endStroke();
         this.container.addChild(plusVert);*/
+    }
+}
+
+class ResistorGraphic {
+
+    constructor(tradius, strokeWidth) {
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
+        this.draw();
+    }
+
+    draw() {
+        const stepwidth = Math.floor(this.tradius / 4);
+        const step = Math.floor(this.tradius * 2 / 15);
+        const centerx = stepwidth;
+
+        this.width = stepwidth * 2;
+        this.height = step * 11;
+
+        this.container = new createjs.Container();
+        const dash = DASH;
+        const outline = new createjs.Shape();
+        outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .drawRect(0, 0, this.width, this.height);
+        this.container.addChild(outline);
+
+
+
+        const zig = new createjs.Shape();
+        zig
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(centerx, 0)
+            .lineTo(centerx - stepwidth, step)
+            .lineTo(centerx + stepwidth, step * 2)
+            .lineTo(centerx - stepwidth, step * 4)
+            .lineTo(centerx + stepwidth, step * 6)
+            .lineTo(centerx - stepwidth, step * 8)
+            .lineTo(centerx + stepwidth, step * 10)
+            .lineTo(centerx, step * 11)
+            .endStroke();
+        this.container.addChild(zig);
     }
 }
 
@@ -200,7 +253,8 @@ class Circuit {
     this.stage = new createjs.Stage(canvasId);
 
     this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
-    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic);
+    this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+    this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic);
     //this.stage.scale = 1/2;
   }
 
@@ -211,7 +265,7 @@ class Circuit {
 
 function main() {
     const TRADIUS = 100;
-    const STROKE_WIDTH = 2;
+    const STROKE_WIDTH = 1;
     const circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
     //const t1 = new TransistorGraphic(10, 10);
     //circuit1.addItem(t1);
