@@ -10,6 +10,7 @@ const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
 const STROKE_WIDTH = 1;
+const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
 const DASH = 6;
 
 class AndGate {
@@ -183,7 +184,6 @@ class AndGate {
 
 
         const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
-//        console.log(this.plusStrokeWidth)
 
         const plusVert = new createjs.Shape();
         plusVert
@@ -208,31 +208,6 @@ class AndGate {
         this.container.addChild(plusHorz);
 
 
-/*
-        const plusVert2 = new createjs.Shape();
-        plusVert2
-            .graphics
-            .setStrokeStyle(this.plusStrokeWidth)
-            .beginStroke("black")
-            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4 + this.tradius * 10)//Math.floor(this.height / 2) - this.tradius *2.2)
-            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen + this.tradius * 10)
-            .endStroke();
-        this.container.addChild(plusVert2);
-
-
-        const plusHorz2 = new createjs.Shape();
-        plusHorz2
-            .graphics
-            .setStrokeStyle(this.plusStrokeWidth)
-            .beginStroke("black")
-            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5  + this.tradius * 10)
-            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5 + this.tradius * 10)
-            .endStroke();
-
-        this.container.addChild(plusHorz2);
-
-*/
-
         const outwire1 = new createjs.Shape();
         outwire1
             .graphics
@@ -253,27 +228,6 @@ class AndGate {
             .endStroke();
         this.container.addChild(outwire7);
 
-/*
-
-        const outwire1 = new createjs.Shape();
-        outwire1
-            .graphics
-            .setStrokeStyle(this.strokeWidth)
-            .beginStroke("black")
-            .moveTo(this.tradius * 5, this.tradius * 13)
-            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
-            .endStroke();
-        this.container.addChild(outwire1);
-
-        const outwire2 = new createjs.Shape();
-        outwire2
-            .graphics
-            .setStrokeStyle(this.strokeWidth)
-            .beginStroke("black")
-            .moveTo(this.tradius * 5, this.tradius * 5)
-            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
-            .endStroke();
-        this.container.addChild(outwire2);*/
 
         const outwire3 = new createjs.Shape();
         outwire3
@@ -554,7 +508,6 @@ class OrGate {
 
 
         const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
-//        console.log(this.plusStrokeWidth)
 
         const plusVert = new createjs.Shape();
         plusVert
@@ -977,8 +930,6 @@ class NotGate {
     }
 }
 
-
-// circuit1.notGate.inputLight.fillCommand.style = "pink";
 class Light {
 
     constructor(tradius, strokeWidth, size) {
@@ -1003,7 +954,6 @@ class Light {
             .drawCircle(this.radius, this.radius, this.radius);
         this.container.addChild(this.bulb);
     }
-
 }
 
 class GroundGraphic {
@@ -1233,6 +1183,51 @@ class Circuit {
   }*/
 }
 
+class XorChip {
+    constructor(tradius, primStrokeWidth, subStrokeWidth) {
+
+        this.input1 = false;
+        this.input2 = false;
+        this.outut = false;
+
+        this.tradius = tradius;
+        this.primStrokeWidth = primStrokeWidth;
+        this.strokeWidth = subStrokeWidth;
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+        
+        this.container = new createjs.Container();
+        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+
+        const agLeft = this.andGateLeft.container.clone(true);
+        agLeft.x = this.tradius;
+        agLeft.y = this.tradius;
+        this.container.addChild(agLeft);
+
+        this.notGateLeft = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const nLeft = this.notGateLeft.container.clone(true);
+        nLeft.x = this.andGateLeft.height + this.tradius * 2;
+        nLeft.y = this.tradius;
+        this.container.addChild(nLeft);
+
+        this.setInput(this.input1, this.input2);
+    }
+
+    setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
+
+        this.notGateLeft.setInput(this.input1);
+        this.andGateLeft.setInput(this.notGateLeft.getOutput(), this.input2);
+        this.output = this.andGateLeft.getOutput();
+    }
+
+    getOutput() {
+        return this.output;
+    }
+}
 
 class AndChip {
     constructor(tradius, strokeWidth) {
@@ -1372,8 +1367,8 @@ const stage = new createjs.Stage(canvasId);
 //const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
 //stage.addChild(orChip.container)
 
-const andChip = new AndChip(TRADIUS, STROKE_WIDTH)
-stage.addChild(andChip.container)
+const xorChip = new XorChip(TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH)
+stage.addChild(xorChip.container)
 
 
 stage.update();
