@@ -1545,6 +1545,58 @@ class XorChip {
 
 
 
+        const inRight1 = new createjs.Shape();
+        inRight1
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(this.width - this.tradius * 10, this.height)
+            .lineTo(this.width - this.tradius * 6, this.height - this.tradius * 2)
+            .endStroke();
+        this.container.addChild(inRight1);
+        
+        const inRight2 = new createjs.Shape();
+        inRight2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(this.width - this.tradius * 10, this.height)
+            .lineTo(this.width - this.tradius * 24, this.height - this.tradius * 12)
+            .endStroke();
+        this.container.addChild(inRight2);
+
+        const inRight3 = new createjs.Shape();
+        inRight3
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(this.width - this.tradius * 6, this.height - this.tradius * 2)
+            .lineTo(this.width - this.tradius * 6, this.height - this.tradius * 4)
+            .endStroke();
+        this.container.addChild(inRight3);
+
+        const inRight4 = new createjs.Shape();
+        inRight4
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(this.width - this.tradius * 6, this.height - this.tradius * 2)
+            .lineTo(this.width - this.tradius * 4, this.height - this.tradius * 2)
+            .endStroke();
+        this.container.addChild(inRight4);
+
+        this.inRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.inRightLight.container.x = this.width - this.tradius * 5
+        this.inRightLight.container.y = this.height - this.tradius * 3
+        this.container.addChild(this.inRightLight.container);
+
+
+
+
+
+
+
+
 
 
         const dash = DASH;
@@ -1569,7 +1621,7 @@ class XorChip {
         this.notGateRight.setInput(this.input2);
         
 
-        
+
         if (this.notGateLeft.getOutput()) {
             this.andNotLeftLight.fillCommand.style = LIGHT_ON_COLOR;
         } else {
@@ -1578,8 +1630,10 @@ class XorChip {
 
         if (this.input2) {
             this.andLeftLight2.fillCommand.style = LIGHT_ON_COLOR;
+            this.inRightLight.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.andLeftLight2.fillCommand.style = LIGHT_OFF_COLOR;
+            this.inRightLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.notGateRight.getOutput()) {
