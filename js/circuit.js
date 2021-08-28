@@ -1195,7 +1195,7 @@ class XorChip {
         this.tradius = tradius;
 
         this.width = this.tradius * 38;
-        this.height = this.tradius * 38;
+        this.height = this.tradius * 3;
 
         this.primStrokeWidth = primStrokeWidth;
         this.strokeWidth = subStrokeWidth;
@@ -1255,6 +1255,10 @@ class XorChip {
 
 
 
+
+
+
+
         const andNotLeftwire = new createjs.Shape();
         andNotLeftwire
             .graphics
@@ -1276,11 +1280,45 @@ class XorChip {
             .endStroke();
         this.container.addChild(andNotLeftwire2);
         
-        this.andNotLeftLight.container.x = Math.floor(this.tradius * 2);
+        this.andNotLeftLight.container.x = Math.floor(this.tradius * 3);
         //this.andNotLeftLight.container.y = Math.floor(this.height / 4) - this.andNotLeftLight.radius * 3;
         this.andNotLeftLight.container.y = agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 0.5);
         
         this.container.addChild(this.andNotLeftLight.container);
+
+
+
+
+
+
+
+        const andLeftwire2 = new createjs.Shape();
+        andLeftwire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 4) + this.notGateLeft.height, agLeft.y + this.andGateLeft.width)
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 4) + this.notGateLeft.height, nLeft.y)
+            .endStroke();
+        this.container.addChild(andLeftwire2);
+
+        this.andLeftLight2 = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const andLeftwire22 = new createjs.Shape();
+        andLeftwire22
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 4) + this.notGateLeft.height, agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 6) + this.notGateLeft.height, agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
+            .endStroke();
+        this.container.addChild(andLeftwire22);
+        
+        this.andLeftLight2.container.x = Math.floor(this.tradius * 3) + this.notGateLeft.height;
+        this.andLeftLight2.container.y = agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 0.5);
+        
+        this.container.addChild(this.andLeftLight2.container);
+
+
 
 
 
@@ -1343,11 +1381,19 @@ class XorChip {
             this.andNotLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
+        if (this.input2) {
+            this.andLeftLight2.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.andLeftLight2.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
         if (this.notGateRight.getOutput()) {
             this.andNotRightLight.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.andNotRightLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
+
+        
 
         this.andGateLeft.setInput(this.notGateLeft.getOutput(), this.input2);
         this.andGateRight.setInput(this.input1, this.notGateRight.getOutput());
