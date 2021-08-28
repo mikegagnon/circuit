@@ -46,7 +46,7 @@ const DASH = 6;
 class AndGate {
     constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights, useCover) {
         this.coverColor = "pink";
-        this.coverName = (Math.random() * 99999999).toString();
+        this.coverName = "cover-" + (Math.random() * 99999999).toString();
         this.useCover = useCover;
 
         this.input1 = false;
@@ -358,9 +358,9 @@ class AndGate {
 
 
         this.coverContainer = new createjs.Container();
-        this.coverContainer.name = this.coverName;
+        this.coverContainer.name = this.coverName + "-container";
         this.cover = new createjs.Shape();
-        this.cover.name = "foo"
+        this.cover.name = this.coverName;
         /*const THIS = this;
         this.cover.rmCover = function() {
             THIS.removeCover()
@@ -1905,11 +1905,25 @@ stage.update();
 // https://stackoverflow.com/questions/54398197/mouse-click-through-top-image
 stage.on("stagemouseup", function(event) {
     var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+
+    if (objs.length == 0) {
+        return;
+    }
+
     //objs[0].rmCover();
     //return objs[0];
     const c = objs[0];
+
+    if (!c.name) {
+        return;
+    }
+
+    if (!c.name.startsWith("cover-")) {
+        return;
+    }
+
     const children = recur(stage);
-    const [child, parent] = getStageItem(c.name, children);
+    const [child, parent] = getStageItem(c.name + "-container", children);
     console.log(c, child)
     parent.removeChild(child);
     stage.update();
