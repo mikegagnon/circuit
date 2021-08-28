@@ -386,12 +386,20 @@ class AndGate {
         this.coverContainer.addChild(this.cover);
 
 
+        var text = new createjs.Text("And", this.tradius * 4 + "px Arial", "black");
+        text.x = this.tradius * 3;
+        text.y = this.tradius * 4;
+        text.textBaseline = "alphabetic"
+        text.rotation = 90
+        this.coverContainer.addChild(text)
+
+
         //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
         this.cover.on("click", function(event) { console.log("clicked"); })
 
         this.container.addChild(this.coverContainer)
 
-        this.cover.alpha = 0.5
+        //this.cover.alpha = 0.5
 
 
 
