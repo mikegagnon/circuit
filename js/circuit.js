@@ -1271,6 +1271,38 @@ class XorChip {
 
 
 
+
+
+        const andNotRightwire = new createjs.Shape();
+        andNotRightwire
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateRight.height / 4)  + this.notGateRight.width, agRight.y + this.andGateRight.width)
+            .lineTo(agRight.x + Math.floor(this.andGateRight.height / 4)  + this.notGateRight.width, nRight.y)
+            .endStroke();
+        this.container.addChild(andNotRightwire);
+
+        this.andNotRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const andNotRightwire2 = new createjs.Shape();
+        andNotRightwire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateRight.height / 4)  + this.notGateRight.width, agRight.y + this.andGateRight.width + Math.floor(this.tradius * 1.5))
+            .lineTo(agRight.x + Math.floor(this.andGateRight.height / 6)  + this.notGateRight.width, agRight.y + this.andGateRight.width + Math.floor(this.tradius * 1.5))
+            .endStroke();
+        this.container.addChild(andNotRightwire2);
+        
+        this.andNotRightLight.container.x = Math.floor(this.tradius * 21)  + this.notGateRight.width;
+        this.andNotRightLight.container.y = agRight.y + this.andGateRight.width + Math.floor(this.tradius * 0.5);
+        
+        this.container.addChild(this.andNotRightLight.container);
+
+
+
+
+
         const dash = DASH;
 
         const outline = new createjs.Shape();
@@ -1290,17 +1322,26 @@ class XorChip {
         this.input2 = value2;
 
         this.notGateLeft.setInput(this.input1);
+        this.notGateRight.setInput(this.input2);
         
-
-
         if (this.notGateLeft.getOutput()) {
             this.andNotLeftLight.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.andNotLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
+        if (this.notGateRight.getOutput()) {
+            this.andNotRightLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.andNotRightLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
         this.andGateLeft.setInput(this.notGateLeft.getOutput(), this.input2);
-        this.output = this.andGateLeft.getOutput();
+        this.andGateRight.setInput(this.input1, this.notGateRight.getOutput());
+
+        this.orGate.setInput(this.andGateLeft.getOutput(), this.andGateRight.getOutput());
+        
+        this.output = this.orGate.getOutput();
     }
 
     getOutput() {
