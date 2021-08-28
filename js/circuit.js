@@ -6,6 +6,36 @@
     this.y = y;
   }
 }*/
+
+function recur(thisContainer)
+{
+    let children = [];
+
+    //console.log("recur()");
+    var containerLength = thisContainer.getNumChildren();
+    var thisChild;
+    for(var i=0; i<containerLength; i++)
+    {
+        thisChild = thisContainer.getChildAt(i);
+        children.push(thisChild);
+        //console.log(thisChild);
+        if(thisChild instanceof createjs.Container)
+        {
+            children = children.concat(recur(thisChild));
+        }
+    }
+
+    return children;
+}
+
+function getStageItem(name, children) {
+    for (let i = 0; i < children.length; i++) {
+        if (children[i].name === name) {
+            return children[i];
+        }
+    }
+}
+
 const XOR_BULB_SIZE = 1;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
@@ -66,6 +96,7 @@ class AndGate {
 
     draw() {
         this.container = new createjs.Container();
+        //this.container.name = "and-gate"
 
         const t = this.transistorGraphic.container.clone(true);
         t.x = Math.floor(this.width / 2) - this.tradius;
@@ -317,31 +348,31 @@ class AndGate {
 
         const dash = DASH;
 
-/*
-        this.fillCommand = this.bulb
-            .graphics
-            .setStrokeStyle(this.strokeWidth)
-            .beginStroke("black")
-            .beginFill(LIGHT_ON_COLOR)
-            .command;*/
+
+        this.coverContainer = new createjs.Container();
+        this.coverContainer.name = "foo"
+        this.cover = new createjs.Shape();
+        this.cover.name = "bar"
+        this.cover.graphics
+            .beginFill(this.coverColor)
+            .drawRect(0, 0, this.width, this.height)
+        this.coverContainer.addChild(this.cover);
 
 
-        const outline = new createjs.Shape();
+        this.container.addChild(this.cover)
 
-        this.coverFillCommand = outline
-            .graphics
-            .beginFill("red")
-            .command
 
-        outline
+        this.outline = new createjs.Shape();
+        this.outline
             .graphics
             .beginStroke("gray")
             .setStrokeStyle(this.strokeWidth)
             .setStrokeDash([dash, dash], 0)
             .drawRect(0, 0, this.width, this.height)
+        this.container.addChild(this.outline);
 
-        this.coverFillCommand.style = this.coverColor;
-        this.container.addChild(outline);
+
+        this.cover.alpha = 0.5
 
 
 
