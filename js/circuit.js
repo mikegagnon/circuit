@@ -1231,20 +1231,20 @@ class XorChip {
             .endStroke();
         this.container.addChild(andNotLeftwire);
 
-            this.andNotLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
-            const andNotLeftwire2 = new createjs.Shape();
-            andNotLeftwire2
-                .graphics
-                .setStrokeStyle(this.primStrokeWidth)
-                .beginStroke("black")
-                .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 4), agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
-                .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 6), agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
-                .endStroke();
-            this.container.addChild(andNotLeftwire2);
-            
-            this.andNotLeftLight.container.x = Math.floor(this.tradius * 2);
-            this.andNotLeftLight.container.y = Math.floor(this.height / 4) - this.andNotLeftLight.radius * 3;
-            this.container.addChild(this.andNotLeftLight.container);
+        this.andNotLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const andNotLeftwire2 = new createjs.Shape();
+        andNotLeftwire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 4), agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 6), agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 1.5))
+            .endStroke();
+        this.container.addChild(andNotLeftwire2);
+        
+        this.andNotLeftLight.container.x = Math.floor(this.tradius * 2);
+        this.andNotLeftLight.container.y = Math.floor(this.height / 4) - this.andNotLeftLight.radius * 3;
+        this.container.addChild(this.andNotLeftLight.container);
 
 
 
