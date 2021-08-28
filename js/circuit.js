@@ -357,6 +357,21 @@ class AndGate {
         const dash = DASH;
 
 
+
+        this.outline = new createjs.Shape();
+        this.outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(0, 0, this.width, this.height)
+        this.outline.name = "outline-" + this.coverName
+        this.container.addChild(this.outline);
+
+
+
+
         this.coverContainer = new createjs.Container();
         this.coverContainer.name = this.coverName + "-container";
         this.cover = new createjs.Shape();
@@ -375,17 +390,6 @@ class AndGate {
         this.cover.on("click", function(event) { console.log("clicked"); })
 
         this.container.addChild(this.coverContainer)
-
-
-        this.outline = new createjs.Shape();
-        this.outline
-            .graphics
-            .beginStroke("gray")
-            .setStrokeStyle(this.strokeWidth)
-            .setStrokeDash([dash, dash], 0)
-            .drawRect(0, 0, this.width, this.height)
-        this.container.addChild(this.outline);
-
 
         this.cover.alpha = 0.5
 
@@ -1915,6 +1919,17 @@ stage.on("stagemouseup", function(event) {
     const c = objs[0];
 
     if (!c.name) {
+        return;
+    }
+
+    if (c.name.startsWith("outline")) {
+        console.log(1)
+            const children = recur(stage);
+            const [child, parent] = getStageItem(c.name, children);
+            console.log(c, child)
+            parent.removeChild(child);
+            stage.update();
+
         return;
     }
 
