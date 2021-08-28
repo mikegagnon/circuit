@@ -1190,6 +1190,9 @@ class XorChip {
         this.input2 = false;
         this.outut = false;
 
+        this.width = 1000;
+        this.height = 1000;
+
         this.tradius = tradius;
         this.primStrokeWidth = primStrokeWidth;
         this.strokeWidth = subStrokeWidth;
@@ -1208,9 +1211,38 @@ class XorChip {
 
         this.notGateLeft = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const nLeft = this.notGateLeft.container.clone(true);
-        nLeft.x = this.andGateLeft.height + this.tradius * 2;
-        nLeft.y = this.tradius;
+        nLeft.x = agLeft.x;
+        nLeft.y = agLeft.y + this.andGateLeft.width + this.tradius * 3;
         this.container.addChild(nLeft);
+
+
+
+
+        const andNotLeftwire = new createjs.Shape();
+        andNotLeftwire
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 4), agLeft.y + this.andGateLeft.width)
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 4), nLeft.y)
+            .endStroke();
+        this.container.addChild(andNotLeftwire);
+
+
+
+
+
+
+        const dash = DASH;
+
+        const outline = new createjs.Shape();
+        outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.primStrokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .drawRect(0, 0, this.width, this.height);
+        this.container.addChild(outline);
 
         this.setInput(this.input1, this.input2);
     }
@@ -1368,6 +1400,9 @@ const stage = new createjs.Stage(canvasId);
 //stage.addChild(orChip.container)
 
 const xorChip = new XorChip(TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH)
+xorChip.container.x = 100;
+xorChip.container.y = 100;
+
 stage.addChild(xorChip.container)
 
 
