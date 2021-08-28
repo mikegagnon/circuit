@@ -871,6 +871,12 @@ class OrChip {
         og.y = 100;
         this.container.addChild(og);
 
+        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const n = this.notGate.container.clone(true);
+        n.x = 500;
+        n.y = 100;
+        this.container.addChild(n);
+
         this.setInput(this.input1, this.input2);
     }
 
@@ -878,7 +884,8 @@ class OrChip {
         this.input1 = value1;
         this.input2 = value2;
         this.orGate.setInput(value1, value2);
-        this.output = this.orGate.getOutput();
+        this.notGate.setInput(this.orGate.getOutput());
+        this.output = this.notGate.getOutput();
     }
 
     getOutput() {
