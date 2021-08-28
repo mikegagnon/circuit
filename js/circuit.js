@@ -36,7 +36,7 @@ class AndGate {
     setInput(value1, value2) {
         this.input1 = value1;
         this.input2 = value2;
-        this.output = value1 || value2;
+        this.output = value1 && value2;
 
         if (this.input1) {
             this.inputLight1.fillCommand.style = LIGHT_ON_COLOR;
@@ -208,7 +208,7 @@ class AndGate {
         this.container.addChild(plusHorz);
 
 
-
+/*
         const plusVert2 = new createjs.Shape();
         plusVert2
             .graphics
@@ -231,8 +231,29 @@ class AndGate {
 
         this.container.addChild(plusHorz2);
 
+*/
 
+        const outwire1 = new createjs.Shape();
+        outwire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5, this.tradius * 13)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
+            .endStroke();
+        this.container.addChild(outwire1);
 
+        const outwire7 = new createjs.Shape();
+        outwire7
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 6, this.tradius * 13)
+            .lineTo(this.tradius * 6, this.tradius * 8)
+            .endStroke();
+        this.container.addChild(outwire7);
+
+/*
 
         const outwire1 = new createjs.Shape();
         outwire1
@@ -252,15 +273,15 @@ class AndGate {
             .moveTo(this.tradius * 5, this.tradius * 5)
             .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
             .endStroke();
-        this.container.addChild(outwire2);
+        this.container.addChild(outwire2);*/
 
         const outwire3 = new createjs.Shape();
         outwire3
             .graphics
             .setStrokeStyle(this.strokeWidth)
             .beginStroke("black")
-            .moveTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
-            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
+            .moveTo(this.tradius * 5, this.tradius * 11)
+            .lineTo(this.tradius * 5, this.tradius * 5)
             .endStroke();
         this.container.addChild(outwire3);
 
@@ -351,14 +372,14 @@ class AndGate {
 
 
 
-        /*this.container.regX = this.width / 2;
+        this.container.regX = this.width / 2;
         this.container.regY = this.width / 2;
         this.container.rotation = -90;
         const oldContainer = this.container;
         this.container = new createjs.Container();
         this.container.addChild(oldContainer);
         oldContainer.x = this.width / 2; 
-        oldContainer.y = this.height / 4;*/
+        oldContainer.y = this.height / 4;
     }
 }
 
@@ -1230,7 +1251,7 @@ class AndChip {
         this.andGate = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
 
         const ag = this.andGate.container.clone(true);
-        ag.x = 100;
+        ag.x = 0;
         ag.y = 0;
         this.container.addChild(ag);
 
