@@ -1267,6 +1267,15 @@ class XorChip {
         this.input2 = value2;
 
         this.notGateLeft.setInput(this.input1);
+        
+
+
+        if (this.notGateLeft.getOutput()) {
+            this.andNotLeftLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.andNotLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
         this.andGateLeft.setInput(this.notGateLeft.getOutput(), this.input2);
         this.output = this.andGateLeft.getOutput();
     }
