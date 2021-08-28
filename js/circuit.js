@@ -1195,7 +1195,7 @@ class XorChip {
         this.tradius = tradius;
 
         this.width = this.tradius * 38;
-        this.height = this.tradius * 3;
+        this.height = this.tradius * 38;
 
         this.primStrokeWidth = primStrokeWidth;
         this.strokeWidth = subStrokeWidth;
@@ -1223,6 +1223,24 @@ class XorChip {
             .lineTo(Math.floor(this.width / 2), this.tradius * 4)
             .endStroke();
         this.container.addChild(outwire);
+
+        this.outLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const outwire2 = new createjs.Shape();
+        outwire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2), this.tradius * 2)
+            .lineTo(Math.floor(this.width / 2) - this.tradius * 2, this.tradius * 2)
+            .endStroke();
+        this.container.addChild(outwire2);
+
+
+
+        this.outLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);       
+        this.outLight.container.x = Math.floor(this.width / 2) - this.tradius * 3;
+        this.outLight.container.y = this.tradius;
+        this.container.addChild(this.outLight.container)
 
 
 
@@ -1401,6 +1419,12 @@ class XorChip {
         this.orGate.setInput(this.andGateLeft.getOutput(), this.andGateRight.getOutput());
 
         this.output = this.orGate.getOutput();
+
+        if (this.output) {
+            this.outLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
     }
 
     getOutput() {
