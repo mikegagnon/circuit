@@ -347,6 +347,18 @@ class OrGate {
             .setStrokeDash([dash, dash], 0)
             .drawRect(0, 0, this.width, this.height);
         this.container.addChild(outline);
+
+
+
+
+        this.container.regX = this.width / 2;
+        this.container.regY = this.width / 2;
+        this.container.rotation = -90;
+        const oldContainer = this.container;
+        this.container = new createjs.Container();
+        this.container.addChild(oldContainer);
+        oldContainer.x = this.width / 2; 
+        oldContainer.y = this.height / 4;
     }
 }
 
@@ -867,14 +879,14 @@ class OrChip {
         this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
 
         const og = this.orGate.container.clone(true);
-        og.x = 100;
-        og.y = 100;
+        og.x = 0;
+        og.y = 0;
         this.container.addChild(og);
 
         this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const n = this.notGate.container.clone(true);
-        n.x = 500;
-        n.y = 100;
+        n.x = this.orGate.height + 10;
+        n.y = 0;
         this.container.addChild(n);
 
         this.setInput(this.input1, this.input2);
