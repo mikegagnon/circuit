@@ -12,6 +12,356 @@ const TRADIUS = 30;
 const STROKE_WIDTH = 2;
 const DASH = 6;
 
+class AndGate {
+    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.input1 = false;
+        this.input2 = false;
+        this.output = false;
+        this.useLights = useLights;
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
+        this.transistorGraphic = transistorGraphic;
+        this.resistorGraphic = resistorGraphic;
+        this.groundGraphic = groundGraphic;
+        this.width = this.tradius * 8;
+        this.height = this.tradius * 16;
+        this.plusStrokeWidth = Math.floor(this.tradius / 7);
+        this.bulbSize = 0.5;
+        this.draw();
+        //console.log(this.plusStrokeWidth);
+
+        this.setInput(this.input1, this.input2);
+    }
+
+    setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
+        this.output = value1 || value2;
+
+        if (this.input1) {
+            this.inputLight1.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inputLight1.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.input2) {
+            this.inputLight2.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inputLight2.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output) {
+            this.outputLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outputLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+    }
+    getOutput() {
+        return this.output;
+    }
+
+    draw() {
+        this.container = new createjs.Container();
+
+        const t = this.transistorGraphic.container.clone(true);
+        t.x = Math.floor(this.width / 2) - this.tradius;
+        t.y = Math.floor(this.height / 4) - this.tradius;
+        this.container.addChild(t);
+
+        const t2 = this.transistorGraphic.container.clone(true);
+        t2.x = Math.floor(this.width / 2) - this.tradius;
+        t2.y = Math.floor(this.height / 4 * 3) - this.tradius;
+        this.container.addChild(t2);
+
+        const r1 = this.resistorGraphic.container.clone(true);
+        r1.x = Math.floor(this.width / 2) + this.tradius - this.resistorGraphic.stepwidth;
+        r1.y = Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2);
+        this.container.addChild(r1);
+
+        const r1wiretop = new createjs.Shape();
+        r1wiretop
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1))
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2))
+            .endStroke();
+        this.container.addChild(r1wiretop);
+
+        const r1wirebottom = new createjs.Shape();
+        r1wirebottom
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.2) + this.resistorGraphic.height)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.4) + this.resistorGraphic.height)
+            .endStroke();
+        this.container.addChild(r1wirebottom);
+
+        const g1 = this.groundGraphic.container.clone(true);
+        g1.x = Math.floor(this.width / 2) + this.tradius - Math.floor(this.groundGraphic.width / 2);
+        g1.y = Math.floor(this.height / 4 * 3) + Math.floor(this.tradius * 1.4) + this.resistorGraphic.height
+        this.container.addChild(g1);
+
+        const r2 = this.resistorGraphic.container.clone(true);
+        r2.regX = this.resistorGraphic.width / 2;
+        r2.regY = this.resistorGraphic.height / 2;
+        r2.rotation = 90
+        r2.x = this.resistorGraphic.height / 2;
+        r2.y = this.resistorGraphic.width / 2;
+
+        const r2wrap = new createjs.Container();
+        r2wrap.addChild(r2);
+
+        r2wrap.x = Math.floor(this.width / 2) - this.tradius - this.resistorGraphic.height - Math.floor(this.tradius * 0.2);
+        r2wrap.y = Math.floor(this.height / 4) - Math.floor(this.resistorGraphic.width / 2);
+        this.container.addChild(r2wrap);
+
+
+
+        const r3 = this.resistorGraphic.container.clone(true);
+        r3.regX = this.resistorGraphic.width / 2;
+        r3.regY = this.resistorGraphic.height / 2;
+        r3.rotation = 90
+        r3.x = this.resistorGraphic.height / 2;
+        r3.y = this.resistorGraphic.width / 2;
+
+        const r3wrap = new createjs.Container();
+        r3wrap.addChild(r3);
+
+        r3wrap.x = Math.floor(this.width / 2) - this.tradius - this.resistorGraphic.height - Math.floor(this.tradius * 0.2);
+        r3wrap.y = Math.floor(this.height / 4 * 3) - Math.floor(this.resistorGraphic.width / 2);
+        this.container.addChild(r3wrap);
+
+
+        const inputWire1 = new createjs.Shape();
+        inputWire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) - this.tradius, Math.floor(this.height / 4))
+            .lineTo(Math.floor(this.width / 2) - this.tradius - Math.floor(this.tradius * 0.2), Math.floor(this.height / 4))
+            .endStroke();
+        this.container.addChild(inputWire1);
+
+        const inputWire1b = new createjs.Shape();
+        inputWire1b
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) - this.tradius, Math.floor(this.height / 4 * 3))
+            .lineTo(Math.floor(this.width / 2) - this.tradius - Math.floor(this.tradius * 0.2), Math.floor(this.height / 4 * 3))
+            .endStroke();
+        this.container.addChild(inputWire1b);
+
+
+        const inputWire2 = new createjs.Shape();
+        inputWire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(0, Math.floor(this.height / 4))
+            .lineTo(r2wrap.x, Math.floor(this.height / 4))
+            .endStroke();
+        this.container.addChild(inputWire2);
+
+        const inputWire2b = new createjs.Shape();
+        inputWire2b
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(0, Math.floor(this.height / 4 * 3))
+            .lineTo(r2wrap.x, Math.floor(this.height / 4 * 3))
+            .endStroke();
+        this.container.addChild(inputWire2b);
+
+
+
+
+
+
+
+
+        const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
+//        console.log(this.plusStrokeWidth)
+
+        const plusVert = new createjs.Shape();
+        plusVert
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4 + this.tradius * 2)//Math.floor(this.height / 2) - this.tradius *2.2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen + this.tradius * 2)
+            .endStroke();
+        this.container.addChild(plusVert);
+
+
+        const plusHorz = new createjs.Shape();
+        plusHorz
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5  + this.tradius * 2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5 + this.tradius * 2)
+            .endStroke();
+
+        this.container.addChild(plusHorz);
+
+
+
+        const plusVert2 = new createjs.Shape();
+        plusVert2
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen * 4 + this.tradius * 10)//Math.floor(this.height / 2) - this.tradius *2.2)
+            .lineTo(Math.floor(this.width / 2) + this.tradius, plusVertGapLen + this.tradius * 10)
+            .endStroke();
+        this.container.addChild(plusVert2);
+
+
+        const plusHorz2 = new createjs.Shape();
+        plusHorz2
+            .graphics
+            .setStrokeStyle(this.plusStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2) + this.tradius - plusVertGapLen * 1.5, plusVertGapLen * 2.5  + this.tradius * 10)
+            .lineTo(Math.floor(this.width / 2) + this.tradius + plusVertGapLen * 1.5, plusVertGapLen * 2.5 + this.tradius * 10)
+            .endStroke();
+
+        this.container.addChild(plusHorz2);
+
+
+
+
+        const outwire1 = new createjs.Shape();
+        outwire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5, this.tradius * 13)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
+            .endStroke();
+        this.container.addChild(outwire1);
+
+        const outwire2 = new createjs.Shape();
+        outwire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5, this.tradius * 5)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
+            .endStroke();
+        this.container.addChild(outwire2);
+
+        const outwire3 = new createjs.Shape();
+        outwire3
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 13)
+            .lineTo(this.tradius * 5 + Math.floor(this.tradius), this.tradius * 5)
+            .endStroke();
+        this.container.addChild(outwire3);
+
+
+        const outwire4 = new createjs.Shape();
+        outwire4
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(this.tradius * 5 + Math.floor(this.tradius), Math.floor(this.height / 2))
+            .lineTo(this.width, Math.floor(this.height / 2))
+            .endStroke();
+        this.container.addChild(outwire4);
+
+
+
+
+        if (this.useLights) {
+            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+
+            const inLightWire1 = new createjs.Shape();
+            inLightWire1
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(Math.floor(this.tradius * 0.2) + this.inputLight1.radius, Math.floor(this.height / 4 ))
+                .lineTo(Math.floor(this.tradius * 0.2) + this.inputLight1.radius, Math.floor(this.height / 4 ) - this.inputLight1.radius)
+                .endStroke();
+            this.container.addChild(inLightWire1);
+
+            this.inputLight1.container.x = Math.floor(this.tradius * 0.2);
+            this.inputLight1.container.y = Math.floor(this.height / 4) - this.inputLight1.radius * 2.5;
+            this.container.addChild(this.inputLight1.container);
+
+
+            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            const inLightWire2 = new createjs.Shape();
+            inLightWire2
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(Math.floor(this.tradius * 0.2) + this.inputLight2.radius, Math.floor(this.height / 4 * 3))
+                .lineTo(Math.floor(this.tradius * 0.2) + this.inputLight2.radius, Math.floor(this.height / 4 * 3) - this.inputLight2.radius)
+                .endStroke();
+            this.container.addChild(inLightWire2);
+
+            this.inputLight2.container.x = Math.floor(this.tradius * 0.2);
+            this.inputLight2.container.y = Math.floor(this.height / 4 * 3) - this.inputLight2.radius * 2.5;
+            this.container.addChild(this.inputLight2.container);
+
+
+
+
+
+
+            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            
+            const outLightWire = new createjs.Shape();
+            outLightWire
+                .graphics
+                .setStrokeStyle(this.strokeWidth)
+                .beginStroke("black")
+                .moveTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.outputLight.radius, Math.floor(this.height / 2))
+                .lineTo(this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2) + this.outputLight.radius, Math.floor(this.height / 2) - this.outputLight.radius)
+                .endStroke();
+            this.container.addChild(outLightWire);
+
+
+            this.outputLight.container.x = this.width - this.outputLight.radius * 2 - Math.floor(this.tradius * 0.2);
+            this.outputLight.container.y = Math.floor(this.height / 2) - this.outputLight.radius * 2.5;
+            this.container.addChild(this.outputLight.container);
+        }
+
+
+
+
+        const dash = DASH;
+
+        const outline = new createjs.Shape();
+        outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .drawRect(0, 0, this.width, this.height);
+        this.container.addChild(outline);
+
+
+
+
+        /*this.container.regX = this.width / 2;
+        this.container.regY = this.width / 2;
+        this.container.rotation = -90;
+        const oldContainer = this.container;
+        this.container = new createjs.Container();
+        this.container.addChild(oldContainer);
+        oldContainer.x = this.width / 2; 
+        oldContainer.y = this.height / 4;*/
+    }
+}
+
 class OrGate {
     constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
         this.input1 = false;
@@ -862,6 +1212,50 @@ class Circuit {
   }*/
 }
 
+
+class AndChip {
+    constructor(tradius, strokeWidth) {
+        this.input1 = false;
+        this.input2 = false;
+        this.outut = false;
+
+        this.tradius = tradius;
+        this.strokeWidth = strokeWidth;
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+        
+        this.container = new createjs.Container();
+        this.andGate = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+
+        const ag = this.andGate.container.clone(true);
+        ag.x = 100;
+        ag.y = 0;
+        this.container.addChild(ag);
+
+        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const n = this.notGate.container.clone(true);
+        n.x = this.andGate.height + 10;
+        n.y = 0;
+        this.container.addChild(n);
+
+        this.setInput(this.input1, this.input2);
+    }
+
+    setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
+        this.andGate.setInput(value1, value2);
+        this.notGate.setInput(this.andGate.getOutput());
+        this.output = this.notGate.getOutput();
+    }
+
+    getOutput() {
+        return this.output;
+    }
+}
+
 class OrChip {
     constructor(tradius, strokeWidth) {
         this.input1 = false;
@@ -954,8 +1348,12 @@ const stage = new createjs.Stage(canvasId);
 //notNotChip.container.x = 100;
 //stage.addChild(notNotChip.container);
 
-const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
-stage.addChild(orChip.container)
+//const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
+//stage.addChild(orChip.container)
+
+const andChip = new AndChip(TRADIUS, STROKE_WIDTH)
+stage.addChild(andChip.container)
+
 
 stage.update();
 
