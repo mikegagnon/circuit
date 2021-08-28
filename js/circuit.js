@@ -1372,6 +1372,36 @@ class XorChip {
 
 
 
+        const andRightwire9 = new createjs.Shape();
+        andRightwire9
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateRight.height / 4)  , agRight.y + this.andGateRight.width)
+            .lineTo(agRight.x + Math.floor(this.andGateRight.height / 4)   , nRight.y)
+            .endStroke();
+        this.container.addChild(andRightwire9);
+
+        this.andRightLight9 = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const andRightwire92 = new createjs.Shape();
+        andRightwire92
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateRight.height / 4)  , agRight.y + this.andGateRight.width + Math.floor(this.tradius * 1.5))
+            .lineTo(agRight.x + Math.floor(this.andGateRight.height / 6)  , agRight.y + this.andGateRight.width + Math.floor(this.tradius * 1.5))
+            .endStroke();
+        this.container.addChild(andRightwire92);
+        
+        this.andRightLight9.container.x = Math.floor(this.tradius * 13)  + this.notGateRight.width;
+        this.andRightLight9.container.y = agRight.y + this.andGateRight.width + Math.floor(this.tradius * 0.5);
+        
+        this.container.addChild(this.andRightLight9.container);
+
+
+
+
+
         const dash = DASH;
 
         const outline = new createjs.Shape();
@@ -1411,6 +1441,11 @@ class XorChip {
             this.andNotRightLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
+        if (this.input1) {
+            this.andRightLight9.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.andRightLight9.fillCommand.style = LIGHT_OFF_COLOR;
+        }
         
 
         this.andGateLeft.setInput(this.notGateLeft.getOutput(), this.input2);
