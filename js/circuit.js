@@ -15,7 +15,9 @@ const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
 const DASH = 6;
 
 class AndGate {
-    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights, useCover) {
+        this.coverColor = "pink";
+        this.useCover = useCover;
         this.input1 = false;
         this.input2 = false;
         this.output = false;
@@ -315,13 +317,30 @@ class AndGate {
 
         const dash = DASH;
 
+/*
+        this.fillCommand = this.bulb
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .beginFill(LIGHT_ON_COLOR)
+            .command;*/
+
+
         const outline = new createjs.Shape();
+
+        this.coverFillCommand = outline
+            .graphics
+            .beginFill("red")
+            .command
+
         outline
             .graphics
             .beginStroke("gray")
             .setStrokeStyle(this.strokeWidth)
             .setStrokeDash([dash, dash], 0)
-            .drawRect(0, 0, this.width, this.height);
+            .drawRect(0, 0, this.width, this.height)
+
+        this.coverFillCommand.style = this.coverColor;
         this.container.addChild(outline);
 
 
@@ -1244,14 +1263,14 @@ class XorChip {
 
 
 
-        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const agLeft = this.andGateLeft.container.clone(true);
         agLeft.x = this.tradius * 2;
         //agLeft.y = this.tradius;
         agLeft.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agLeft);
 
-        this.andGateRight= new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.andGateRight= new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const agRight = this.andGateRight.container.clone(true);
         //agRight.x = this.tradius * 20;
         agRight.x = this.andGateRight.height + this.tradius * 4;
