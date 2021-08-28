@@ -1224,7 +1224,7 @@ class XorChip {
         const agRight = this.andGateRight.container.clone(true);
         //agRight.x = this.tradius * 20;
         agRight.x = this.andGateRight.height + this.tradius * 4;
-        agRight.y = this.tradius;
+        agRight.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agRight);
 
         this.notGateLeft = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
@@ -1232,6 +1232,12 @@ class XorChip {
         nLeft.x = agLeft.x;
         nLeft.y = agLeft.y + this.andGateLeft.width + this.tradius * 3;
         this.container.addChild(nLeft);
+
+        this.notGateRight = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const nRight = this.notGateRight.container.clone(true);
+        nRight.x = agRight.x + this.notGateRight.height;
+        nRight.y = agRight.y + this.notGateRight.width + this.tradius * 3;
+        this.container.addChild(nRight);
 
 
 
