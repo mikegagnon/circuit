@@ -1446,6 +1446,45 @@ class XorChip {
 
 
 
+        const orInRightWire1 = new createjs.Shape();
+        orInRightWire1
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateLeft.height / 2), agRight.y)
+            .lineTo(agRight.x + Math.floor(this.andGateLeft.height / 2), og.y + this.orGate.width + this.tradius)
+            .endStroke();
+        this.container.addChild(orInRightWire1);
+
+        this.orInRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const orInRightWire2 = new createjs.Shape();
+        orInRightWire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + Math.floor(this.andGateLeft.height / 2) - this.tradius * 5, og.y + this.orGate.width + this.tradius)
+            .lineTo(agRight.x + Math.floor(this.andGateLeft.height / 2) + this.tradius * 2, og.y + this.orGate.width + this.tradius)
+            .endStroke();
+        this.container.addChild(orInRightWire2);
+        
+        this.orInRightLight.container.x = agRight.x + Math.floor(this.andGateLeft.height / 2) + this.tradius * 1;
+        this.orInRightLight.container.y = og.y + this.orGate.width;
+        
+        this.container.addChild(this.orInRightLight.container);
+
+
+        const orInRightWire3 = new createjs.Shape();
+        orInRightWire3
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agRight.x + this.tradius * 3, og.y + this.orGate.width + this.tradius)
+            .lineTo(agRight.x + this.tradius * 3, og.y + this.orGate.width )
+            .endStroke();
+        this.container.addChild(orInRightWire3);
+
+
+
 
 
         const dash = DASH;
@@ -1505,6 +1544,14 @@ class XorChip {
         } else {
             this.orInLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
+
+        if (this.orGate.input2) {
+            this.orInRightLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.orInRightLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+
 
 
 
