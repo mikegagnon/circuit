@@ -8,8 +8,8 @@
 }*/
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
-const TRADIUS = 30;
-const STROKE_WIDTH = 2;
+const TRADIUS = 20;
+const STROKE_WIDTH = 1;
 const DASH = 6;
 
 class AndGate {
