@@ -1402,6 +1402,52 @@ class XorChip {
 
 
 
+
+
+        const orInLeftWire1 = new createjs.Shape();
+        orInLeftWire1
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 2), agLeft.y)
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 2), og.y + this.orGate.width + this.tradius)
+            .endStroke();
+        this.container.addChild(orInLeftWire1);
+
+        this.orInLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        const orInLeftWire2 = new createjs.Shape();
+        orInLeftWire2
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 2) - this.tradius * 2, og.y + this.orGate.width + this.tradius)
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 2) + this.tradius * 5, og.y + this.orGate.width + this.tradius)
+            .endStroke();
+        this.container.addChild(orInLeftWire2);
+        
+        
+        this.orInLeftLight.container.x = agLeft.x + Math.floor(this.andGateLeft.height / 2) - this.tradius * 3;
+        this.orInLeftLight.container.y = og.y + this.orGate.width;
+        
+        this.container.addChild(this.orInLeftLight.container);
+
+
+        const orInLeftWire3 = new createjs.Shape();
+        orInLeftWire3
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(agLeft.x + Math.floor(this.andGateLeft.height / 2) + this.tradius * 5, og.y + this.orGate.width + this.tradius)
+            .lineTo(agLeft.x + Math.floor(this.andGateLeft.height / 2) + this.tradius * 5, og.y + this.orGate.width )
+            .endStroke();
+        this.container.addChild(orInLeftWire3);
+
+
+
+
+
+
+
         const dash = DASH;
 
         const outline = new createjs.Shape();
@@ -1452,6 +1498,17 @@ class XorChip {
         this.andGateRight.setInput(this.input1, this.notGateRight.getOutput());
 
         this.orGate.setInput(this.andGateLeft.getOutput(), this.andGateRight.getOutput());
+
+
+        if (this.orGate.input1) {
+            this.orInLeftLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.orInLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+
+
+
 
         this.output = this.orGate.getOutput();
 
