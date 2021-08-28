@@ -1205,12 +1205,27 @@ class XorChip {
         this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
         
         this.container = new createjs.Container();
-        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
 
+
+        this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const og = this.orGate.container.clone(true);
+        og.x = this.tradius + this.orGate.height / 2 + this.tradius * 2;
+        og.y = this.tradius;
+        this.container.addChild(og);
+
+        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const agLeft = this.andGateLeft.container.clone(true);
         agLeft.x = this.tradius;
-        agLeft.y = this.tradius;
+        //agLeft.y = this.tradius;
+        agLeft.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agLeft);
+
+        this.andGateRight= new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const agRight = this.andGateRight.container.clone(true);
+        //agRight.x = this.tradius * 20;
+        agRight.x = this.andGateRight.height + this.tradius * 4;
+        agRight.y = this.tradius;
+        this.container.addChild(agRight);
 
         this.notGateLeft = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const nLeft = this.notGateLeft.container.clone(true);
@@ -1243,7 +1258,9 @@ class XorChip {
         this.container.addChild(andNotLeftwire2);
         
         this.andNotLeftLight.container.x = Math.floor(this.tradius * 2);
-        this.andNotLeftLight.container.y = Math.floor(this.height / 4) - this.andNotLeftLight.radius * 3;
+        //this.andNotLeftLight.container.y = Math.floor(this.height / 4) - this.andNotLeftLight.radius * 3;
+        this.andNotLeftLight.container.y = agLeft.y + this.andGateLeft.width + Math.floor(this.tradius * 0.5);
+        
         this.container.addChild(this.andNotLeftLight.container);
 
 
