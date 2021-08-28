@@ -1192,11 +1192,11 @@ class XorChip {
         this.outut = false;
 
         this.bulbSize = XOR_BULB_SIZE;
-
-        this.width = 1000;
-        this.height = 1000;
-
         this.tradius = tradius;
+
+        this.width = this.tradius * 38;
+        this.height = this.tradius * 38;
+
         this.primStrokeWidth = primStrokeWidth;
         this.strokeWidth = subStrokeWidth;
 
@@ -1210,12 +1210,25 @@ class XorChip {
         this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const og = this.orGate.container.clone(true);
         og.x = this.tradius + this.orGate.height / 2 + this.tradius * 2;
-        og.y = this.tradius;
+        og.y = this.tradius * 4;
         this.container.addChild(og);
+
+
+        const outwire = new createjs.Shape();
+        outwire
+            .graphics
+            .setStrokeStyle(this.primStrokeWidth)
+            .beginStroke("black")
+            .moveTo(Math.floor(this.width / 2), 0)
+            .lineTo(Math.floor(this.width / 2), this.tradius * 4)
+            .endStroke();
+        this.container.addChild(outwire);
+
+
 
         this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const agLeft = this.andGateLeft.container.clone(true);
-        agLeft.x = this.tradius;
+        agLeft.x = this.tradius * 2;
         //agLeft.y = this.tradius;
         agLeft.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agLeft);
@@ -1340,7 +1353,7 @@ class XorChip {
         this.andGateRight.setInput(this.input1, this.notGateRight.getOutput());
 
         this.orGate.setInput(this.andGateLeft.getOutput(), this.andGateRight.getOutput());
-        
+
         this.output = this.orGate.getOutput();
     }
 
