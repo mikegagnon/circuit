@@ -381,6 +381,9 @@ class AndGate {
             THIS.removeCover()
         }*/
         this.cover.graphics
+            .beginStroke("black")
+            .setStrokeStyle(this.strokeWidth)
+            //.setStrokeDash([dash, dash], 0)
             .beginFill(this.coverColor)
             .drawRect(0, 0, this.width, this.height)
         this.coverContainer.addChild(this.cover);
