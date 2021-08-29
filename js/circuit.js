@@ -1649,6 +1649,69 @@ class HalfAdder {
 
 
 
+
+        const xorLeftInWire = new createjs.Shape();
+        xorLeftInWire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.xorChip.inLeft1X + xorg.x, this.xorChip.height + xorg.y)
+            .lineTo(this.xorChip.inLeft1X + xorg.x, this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .endStroke();
+        this.container.addChild(xorLeftInWire);
+
+        const xorLeftInWire2 = new createjs.Shape();
+        xorLeftInWire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.xorChip.inLeft1X + xorg.x, xorg.y + this.xorChip.height + this.bulbSize * this.tradius * 2)
+            .lineTo(this.xorChip.inLeft1X + xorg.x - this.bulbSize * this.tradius, xorg.y + this.xorChip.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(xorLeftInWire2);
+
+        this.xorInLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.xorInLightLeft.container.x = this.xorChip.inLeft1X + xorg.x - this.bulbSize * this.tradius * 3;
+        this.xorInLightLeft.container.y =  xorg.y + this.xorChip.height + this.bulbSize * this.tradius 
+        this.container.addChild(this.xorInLightLeft.container);
+
+
+
+
+
+                //ddd
+        const xorRightInWire = new createjs.Shape();
+        xorRightInWire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.xorChip.inRight1X + xorg.x, this.xorChip.height + xorg.y)
+            .lineTo(this.xorChip.inRight1X + xorg.x, this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .endStroke();
+        this.container.addChild(xorRightInWire);
+
+
+        const xorRightInWire2 = new createjs.Shape();
+        xorRightInWire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.xorChip.inRight1X + xorg.x, xorg.y + this.xorChip.height + this.bulbSize * this.tradius * 2)
+            .lineTo(this.xorChip.inRight1X + xorg.x - this.bulbSize * this.tradius, xorg.y + this.xorChip.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(xorRightInWire2);
+
+        this.xorInLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.xorInLightRight.container.x = this.xorChip.inRight1X + xorg.x - this.bulbSize * this.tradius * 3;
+        this.xorInLightRight.container.y =  xorg.y + this.xorChip.height + this.bulbSize * this.tradius 
+        this.container.addChild(this.xorInLightRight.container);
+
+
+
+
+
+
+
                 const dash = 20;
 
 
@@ -2023,7 +2086,7 @@ class XorChip {
 
 
 
-
+        this.inLeft1X = this.tradius * 10;
 
 
         const inLeft1 = new createjs.Shape();
@@ -2035,6 +2098,7 @@ class XorChip {
             .lineTo(this.tradius * 6, this.height - this.tradius * 2)
             .endStroke();
         this.container.addChild(inLeft1);
+
 
 
         const inLeft2 = new createjs.Shape();
@@ -2079,7 +2143,8 @@ class XorChip {
 
 
 
-
+        // ddd
+        this.inRight1X = this.width - this.tradius * 10
 
 
 
