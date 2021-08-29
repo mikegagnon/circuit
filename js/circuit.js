@@ -1161,7 +1161,10 @@ class Light {
 
     draw() {
         this.container = new createjs.Container();
+        const bulbName =  "bulb-" + (Math.random() * 99999999).toString();
+
         this.bulb = new createjs.Shape();
+        this.bulb.name = bulbName
         this.fillCommand = this.bulb
             .graphics
             .setStrokeStyle(this.strokeWidth)
@@ -1176,8 +1179,12 @@ class Light {
         if (this.func) {
             const THIS = this;
             this.bulb.cursor = "pointer";
-            this.bulb.addEventListener("click", function(){
-                THIS.func();
+            this.bulb.addEventListener("click", function(event){
+                var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+                console.log(objs);
+                if (objs.length > 0 && objs[0].name == bulbName) {
+                    THIS.func();
+                }
             });
             console.log("p")
 
@@ -1896,9 +1903,9 @@ class XorChip {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Xor", this.tradius * 8 + "px Arial", "black");
-        text.x = this.tradius * 12;
-        text.y = this.tradius * 20;
+        var text = new createjs.Text("Xor", this.tradius * 16 + "px Arial", "black");
+        text.x = this.tradius * 7;
+        text.y = this.tradius * 24;
         text.textBaseline = "alphabetic"
         //text.rotation = 90
         this.coverContainer.addChild(text)
