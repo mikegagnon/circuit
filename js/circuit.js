@@ -38,7 +38,7 @@ function getStageItem(name, children) {
 const XOR_BULB_SIZE = 1;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
-const TRADIUS = 10;
+const TRADIUS = 20;
 const STROKE_WIDTH = 1;
 const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
 const DASH = 6;
