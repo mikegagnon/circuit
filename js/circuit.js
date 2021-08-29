@@ -304,7 +304,6 @@ class AndGate {
 
         if (this.useLights) {
             this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
-                console.log(1);
                 const input = !THIS.input1;
                 THIS.setInput(input, THIS.input2);
                 THIS.stage.update()
@@ -861,8 +860,8 @@ class OrGate {
 }
 
 class NotGate {
-    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
-
+    constructor(stage, tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.stage = stage;
         this.useCover = true;
         this.coverColor = "beige";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
@@ -904,6 +903,8 @@ class NotGate {
     }
 
     draw() {
+        const THIS = this;
+
         this.container = new createjs.Container();
 
         const t = this.transistorGraphic.container.clone(true);
@@ -1049,7 +1050,11 @@ class NotGate {
         this.container.addChild(outwire);
 
         if (this.useLights) {
-            this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+                const input = !THIS.input;
+                THIS.setInput(input);
+                THIS.stage.update()
+            });
 
             const inLightWire = new createjs.Shape();
             inLightWire
@@ -1533,14 +1538,14 @@ class XorChip {
         agRight.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agRight);
 
-        this.notGateLeft = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-        const nLeft = this.notGateLeft.container.clone(true);
+        this.notGateLeft = new NotGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const nLeft = this.notGateLeft.container;//.clone(true);
         nLeft.x = agLeft.x;
         nLeft.y = agLeft.y + this.andGateLeft.width + this.tradius * 3;
         this.container.addChild(nLeft);
 
-        this.notGateRight = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-        const nRight = this.notGateRight.container.clone(true);
+        this.notGateRight = new NotGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const nRight = this.notGateRight.container;//.clone(true);
         nRight.x = agRight.x + this.notGateRight.height;
         nRight.y = agRight.y + this.notGateRight.width + this.tradius * 3;
         this.container.addChild(nRight);
@@ -2101,7 +2106,7 @@ class OrChip {
         this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         this.width = this.orGate.height;
         this.height = this.orGate.width;
-        
+
         const og = this.orGate.container;//.clone(true);
         og.x = 0;
         og.y = 0;
@@ -2130,7 +2135,8 @@ class OrChip {
 }
 
 class NotNotChip {
-    constructor(tradius, strokeWidth) {
+    constructor(stage, tradius, strokeWidth) {
+        this.stage = stage;
         this.input = false;
         this.outut = false;
 
@@ -2143,18 +2149,20 @@ class NotNotChip {
         this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
         
         this.container = new createjs.Container();
-        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-        this.notGate2 = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.notGate = new NotGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        //this.notGate2 = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.width = this.notGate.height;
+        this.height = this.notGate.width;
 
-        const n = this.notGate.container.clone(true);
+        const n = this.notGate.container;//.clone(true);
         n.x = 0;
         n.y = 100;
         this.container.addChild(n);
 
-        const n2 = this.notGate2.container.clone(true);
+        /*const n2 = this.notGate2.container.clone(true);
         n2.x = 400;
         n2.y = 100;
-        this.container.addChild(n2);
+        this.container.addChild(n2);*/
 
         this.setInput(this.input);
     }
@@ -2162,8 +2170,8 @@ class NotNotChip {
     setInput(value) {
         this.input = value;
         this.notGate.setInput(value);
-        this.notGate2.setInput(this.notGate.getOutput());
-        this.output = this.notGate2.getOutput();
+        //this.notGate2.setInput(this.notGate.getOutput());
+        this.output = this.notGate.getOutput();
     }
 
     getOutput() {
@@ -2282,15 +2290,15 @@ class Camera {
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
 stage.enableMouseOver();
-//const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
+//const xorChip = new NotNotChip(stage, TRADIUS, STROKE_WIDTH);
 //const xorChip = new AndChip(stage, TRADIUS, STROKE_WIDTH);
 //notNotChip.container.x = 100;
 //stage.addChild(notNotChip.container);
 
-const xorChip = new OrChip(stage, TRADIUS, STROKE_WIDTH)
+//const xorChip = new OrChip(stage, TRADIUS, STROKE_WIDTH)
 //stage.addChild(orChip.container)
 
-//const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
+const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
 xorChip.container.x = -xorChip.width / 2;
 xorChip.container.y = -xorChip.height / 2;
 
