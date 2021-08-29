@@ -1508,14 +1508,14 @@ class XorChip {
 
 
         this.andGateLeft = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
-        const agLeft = this.andGateLeft.container.clone(true);
+        const agLeft = this.andGateLeft.container;//.clone(true);
         agLeft.x = this.tradius * 2;
         //agLeft.y = this.tradius;
         agLeft.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agLeft);
 
         this.andGateRight= new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
-        const agRight = this.andGateRight.container.clone(true);
+        const agRight = this.andGateRight.container;//.clone(true);
         //agRight.x = this.tradius * 20;
         agRight.x = this.andGateRight.height + this.tradius * 4;
         agRight.y = og.y + this.orGate.width + this.tradius * 3;
