@@ -39,7 +39,7 @@ const MAX_ZOOM = 8;
 const MIN_ZOOM = 0.01;
 
 const XOR_BULB_SIZE = 1;
-const HALF_ADDER_BULB_SIZE = 6;
+const HALF_ADDER_BULB_SIZE = 3;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
@@ -1494,22 +1494,58 @@ class HalfAdder {
         this.xorChip = new XorChip(this.stage, this.tradius, this.primStrokeWidth, this.strokeWidth, true);
         const xorg = this.xorChip.container;
         xorg.x = this.bulbSize * this.tradius; 
-        xorg.y = this.bulbSize * 2 * this.tradius;
+        xorg.y = this.bulbSize * 3 * this.tradius;
         this.container.addChild(xorg);
 
 
         this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const ag = this.andGate.container;
         ag.x = xorg.x + this.xorChip.width + this.bulbSize * this.tradius; 
-        ag.y = this.bulbSize * 2 * this.tradius;
+        ag.y = this.bulbSize * 3 * this.tradius;
         this.container.addChild(ag);
 
 
 
 
         this.width = ag.x + this.andGate.height +  this.bulbSize * this.tradius; 
-        this.height = xorg.y + this.xorChip.height + this.bulbSize * 2 * this.tradius;
+        this.height = xorg.y + this.xorChip.height + this.bulbSize * 3 * this.tradius;
 
+
+
+
+
+
+
+
+
+
+
+
+        const leftOutwire = new createjs.Shape();
+        leftOutwire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), 0)
+            .lineTo(xorg.x + Math.floor(this.xorChip.width /2), xorg.y)
+            .endStroke();
+        this.container.addChild(leftOutwire);
+
+
+        const leftOutwire2 = new createjs.Shape();
+        leftOutwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), Math.floor(xorg.y/2))
+            .lineTo(xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius, Math.floor(xorg.y/2))
+            .endStroke();
+        this.container.addChild(leftOutwire2);
+
+        this.outLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightLeft.container.x = xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius * 3;
+        this.outLightLeft.container.y = Math.floor(xorg.y/2) - this.bulbSize * this.tradius;
+        this.container.addChild(this.outLightLeft.container);
 
 
 
@@ -1554,9 +1590,9 @@ class HalfAdder {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Half Adder", this.tradius * 12 + "px Arial", "black");
+        var text = new createjs.Text("Half Adder", this.tradius * 10 + "px Arial", "black");
         text.x = this.tradius * 7;
-        text.y = this.tradius * 33;
+        text.y = this.tradius * 30;
         text.textBaseline = "alphabetic"
         //text.rotation = 90
         this.coverContainer.addChild(text)
