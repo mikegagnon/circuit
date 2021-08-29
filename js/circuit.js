@@ -1508,7 +1508,7 @@ class HalfAdder {
 
 
         this.width = ag.x + this.andGate.height +  this.bulbSize * 2 * this.tradius; 
-        this.height = this.tradius * 100;
+        this.height = xorg.y + this.xorChip.height + this.bulbSize * 2 * this.tradius;
 
 
 
@@ -1556,7 +1556,7 @@ class HalfAdder {
 
         var text = new createjs.Text("Half Adder", this.tradius * 16 + "px Arial", "black");
         text.x = this.tradius * 7;
-        text.y = this.tradius * 24;
+        text.y = this.tradius * 36;
         text.textBaseline = "alphabetic"
         //text.rotation = 90
         this.coverContainer.addChild(text)
