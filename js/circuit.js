@@ -1839,7 +1839,11 @@ class XorChip {
             .endStroke();
         this.container.addChild(inRight4);
 
-        this.inRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.inRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize, function(){
+            const input = !THIS.input2;
+            THIS.setInput(THIS.input1, input);
+            THIS.stage.update();
+        });
         this.inRightLight.container.x = this.width - this.tradius * 5
         this.inRightLight.container.y = this.height - this.tradius * 3
         this.container.addChild(this.inRightLight.container);
