@@ -436,7 +436,8 @@ class AndGate {
 }
 
 class OrGate {
-    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+    constructor(stage, tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.stage = stage;
         this.useCover = true;
         this.coverColor = "orange";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
@@ -488,6 +489,8 @@ class OrGate {
     }
 
     draw() {
+        const THIS = this;
+
         this.container = new createjs.Container();
 
         const t = this.transistorGraphic.container.clone(true);
@@ -705,7 +708,11 @@ class OrGate {
 
 
         if (this.useLights) {
-            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+                const input = !THIS.input1;
+                THIS.setInput(input, THIS.input2);
+                THIS.stage.update()
+            });
 
             const inLightWire1 = new createjs.Shape();
             inLightWire1
@@ -722,7 +729,12 @@ class OrGate {
             this.container.addChild(this.inputLight1.container);
 
 
-            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+                const input = !THIS.input2;
+                THIS.setInput(THIS.input1, input);
+                THIS.stage.update()
+            });
+
             const inLightWire2 = new createjs.Shape();
             inLightWire2
                 .graphics
@@ -1470,8 +1482,8 @@ class XorChip {
         this.container = new createjs.Container();
 
 
-        this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-        const og = this.orGate.container.clone(true);
+        this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const og = this.orGate.container;//.clone(true);
         og.x = this.tradius + this.orGate.height / 2 + this.tradius * 2;
         og.y = this.tradius * 4;
         this.container.addChild(og);
