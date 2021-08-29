@@ -401,7 +401,7 @@ class AndGate {
 
 
         //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
-        this.cover.on("click", function(event) { console.log("clicked"); })
+        //this.cover.on("click", function(event) { console.log("clicked"); })
 
         this.container.addChild(this.coverContainer)
 
@@ -812,7 +812,7 @@ class OrGate {
 
 
         //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
-        this.cover.on("click", function(event) { console.log("clicked"); })
+        //this.cover.on("click", function(event) { console.log("clicked"); })
 
         this.container.addChild(this.coverContainer)
 
@@ -929,7 +929,7 @@ class NotGate {
         //const plusLen = Math.floor(this.tradius / 2.5)
 
         const plusVertGapLen = (Math.floor(this.height / 2) - this.tradius * 2) - (Math.floor(this.height / 2) - this.tradius *2.2)
-        console.log(this.plusStrokeWidth)
+        //console.log(this.plusStrokeWidth)
 
         const plusVert = new createjs.Shape();
         plusVert
@@ -1112,7 +1112,7 @@ class NotGate {
 
 
         //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
-        this.cover.on("click", function(event) { console.log("clicked"); })
+        //this.cover.on("click", function(event) { console.log("clicked"); })
 
         this.container.addChild(this.coverContainer)
 
@@ -1181,12 +1181,10 @@ class Light {
             this.bulb.cursor = "pointer";
             this.bulb.addEventListener("click", function(event){
                 var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
-                console.log(objs);
                 if (objs.length > 0 && objs[0].name == bulbName) {
                     THIS.func();
                 }
             });
-            console.log("p")
 
         }
 
@@ -2268,7 +2266,7 @@ const CANVAS = document.getElementById("circuit-canvas-1");
             .drawRect(0, 0, CANVAS.width, CANVAS.height)
             //.drawRect(-100, -100, 1000, 1000)
 
-        console.log(dragSurface)
+        //console.log(dragSurface)
         //dragSurface.addChild(dragSurfaceOutline);
 
 const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.5);
@@ -2302,10 +2300,10 @@ stage.on("stagemouseup", function(event) {
     }
 
     if (c.name.startsWith("outline")) {
-        console.log(1)
+        //console.log(1)
             const children = recur(stage);
             const [child, parent] = getStageItem(c.name, children);
-            console.log(c, child)
+            //console.log(c, child)
             parent.removeChild(child);
             stage.update();
 
@@ -2318,7 +2316,7 @@ stage.on("stagemouseup", function(event) {
 
     const children = recur(stage);
     const [child, parent] = getStageItem(c.name + "-container", children);
-    console.log(c, child)
+    //console.log(c, child)
     parent.removeChild(child);
     stage.update();
     //console.log(objs[0]);
