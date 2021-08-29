@@ -1449,8 +1449,43 @@ class Circuit {
 
 class HalfAdder {
 
-    setInput(a, b) {
+        setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
 
+        this.andGate.setInput(this.input1, this.input2);
+        this.xorChip.setInput(this.input1, this.input2);
+        
+        this.output1 = this.andGate.getOutput();
+        this.output2 = this.xorChip.getOutput();
+
+        if (this.input1) {
+            this.inLightLeft.fillCommand.style = LIGHT_ON_COLOR;
+            this.xorInLightLeft.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLightLeft.fillCommand.style = LIGHT_OFF_COLOR;
+            this.xorInLightLeft.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.input2) {
+            this.inLightRight.fillCommand.style = LIGHT_ON_COLOR;
+            this.xorInLightRight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLightRight.fillCommand.style = LIGHT_OFF_COLOR;
+            this.xorInLightRight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output1) {
+            this.outLightLeft.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLightLeft.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output2) {
+            this.outLightRight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLightRight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
     }
 
     constructor(stage, tradius, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
@@ -1649,7 +1684,7 @@ class HalfAdder {
 
 
 
-
+//ddd
         const xorLeftInWire = new createjs.Shape();
         xorLeftInWire
             .graphics
@@ -1670,7 +1705,11 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(xorLeftInWire2);
 
-        this.xorInLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.xorInLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+            const x = !THIS.input1;
+            THIS.setInput(x, THIS.input2);
+            THIS.stage.update();
+        });
         this.xorInLightLeft.container.x = this.xorChip.inLeft1X + xorg.x - this.bulbSize * this.tradius * 3;
         this.xorInLightLeft.container.y =  xorg.y + this.xorChip.height + this.bulbSize * this.tradius 
         this.container.addChild(this.xorInLightLeft.container);
@@ -1679,7 +1718,6 @@ class HalfAdder {
 
 
 
-                //ddd
         const xorRightInWire = new createjs.Shape();
         xorRightInWire
             .graphics
@@ -1701,7 +1739,11 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(xorRightInWire2);
 
-        this.xorInLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.xorInLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+            const x = !THIS.input2;
+            THIS.setInput(THIS.input1, x);
+            THIS.stage.update();
+        });
         this.xorInLightRight.container.x = this.xorChip.inRight1X + xorg.x - this.bulbSize * this.tradius * 3;
         this.xorInLightRight.container.y =  xorg.y + this.xorChip.height + this.bulbSize * this.tradius 
         this.container.addChild(this.xorInLightRight.container);
