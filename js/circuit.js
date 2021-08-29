@@ -1623,6 +1623,7 @@ class HalfAdder {
         this.container.addChild(rightInWire);
 
 
+
         const rightInwire2 = new createjs.Shape();
         rightInwire2
             .graphics
@@ -1749,6 +1750,61 @@ class HalfAdder {
         this.xorInLightRight.container.y =  xorg.y + this.xorChip.height + this.bulbSize * this.tradius 
         this.container.addChild(this.xorInLightRight.container);
 
+
+
+
+
+
+
+
+
+
+
+        this.inLeftX = ag.x + Math.floor(this.andGate.height /2);
+        this.inRightX = xorg.x + Math.floor(this.xorChip.width /2);
+
+        const leftInWireZ = new createjs.Shape();
+        leftInWireZ
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4), this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .lineTo(this.inLeftX, this.height)
+            .endStroke();
+        this.container.addChild(leftInWireZ);
+
+        const leftInWireZ2 = new createjs.Shape();
+        leftInWireZ2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.xorChip.inLeft1X + xorg.x, this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .lineTo(this.inLeftX, this.height)
+            .endStroke();
+        this.container.addChild(leftInWireZ2);
+
+
+
+        const rightInWireZ = new createjs.Shape();
+        rightInWireZ
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4 * 3), this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .lineTo(this.inRightX, this.height)
+            .endStroke();
+        this.container.addChild(rightInWireZ);
+
+//ddd
+        const rightInWireZ2 = new createjs.Shape();
+        rightInWireZ2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("blue")
+            .moveTo(this.xorChip.inRight1X + xorg.x, this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
+            .lineTo(this.inRightX, this.height)
+            .endStroke();
+        this.container.addChild(rightInWireZ2);
 
 
 
