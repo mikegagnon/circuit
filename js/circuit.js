@@ -39,7 +39,7 @@ const MAX_ZOOM = 8;
 const MIN_ZOOM = 0.01;
 
 const XOR_BULB_SIZE = 1;
-const HALF_ADDER_BULB_SIZE = 3;
+const HALF_ADDER_BULB_SIZE = 2;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
@@ -1549,6 +1549,73 @@ class HalfAdder {
         this.outLightLeft.container.x = ag.x + Math.floor(this.andGate.height /2) - this.bulbSize * this.tradius * 3;
         this.outLightLeft.container.y = Math.floor(ag.y/2) - this.bulbSize * this.tradius;
         this.container.addChild(this.outLightLeft.container);
+
+
+
+
+
+
+
+        const leftInwire = new createjs.Shape();
+        leftInwire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4), this.andGate.width + ag.y)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4), this.height)
+            .endStroke();
+        this.container.addChild(leftInwire);
+
+
+        const leftInwire2 = new createjs.Shape();
+        leftInwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4), ag.y + this.andGate.width + this.bulbSize * this.tradius * 2)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4) - this.bulbSize * this.tradius, ag.y + this.andGate.width + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(leftInwire2);
+
+        this.inLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightLeft.container.x = ag.x + Math.floor(this.andGate.height /4) - this.bulbSize * this.tradius * 3;
+        this.inLightLeft.container.y =  ag.y + this.andGate.width + this.bulbSize * this.tradius
+        this.container.addChild(this.inLightLeft.container);
+
+
+
+
+
+
+
+        const rightInWire = new createjs.Shape();
+        rightInWire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4 *3), this.andGate.width + ag.y)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4 * 3), this.height)
+            .endStroke();
+        this.container.addChild(rightInWire);
+
+
+        const rightInwire2 = new createjs.Shape();
+        rightInwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ag.x + Math.floor(this.andGate.height /4 * 3), ag.y + this.andGate.width + this.bulbSize * this.tradius * 2)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4 * 3) - this.bulbSize * this.tradius, ag.y + this.andGate.width + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(rightInwire2);
+
+        this.inLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightRight.container.x = ag.x + Math.floor(this.andGate.height /4 * 3) - this.bulbSize * this.tradius * 3;
+        this.inLightRight.container.y =  ag.y + this.andGate.width + this.bulbSize * this.tradius
+        this.container.addChild(this.inLightRight.container);
+
+
+
 
 
 
