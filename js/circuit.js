@@ -915,18 +915,6 @@ class NotGate {
         this.container.addChild(t);
 
         
-/*
-        const dash = DASH;
-
-        const outline = new createjs.Shape();
-        outline
-            .graphics
-            .beginStroke("gray")
-            .setStrokeStyle(this.strokeWidth)
-            .setStrokeDash([dash, dash], 0)
-            .drawRect(0, 0, this.width, this.height);
-        this.container.addChild(outline);
-        */
 
 
         const plusWire = new createjs.Shape();
@@ -1493,7 +1481,7 @@ class HalfAdder {
 
         this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const ag = this.andGate.container;
-        ag.x = this.bulbSize * this.tradius; 
+        ag.x = this.bulbSize * this.tradius * 2; 
         ag.y = this.bulbSize * 3 * this.tradius;
         this.container.addChild(ag);
 
@@ -1510,7 +1498,7 @@ class HalfAdder {
 
 
         this.width = xorg.x + this.xorChip.width +  this.bulbSize * this.tradius; 
-        this.height = xorg.y + this.xorChip.height + this.bulbSize * 3 * this.tradius;
+        this.height = xorg.y + this.xorChip.height + this.bulbSize * 8 * this.tradius;
 
 
 
