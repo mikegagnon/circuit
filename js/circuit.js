@@ -1493,21 +1493,21 @@ class HalfAdder {
 
         this.xorChip = new XorChip(this.stage, this.tradius, this.primStrokeWidth, this.strokeWidth, true);
         const xorg = this.xorChip.container;
-        xorg.x = this.bulbSize * 2 * this.tradius; 
+        xorg.x = this.bulbSize * this.tradius; 
         xorg.y = this.bulbSize * 2 * this.tradius;
         this.container.addChild(xorg);
 
 
         this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const ag = this.andGate.container;
-        ag.x = xorg.x + this.xorChip.width + this.bulbSize * 2 * this.tradius; 
+        ag.x = xorg.x + this.xorChip.width + this.bulbSize * this.tradius; 
         ag.y = this.bulbSize * 2 * this.tradius;
         this.container.addChild(ag);
 
 
 
 
-        this.width = ag.x + this.andGate.height +  this.bulbSize * 2 * this.tradius; 
+        this.width = ag.x + this.andGate.height +  this.bulbSize * this.tradius; 
         this.height = xorg.y + this.xorChip.height + this.bulbSize * 2 * this.tradius;
 
 
@@ -1554,9 +1554,9 @@ class HalfAdder {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Half Adder", this.tradius * 16 + "px Arial", "black");
+        var text = new createjs.Text("Half Adder", this.tradius * 12 + "px Arial", "black");
         text.x = this.tradius * 7;
-        text.y = this.tradius * 36;
+        text.y = this.tradius * 33;
         text.textBaseline = "alphabetic"
         //text.rotation = 90
         this.coverContainer.addChild(text)
