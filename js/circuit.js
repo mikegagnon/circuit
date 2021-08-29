@@ -420,6 +420,10 @@ class AndGate {
 
 class OrGate {
     constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
+        this.useCover = true;
+        this.coverColor = "orange";
+        this.coverName = "cover-" + (Math.random() * 99999999).toString();
+        
         this.input1 = false;
         this.input2 = false;
         this.output = false;
@@ -742,7 +746,7 @@ class OrGate {
 
 
 
-        const dash = DASH;
+        /*const dash = DASH;
 
         const outline = new createjs.Shape();
         outline
@@ -751,7 +755,67 @@ class OrGate {
             .setStrokeStyle(this.strokeWidth)
             .setStrokeDash([dash, dash], 0)
             .drawRect(0, 0, this.width, this.height);
-        this.container.addChild(outline);
+        this.container.addChild(outline);*/
+
+
+
+
+
+
+
+
+
+        const dash = DASH;
+
+
+
+        this.outline = new createjs.Shape();
+        this.outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.strokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(0, 0, this.width, this.height)
+        this.outline.name = "outline-" + this.coverName
+        this.container.addChild(this.outline);
+
+
+
+
+        this.coverContainer = new createjs.Container();
+        this.coverContainer.name = this.coverName + "-container";
+        this.cover = new createjs.Shape();
+        this.cover.name = this.coverName;
+        /*const THIS = this;
+        this.cover.rmCover = function() {
+            THIS.removeCover()
+        }*/
+        this.cover.graphics
+            .beginStroke("black")
+            .setStrokeStyle(this.strokeWidth)
+            //.setStrokeDash([dash, dash], 0)
+            .beginFill(this.coverColor)
+            .drawRect(0, 0, this.width, this.height)
+        this.coverContainer.addChild(this.cover);
+
+
+        var text = new createjs.Text("Or", this.tradius * 4 + "px Arial", "black");
+        text.x = this.tradius * 3;
+        text.y = this.tradius * 6;
+        text.textBaseline = "alphabetic"
+        text.rotation = 90
+        this.coverContainer.addChild(text)
+
+
+        //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
+        this.cover.on("click", function(event) { console.log("clicked"); })
+
+        this.container.addChild(this.coverContainer)
+
+
+
+
 
 
 
