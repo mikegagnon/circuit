@@ -35,6 +35,9 @@ function getStageItem(name, children) {
     }
 }
 
+const MAX_ZOOM = 8;
+const MIN_ZOOM = 0.01;
+
 const XOR_BULB_SIZE = 1;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
@@ -2090,10 +2093,10 @@ class NotNotChip {
 }
 
 class Camera {
-    constructor(container, canvasWidth, canvasHeight, scale) {
+    constructor(stage, container, canvas, scale) {
+        this.stage = stage;
         this.container = container;
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
+        this.canvas = canvas;
         this.stageTween = null;
 
         // The coordinates for the center of the *container* (not the stage)
@@ -2104,6 +2107,30 @@ class Camera {
 
         this.placeCamera();
         this.zoom(scale);
+
+        const THIS = this;
+
+        this.canvas.onwheel = function(event) {
+            THIS.wheel(event);
+        };
+    }
+
+    wheel(event) {
+        // TODO: If stage tween then disable zoom
+        event.preventDefault();
+
+        let scale = this.scale;
+        scale += event.deltaY * 0.001;
+
+        // Restrict scale
+        scale = Math.min(Math.max(MIN_ZOOM, scale), MAX_ZOOM);
+
+        //this.viz.pan();
+        this.placeCamera();
+        this.zoom(scale);
+        this.stage.update();
+        //this.viz.stage.update();
+
     }
 
     zoom(scale) {
@@ -2116,8 +2143,8 @@ class Camera {
 
     placeCamera() {
         //console.log("placeCamera")
-        this.container.x = this.canvasWidth / 2 - this.center.x;
-        this.container.y = this.canvasHeight / 2 - this.center.y;
+        this.container.x = this.canvas.width / 2 - this.center.x;
+        this.container.y = this.canvas.height / 2 - this.center.y;
     }
 }
 
@@ -2141,8 +2168,10 @@ rootContainer.addChild(xorChip.container);
 
 const CANVAS_WIDTH = 1000;
 const CANVAS_HEIGHT = 500;
+const CANVAS = document.getElementById("circuit-canvas-1");
 
-const camera = new Camera(rootContainer, CANVAS_WIDTH, CANVAS_HEIGHT, 0.4);
+
+const camera = new Camera(stage, rootContainer, CANVAS, 0.4);
 
 stage.addChild(rootContainer);
 
