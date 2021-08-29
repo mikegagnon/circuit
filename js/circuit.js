@@ -39,7 +39,7 @@ const MAX_ZOOM = 8;
 const MIN_ZOOM = 0.01;
 
 const XOR_BULB_SIZE = 1;
-const HALF_ADDER_BULB_SIZE = 2;
+const HALF_ADDER_BULB_SIZE = 6;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
@@ -1472,8 +1472,7 @@ class HalfAdder {
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
 
         this.tradius = tradius;
-        this.width = this.tradius * 100;
-        this.height = this.tradius * 100;
+
 
 
         this.input1 = false;
@@ -1493,14 +1492,23 @@ class HalfAdder {
         this.container = new createjs.Container();
 
         this.xorChip = new XorChip(this.stage, this.tradius, this.primStrokeWidth, this.strokeWidth, true);
-
-        const xorg = this.xorChip.container;//.clone(true);
-        xorg.x = this.tradius + this.xorChip.height / 2 + this.tradius * 4;
-        xorg.y = this.bulbSize * 2;
+        const xorg = this.xorChip.container;
+        xorg.x = this.bulbSize * 2 * this.tradius; 
+        xorg.y = this.bulbSize * 2 * this.tradius;
         this.container.addChild(xorg);
 
 
+        this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        const ag = this.andGate.container;
+        ag.x = xorg.x + this.xorChip.width + this.bulbSize * 2 * this.tradius; 
+        ag.y = this.bulbSize * 2 * this.tradius;
+        this.container.addChild(ag);
 
+
+
+
+        this.width = this.tradius * 100;
+        this.height = this.tradius * 100;
 
 
 
