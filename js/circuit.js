@@ -1148,12 +1148,15 @@ class NotGate {
 
 class Light {
 
-    constructor(tradius, strokeWidth, size) {
+    constructor(tradius, strokeWidth, size, func) {
         this.tradius = tradius;
         this.radius = Math.floor(this.tradius * size);
         this.strokeWidth = strokeWidth;
         this.size = size;
+        this.func = func;
         this.draw();
+
+
     }
 
     draw() {
@@ -1168,7 +1171,20 @@ class Light {
 
         this.bulb.graphics
             .drawCircle(this.radius, this.radius, this.radius);
+
+
+        if (this.func) {
+            const THIS = this;
+            this.bulb.cursor = "pointer";
+            this.bulb.addEventListener("click", function(){
+                THIS.func();
+            });
+            console.log("p")
+
+        }
+
         this.container.addChild(this.bulb);
+
     }
 }
 
@@ -1400,7 +1416,10 @@ class Circuit {
 }
 
 class XorChip {
-    constructor(tradius, primStrokeWidth, subStrokeWidth, useCover) {
+    constructor(stage, tradius, primStrokeWidth, subStrokeWidth, useCover) {
+
+        const THIS = this;
+        this.stage = stage;
 
         this.coverColor = "lightblue";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
@@ -1651,6 +1670,13 @@ class XorChip {
         this.container.addChild(this.orInLeftLight.container);
 
 
+
+
+
+
+
+
+
         const orInLeftWire3 = new createjs.Shape();
         orInLeftWire3
             .graphics
@@ -1752,7 +1778,11 @@ class XorChip {
             .endStroke();
         this.container.addChild(inLeft4);
 
-        this.inLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.inLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize, function(){
+            const input = !THIS.input1;
+            THIS.setInput(input, THIS.input2);
+            THIS.stage.update();
+        });
         this.inLeftLight.container.x = this.tradius * 3
         this.inLeftLight.container.y = this.height - this.tradius * 3
         this.container.addChild(this.inLeftLight.container);
@@ -2202,6 +2232,7 @@ class Camera {
 
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
+stage.enableMouseOver();
 //const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
 //notNotChip.container.x = 100;
 //stage.addChild(notNotChip.container);
@@ -2209,7 +2240,7 @@ const stage = new createjs.Stage(canvasId);
 //const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
 //stage.addChild(orChip.container)
 
-const xorChip = new XorChip(TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
+const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
 xorChip.container.x = -xorChip.width / 2;
 xorChip.container.y = -xorChip.height / 2;
 
@@ -2233,7 +2264,7 @@ const CANVAS = document.getElementById("circuit-canvas-1");
         console.log(dragSurface)
         //dragSurface.addChild(dragSurfaceOutline);
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.1);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.5);
 
 
 stage.addChild(dragSurface);
