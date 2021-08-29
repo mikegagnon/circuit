@@ -2099,6 +2099,8 @@ class Camera {
         this.canvas = canvas;
         this.stageTween = null;
 
+        this.dragStart = null;
+
         // The coordinates for the center of the *container* (not the stage)
         this.center = {
             x: 0,
@@ -2113,6 +2115,53 @@ class Camera {
         this.canvas.onwheel = function(event) {
             THIS.wheel(event);
         };
+
+        this.container.on("pressmove", function(evt) {
+            THIS.pressmove(evt);
+        });
+
+        this.container.on("pressup", function(evt) {
+            THIS.pressup(evt);
+        });
+    }
+
+    pressmove(evt) {
+        //console.log("pressmove");
+
+        if (!this.dragStart) {
+            this.dragStart = {
+                x: evt.stageX - this.container.x,
+                y: evt.stageY - this.container.y,
+            };
+            this.containerStart = this.dragStart;
+            this.cameraCenterStart = {
+                x: this.center.x,
+                y: this.center.y,
+            };
+            //console.log(this.dragStart);
+        } else {
+            this.containerStart = {
+                x: evt.stageX - this.container.x + this.containerStart.x - this.dragStart.x,
+                y: evt.stageY - this.container.y + this.containerStart.y - this.dragStart.y,
+            }
+        }
+
+        const newCameraCenter = {
+            x: this.dragStart.x - this.containerStart.x + this.cameraCenterStart.x,
+            y: this.dragStart.y - this.containerStart.y + this.cameraCenterStart.y,
+        };
+
+        this.center = newCameraCenter;
+        //console.log(this.viz.camera.center);
+
+        this.placeCamera();
+        this.stage.update();
+
+    }
+
+    pressup(evt) {
+        //console.log("pressup");
+        this.dragStart = null;
     }
 
     wheel(event) {
