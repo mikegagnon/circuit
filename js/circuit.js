@@ -1507,7 +1507,7 @@ class HalfAdder {
 
 
 
-        this.width = this.tradius * 100;
+        this.width = ag.x + this.andGate.height +  this.bulbSize * 2 * this.tradius; 
         this.height = this.tradius * 100;
 
 
