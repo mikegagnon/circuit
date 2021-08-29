@@ -2093,10 +2093,11 @@ class NotNotChip {
 }
 
 class Camera {
-    constructor(stage, container, canvas, scale) {
+    constructor(stage, container, canvas, dragSurface, scale) {
         this.stage = stage;
         this.container = container;
         this.canvas = canvas;
+        this.dragSurface = dragSurface;
         this.stageTween = null;
 
         this.dragStart = null;
@@ -2116,11 +2117,11 @@ class Camera {
             THIS.wheel(event);
         };
 
-        this.container.on("pressmove", function(evt) {
+        this.dragSurface.on("pressmove", function(evt) {
             THIS.pressmove(evt);
         });
 
-        this.container.on("pressup", function(evt) {
+        this.dragSurface.on("pressup", function(evt) {
             THIS.pressup(evt);
         });
     }
@@ -2220,7 +2221,23 @@ const CANVAS_HEIGHT = 500;
 const CANVAS = document.getElementById("circuit-canvas-1");
 
 
-const camera = new Camera(stage, rootContainer, CANVAS, 0.4);
+
+
+        const dragSurface = new createjs.Shape();
+        dragSurface
+            .graphics
+            .beginFill("white")//"rgba(255, 255, 0, 0.51")
+            .drawRect(0, 0, CANVAS.width, CANVAS.height)
+            //.drawRect(-100, -100, 1000, 1000)
+
+        console.log(dragSurface)
+        //dragSurface.addChild(dragSurfaceOutline);
+
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.1);
+
+
+stage.addChild(dragSurface);
+
 
 stage.addChild(rootContainer);
 
@@ -2268,10 +2285,10 @@ stage.on("stagemouseup", function(event) {
     stage.update();
     //console.log(objs[0]);
     return;
-    for (var i=0, l=objs.length; i<l; i++) {
+    /*(for (var i=0, l=objs.length; i<l; i++) {
       var obj = objs[i];
       if (obj == firstElement || obj == secondElement) { doSomething(); break; }
-    }
+    }*/
 });
 
 
