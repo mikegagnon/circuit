@@ -2084,7 +2084,8 @@ class AndChip {
 }
 
 class OrChip {
-    constructor(tradius, strokeWidth) {
+    constructor(stage, tradius, strokeWidth) {
+        this.stage = stage;
         this.input1 = false;
         this.input2 = false;
         this.outut = false;
@@ -2097,18 +2098,20 @@ class OrChip {
         this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
         
         this.container = new createjs.Container();
-        this.orGate = new OrGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-
-        const og = this.orGate.container.clone(true);
+        this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.width = this.orGate.height;
+        this.height = this.orGate.width;
+        
+        const og = this.orGate.container;//.clone(true);
         og.x = 0;
         og.y = 0;
         this.container.addChild(og);
 
-        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
-        const n = this.notGate.container.clone(true);
+        /*this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const n = this.notGate.container;//.clone(true);
         n.x = this.orGate.height + 10;
         n.y = 0;
-        this.container.addChild(n);
+        this.container.addChild(n);*/
 
         this.setInput(this.input1, this.input2);
     }
@@ -2117,8 +2120,8 @@ class OrChip {
         this.input1 = value1;
         this.input2 = value2;
         this.orGate.setInput(value1, value2);
-        this.notGate.setInput(this.orGate.getOutput());
-        this.output = this.notGate.getOutput();
+        //this.notGate.setInput(this.orGate.getOutput());
+        this.output = this.orGate.getOutput();
     }
 
     getOutput() {
@@ -2284,10 +2287,10 @@ stage.enableMouseOver();
 //notNotChip.container.x = 100;
 //stage.addChild(notNotChip.container);
 
-//const orChip = new OrChip(TRADIUS, STROKE_WIDTH)
+const xorChip = new OrChip(stage, TRADIUS, STROKE_WIDTH)
 //stage.addChild(orChip.container)
 
-const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
+//const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
 xorChip.container.x = -xorChip.width / 2;
 xorChip.container.y = -xorChip.height / 2;
 
