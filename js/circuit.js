@@ -1491,24 +1491,27 @@ class HalfAdder {
 
         this.container = new createjs.Container();
 
+        this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        const ag = this.andGate.container;
+        ag.x = this.bulbSize * this.tradius; 
+        ag.y = this.bulbSize * 3 * this.tradius;
+        this.container.addChild(ag);
+
         this.xorChip = new XorChip(this.stage, this.tradius, this.primStrokeWidth, this.strokeWidth, true);
         const xorg = this.xorChip.container;
-        xorg.x = this.bulbSize * this.tradius; 
+        xorg.x = ag.x + this.andGate.height + this.bulbSize * this.tradius; 
         xorg.y = this.bulbSize * 3 * this.tradius;
         this.container.addChild(xorg);
 
 
-        this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
-        const ag = this.andGate.container;
-        ag.x = xorg.x + this.xorChip.width + this.bulbSize * this.tradius; 
-        ag.y = this.bulbSize * 3 * this.tradius;
-        this.container.addChild(ag);
 
 
 
 
-        this.width = ag.x + this.andGate.height +  this.bulbSize * this.tradius; 
+
+        this.width = xorg.x + this.xorChip.width +  this.bulbSize * this.tradius; 
         this.height = xorg.y + this.xorChip.height + this.bulbSize * 3 * this.tradius;
+
 
 
 
@@ -1526,8 +1529,8 @@ class HalfAdder {
             .graphics
             .setStrokeStyle(this.halfAdderStrokeWidth)
             .beginStroke("black")
-            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), 0)
-            .lineTo(xorg.x + Math.floor(this.xorChip.width /2), xorg.y)
+            .moveTo(ag.x + Math.floor(this.andGate.height /2), 0)
+            .lineTo(ag.x + Math.floor(this.andGate.height /2), ag.y)
             .endStroke();
         this.container.addChild(leftOutwire);
 
@@ -1537,15 +1540,47 @@ class HalfAdder {
             .graphics
             .setStrokeStyle(this.halfAdderStrokeWidth)
             .beginStroke("black")
-            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), Math.floor(xorg.y/2))
-            .lineTo(xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius, Math.floor(xorg.y/2))
+            .moveTo(ag.x + Math.floor(this.andGate.height /2), Math.floor(ag.y/2))
+            .lineTo(ag.x + Math.floor(this.andGate.height /2) - this.bulbSize * this.tradius, Math.floor(ag.y/2))
             .endStroke();
         this.container.addChild(leftOutwire2);
 
         this.outLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
-        this.outLightLeft.container.x = xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius * 3;
-        this.outLightLeft.container.y = Math.floor(xorg.y/2) - this.bulbSize * this.tradius;
+        this.outLightLeft.container.x = ag.x + Math.floor(this.andGate.height /2) - this.bulbSize * this.tradius * 3;
+        this.outLightLeft.container.y = Math.floor(ag.y/2) - this.bulbSize * this.tradius;
         this.container.addChild(this.outLightLeft.container);
+
+
+
+
+
+
+
+        const rightOutwire = new createjs.Shape();
+        rightOutwire
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), 0)
+            .lineTo(xorg.x + Math.floor(this.xorChip.width /2), xorg.y)
+            .endStroke();
+        this.container.addChild(rightOutwire);
+
+
+        const rightOutwire2 = new createjs.Shape();
+        rightOutwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(xorg.x + Math.floor(this.xorChip.width /2), Math.floor(xorg.y/2))
+            .lineTo(xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius, Math.floor(xorg.y/2))
+            .endStroke();
+        this.container.addChild(rightOutwire2);
+
+        this.outLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightRight.container.x = xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius * 3;
+        this.outLightRight.container.y = Math.floor(xorg.y/2) - this.bulbSize * this.tradius;
+        this.container.addChild(this.outLightRight.container);
 
 
 
