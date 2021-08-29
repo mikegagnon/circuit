@@ -492,6 +492,8 @@ class OrGate {
     }
 
     draw() {
+
+        this.inLeftX = Math.floor(this.height / 4);
         const THIS = this;
 
         this.container = new createjs.Container();
@@ -1456,7 +1458,7 @@ class FullAdder {
     constructor(stage, tradius, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
         const THIS = this;
         this.stage = stage;
-        this.coverColor = "#63e8dc";
+        this.coverColor = "#9cf7ef";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
         this.tradius = tradius
 
@@ -1477,13 +1479,27 @@ class FullAdder {
 
         this.container = new createjs.Container();
 
-        this.leftHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
 
+
+
+        this.rightHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+        const rh = this.rightHalf.container;
+        rh.x = this.tradius * 37;
+        rh.y = this.bulbSize * 10 * this.tradius;
+        this.container.addChild(rh);
+
+
+        this.leftHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const lh = this.leftHalf.container;
         lh.x = this.bulbSize * this.tradius * 2; 
-        lh.y = this.bulbSize * 3 * this.tradius;
+        lh.y = rh.y + this.rightHalf.height + this.bulbSize * 3 * this.tradius;
         this.container.addChild(lh);
 
+        this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        const og = this.orGate.container;
+        og.x = this.tradius * 16;
+        og.y = this.bulbSize * 2 * this.tradius;
+        this.container.addChild(og);
 
 
 
@@ -1493,11 +1509,34 @@ class FullAdder {
 
 
 
-        this.width = lh.x + this.leftHalf.width +  this.bulbSize * this.tradius; 
+
+
+        this.width = rh.x + this.rightHalf.width +  this.bulbSize * this.tradius * 2; 
         this.height = lh.y + this.leftHalf.height + this.bulbSize * 8 * this.tradius;
 
 
 
+
+
+        const inoutwire = new createjs.Shape();
+        inoutwire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(lh.x + this.leftHalf.inRightX,lh.y)
+            .lineTo(rh.x + this.rightHalf.inLeftX, rh.y + this.rightHalf.height)
+            .endStroke();
+        this.container.addChild(inoutwire);
+
+        const orInLeftWire = new createjs.Shape();
+        orInLeftWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(lh.x + this.leftHalf.inLeftX,lh.y)
+            .lineTo(og.x + this.orGate.inLeftX, og.y + this.orGate.width)
+            .endStroke();
+        this.container.addChild(orInLeftWire);
 
 
 
