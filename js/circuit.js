@@ -1585,7 +1585,8 @@ class HalfAdder {
             .setStrokeStyle(this.halfAdderStrokeWidth)
             .beginStroke("black")
             .moveTo(ag.x + Math.floor(this.andGate.height /4), this.andGate.width + ag.y)
-            .lineTo(ag.x + Math.floor(this.andGate.height /4), this.andGate.width + ag.y + this.bulbSize * this.tradius * 4)
+            //.lineTo(ag.x + Math.floor(this.andGate.height /4), this.andGate.width + ag.y + this.bulbSize * this.tradius * 4)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4), this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
             .endStroke();
         this.container.addChild(leftInwire);
 
@@ -1617,7 +1618,7 @@ class HalfAdder {
             .setStrokeStyle(this.halfAdderStrokeWidth)
             .beginStroke("black")
             .moveTo(ag.x + Math.floor(this.andGate.height /4 *3), this.andGate.width + ag.y)
-            .lineTo(ag.x + Math.floor(this.andGate.height /4 * 3), this.andGate.width + ag.y + this.bulbSize * this.tradius * 4)
+            .lineTo(ag.x + Math.floor(this.andGate.height /4 * 3), this.xorChip.height + xorg.y + this.bulbSize * this.tradius * 4)
             .endStroke();
         this.container.addChild(rightInWire);
 
