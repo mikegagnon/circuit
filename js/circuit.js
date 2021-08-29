@@ -47,10 +47,11 @@ const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
 const DASH = 6;
 
 class AndGate {
-    constructor(tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights, useCover) {
+    constructor(stage, tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights, useCover) {
         this.coverColor = "pink";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
         this.useCover = useCover;
+        this.stage = stage;
 
         this.input1 = false;
         this.input2 = false;
@@ -100,12 +101,15 @@ class AndGate {
         } else {
             this.outputLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
-    }
+    } 
     getOutput() {
         return this.output;
     }
 
     draw() {
+
+        const THIS = this;
+
         this.container = new createjs.Container();
         //this.container.name = "and-gate"
 
@@ -299,7 +303,12 @@ class AndGate {
 
 
         if (this.useLights) {
-            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+                console.log(1);
+                const input = !THIS.input1;
+                THIS.setInput(input, THIS.input2);
+                THIS.stage.update()
+            });
 
             const inLightWire1 = new createjs.Shape();
             inLightWire1
@@ -316,7 +325,12 @@ class AndGate {
             this.container.addChild(this.inputLight1.container);
 
 
-            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+                console.log(1);
+                const input = !THIS.input2;
+                THIS.setInput(THIS.input1, input);
+                THIS.stage.update()
+            });
             const inLightWire2 = new createjs.Shape();
             inLightWire2
                 .graphics
@@ -1175,16 +1189,22 @@ class Light {
         this.bulb.graphics
             .drawCircle(this.radius, this.radius, this.radius);
 
-
+            this.bulb.cursor = "pointer";
         if (this.func) {
+            console.log("Asdf")
             const THIS = this;
+            /*const scope = null;
+            const once = true;
+            const data = null;
+            const useCapture = false;*/
             this.bulb.cursor = "pointer";
             this.bulb.addEventListener("click", function(event){
+                console.log("saf")
                 var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
                 if (objs.length > 0 && objs[0].name == bulbName) {
                     THIS.func();
                 }
-            });
+            }/*, scope, once, data, useCapture*/);
 
         }
 
@@ -1487,14 +1507,14 @@ class XorChip {
 
 
 
-        this.andGateLeft = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        this.andGateLeft = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const agLeft = this.andGateLeft.container.clone(true);
         agLeft.x = this.tradius * 2;
         //agLeft.y = this.tradius;
         agLeft.y = og.y + this.orGate.width + this.tradius * 3;
         this.container.addChild(agLeft);
 
-        this.andGateRight= new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        this.andGateRight= new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
         const agRight = this.andGateRight.container.clone(true);
         //agRight.x = this.tradius * 20;
         agRight.x = this.andGateRight.height + this.tradius * 4;
@@ -2004,7 +2024,8 @@ class XorChip {
 }
 
 class AndChip {
-    constructor(tradius, strokeWidth) {
+    constructor(stage, tradius, strokeWidth) {
+        this.stage = stage;
         this.input1 = false;
         this.input2 = false;
         this.outut = false;
@@ -2017,18 +2038,21 @@ class AndChip {
         this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
         
         this.container = new createjs.Container();
-        this.andGate = new AndGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        this.andGate = new AndGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        this.width = this.andGate.height;
+        this.height = this.andGate.width;
 
-        const ag = this.andGate.container.clone(true);
+        /*const ag = this.andGate.container.clone(true);
         ag.x = 0;
         ag.y = 0;
-        this.container.addChild(ag);
+        this.container.addChild(ag);*/
+        this.container.addChild(this.andGate.container)
 
-        this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
+        /*this.notGate = new NotGate(this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const n = this.notGate.container.clone(true);
         n.x = this.andGate.height + 10;
         n.y = 0;
-        this.container.addChild(n);
+        this.container.addChild(n);*/
 
         this.setInput(this.input1, this.input2);
     }
@@ -2037,8 +2061,9 @@ class AndChip {
         this.input1 = value1;
         this.input2 = value2;
         this.andGate.setInput(value1, value2);
-        this.notGate.setInput(this.andGate.getOutput());
-        this.output = this.notGate.getOutput();
+        //this.notGate.setInput(this.andGate.getOutput());
+        //this.output = this.notGate.getOutput();
+        this.output = this.andGate.output;
     }
 
     getOutput() {
@@ -2243,6 +2268,7 @@ const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
 stage.enableMouseOver();
 //const notNotChip = new NotNotChip(TRADIUS, STROKE_WIDTH);
+//const xorChip = new AndChip(stage, TRADIUS, STROKE_WIDTH);
 //notNotChip.container.x = 100;
 //stage.addChild(notNotChip.container);
 
@@ -2289,19 +2315,26 @@ stage.update();
 
 // https://stackoverflow.com/questions/54398197/mouse-click-through-top-image
 stage.on("stagemouseup", function(event) {
+
     var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
 
     if (objs.length == 0) {
         return;
     }
 
+
     //objs[0].rmCover();
     //return objs[0];
     const c = objs[0];
+    console.log(c.name)
 
     if (!c.name) {
         return;
     }
+
+
+    console.log(c.name)
+
 
     if (c.name.startsWith("outline")) {
         //console.log(1)
@@ -2315,6 +2348,7 @@ stage.on("stagemouseup", function(event) {
     }
 
     if (!c.name.startsWith("cover-")) {
+        console.log("not cover")
         return;
     }
 
