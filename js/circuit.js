@@ -2089,6 +2089,39 @@ class NotNotChip {
     }
 }
 
+class Camera {
+    constructor(container, canvasWidth, canvasHeight, scale) {
+        this.container = container;
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.stageTween = null;
+
+        // The coordinates for the center of the *container* (not the stage)
+        this.center = {
+            x: 0,
+            y: 0,
+        };
+
+        this.placeCamera();
+        this.zoom(scale);
+    }
+
+    zoom(scale) {
+        this.scale = scale;
+        this.container.scaleX = this.scale;
+        this.container.scaleY = this.scale;
+        //console.log(this.scale);
+    }
+
+
+    placeCamera() {
+        //console.log("placeCamera")
+        this.container.x = this.canvasWidth / 2 - this.center.x;
+        this.container.y = this.canvasHeight / 2 - this.center.y;
+    }
+}
+
+
 
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
@@ -2100,10 +2133,20 @@ const stage = new createjs.Stage(canvasId);
 //stage.addChild(orChip.container)
 
 const xorChip = new XorChip(TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
-xorChip.container.x = 100;
-xorChip.container.y = 100;
+xorChip.container.x = -xorChip.width / 2;
+xorChip.container.y = -xorChip.height / 2;
 
-stage.addChild(xorChip.container)
+const rootContainer = new createjs.Container();
+rootContainer.addChild(xorChip.container);
+
+const CANVAS_WIDTH = 1000;
+const CANVAS_HEIGHT = 500;
+
+const camera = new Camera(rootContainer, CANVAS_WIDTH, CANVAS_HEIGHT, 0.4);
+
+stage.addChild(rootContainer);
+
+
 
 
 stage.update();
