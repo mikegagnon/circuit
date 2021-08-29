@@ -39,11 +39,13 @@ const MAX_ZOOM = 8;
 const MIN_ZOOM = 0.01;
 
 const XOR_BULB_SIZE = 1;
+const HALF_ADDER_BULB_SIZE = 2;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
 const STROKE_WIDTH = 1;
 const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
+const HALF_ADDER_STROKE_WIDTH = STROKE_WIDTH * 6;
 const DASH = 6;
 
 class AndGate {
@@ -1457,6 +1459,117 @@ class Circuit {
   }*/
 }
 
+class HalfAdder {
+
+    setInput(a, b) {
+
+    }
+
+    constructor(stage, tradius, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
+        const THIS = this;
+        this.stage = stage;
+        this.coverColor = "#CBC3E3";
+        this.coverName = "cover-" + (Math.random() * 99999999).toString();
+
+        this.tradius = tradius;
+        this.width = this.tradius * 100;
+        this.height = this.tradius * 100;
+
+
+        this.input1 = false;
+        this.input2 = false;
+        this.output1 = false;
+        this.output2 = false;
+
+        this.bulbSize = HALF_ADDER_BULB_SIZE;
+        this.halfAdderStrokeWidth = halfAdderStrokeWidth;
+        this.primStrokeWidth = primStrokeWidth;
+        this.strokeWidth = subStrokeWidth;
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+
+        this.container = new createjs.Container();
+
+        this.xorChip = new XorChip(this.stage, this.tradius, this.primStrokeWidth, this.strokeWidth, true);
+
+        const xorg = this.xorChip.container;//.clone(true);
+        xorg.x = this.tradius + this.xorChip.height / 2 + this.tradius * 4;
+        xorg.y = this.bulbSize * 2;
+        this.container.addChild(xorg);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                const dash = 20;
+
+
+
+        this.outline = new createjs.Shape();
+        this.outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(0, 0, this.width, this.height)
+        this.outline.name = "outline-" + this.coverName
+        this.container.addChild(this.outline);
+
+
+
+
+        this.coverContainer = new createjs.Container();
+        this.coverContainer.name = this.coverName + "-container";
+        this.cover = new createjs.Shape();
+        this.cover.name = this.coverName;
+        this.cover.graphics
+            .beginStroke("black")
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            //.setStrokeDash([dash, dash], 0)
+            .beginFill(this.coverColor)
+            .drawRect(0, 0, this.width, this.height)
+        this.coverContainer.addChild(this.cover);
+
+
+        var text = new createjs.Text("Half Adder", this.tradius * 16 + "px Arial", "black");
+        text.x = this.tradius * 7;
+        text.y = this.tradius * 24;
+        text.textBaseline = "alphabetic"
+        //text.rotation = 90
+        this.coverContainer.addChild(text)
+
+
+        //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
+        //this.cover.on("click", function(event) { console.log("clicked"); })
+
+        this.container.addChild(this.coverContainer)
+
+
+
+
+
+
+
+        this.setInput(this.input1, this.input2);
+
+    }
+}
+
 class XorChip {
     constructor(stage, tradius, primStrokeWidth, subStrokeWidth, useCover) {
 
@@ -2298,7 +2411,11 @@ stage.enableMouseOver();
 //const xorChip = new OrChip(stage, TRADIUS, STROKE_WIDTH)
 //stage.addChild(orChip.container)
 
-const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
+
+const xorChip = new HalfAdder(stage, TRADIUS, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+
+
+//const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
 xorChip.container.x = -xorChip.width / 2;
 xorChip.container.y = -xorChip.height / 2;
 
@@ -2322,7 +2439,7 @@ const CANVAS = document.getElementById("circuit-canvas-1");
         //console.log(dragSurface)
         //dragSurface.addChild(dragSurfaceOutline);
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.5);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.2);
 
 
 stage.addChild(dragSurface);
