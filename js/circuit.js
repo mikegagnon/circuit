@@ -1458,7 +1458,38 @@ class Circuit {
 
 class HalfAdderBoard {
     setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
 
+        this.halfAdder.setInput(this.input1, this.input2);
+
+        this.output1 = this.halfAdder.output1;
+        this.output2 = this.halfAdder.output2;
+
+
+        if (this.input1) {
+            this.inLightLeft.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLightLeft.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.input2) {
+            this.inLightRight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLightRight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output1) {
+            this.outLightLeft.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLightLeft.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output2) {
+            this.outLightRight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLightRight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
     }
 
     constructor(stage, tradius, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
@@ -1483,6 +1514,7 @@ class HalfAdderBoard {
         ha.x = 0
         ha.y = 0
         this.container.addChild(ha);
+
 
         this.width = this.halfAdder.width;
         this.height = this.halfAdder.height;
@@ -1530,10 +1562,13 @@ class HalfAdderBoard {
             .endStroke();
         this.container.addChild(leftInwire2);
 
-        this.outLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
-        this.outLightRight.container.x = ha.x + this.halfAdder.inLeftX - this.bulbSize * this.tradius;
-        this.outLightRight.container.y = this.halfAdder.height  + this.bulbSize * this.tradius;
-        this.container.addChild(this.outLightRight.container);
+        this.inLightLeft = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(!THIS.input1, THIS.input2);
+            THIS.stage.update();
+        });
+        this.inLightLeft.container.x = ha.x + this.halfAdder.inLeftX - this.bulbSize * this.tradius;
+        this.inLightLeft.container.y = this.halfAdder.height  + this.bulbSize * this.tradius;
+        this.container.addChild(this.inLightLeft.container);
 
 
 
@@ -1547,13 +1582,17 @@ class HalfAdderBoard {
             .endStroke();
         this.container.addChild(rightInwire2);
 
-        this.inLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.input1, !THIS.input2);
+            THIS.stage.update();
+        });
         this.inLightRight.container.x = ha.x + this.halfAdder.inRightX - this.bulbSize * this.tradius;
         this.inLightRight.container.y = this.halfAdder.height  + this.bulbSize * this.tradius;
         this.container.addChild(this.inLightRight.container);
 
 
 
+        this.setInput(false, false);
 
 
     }
