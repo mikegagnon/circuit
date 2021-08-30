@@ -8,12 +8,15 @@
   <link href="css/style.css" rel="stylesheet">
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/createjs.min.js"></script>
+  <script type="text/javascript">
+    const SCROLL_TIME = 100;
+  </script>
 </head>
 <body>
   <!--<div><img src="img/title.png" class="banner"></div>-->
 
   <div>
-    <canvas id="circuit-canvas-1" width="1000" height="500" style="border: 1px solid black;"></canvas>
+    <canvas id="circuit-canvas-1" width="1000" height="500"></canvas>
   </div>
   <div id="spacer" style="float: left; "></div>
   <div id="pres">
@@ -139,9 +142,140 @@
           </table>
         </div>
 
+        <button class="btn btn-secondary"
+          onclick="setTimeout(function(){$('#pres-2').css('display', 'block'); $('#pres-1').css('display', 'none');}, 1000); $('html, body').animate({scrollTop : 0}, SCROLL_TIME); " 
+          >Dissect</button>
+      </center>
+    </div>
+
+
+    <div id="pres-2" style="display: none">
+      <div class="header">Binary numbers 2</div>
+      <center>
+        <div>
+          <table><tr><td>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">0</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">1</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">2</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">3</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">4</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">5</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">6</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">7</span>
+            </div>
+          </td><td style="padding-left: 100px">
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">8</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">9</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">10</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">11</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">12</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">13</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-off.png">
+                <span class="binNumber">14</span>
+            </div>
+            <div class="bin-row">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <img class="small-light" src="img/light-on.png">
+                <span class="binNumber">15</span>
+            </div>
+          </td></tr>
+          </table>
+        </div>
+
         <button class="btn btn-secondary">Dissect</button>
       </center>
     </div>
+    
+
   </div>
 
 
