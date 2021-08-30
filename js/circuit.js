@@ -3922,7 +3922,7 @@ class Camera {
 
 $("#pres").css("height", $(window).height());
 
-
+const INIT_SCALE = 0.042;
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
 stage.enableMouseOver();
@@ -3968,7 +3968,7 @@ const CANVAS_HEIGHT = 500;
         //dragSurface.addChild(dragSurfaceOutline);
 stage.addChild(dragSurface);
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.03);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, INIT_SCALE);
 
 
 
