@@ -1745,7 +1745,38 @@ class FullAdder {
 
 
 
+        const xinwireBulb = new createjs.Shape();
+        xinwireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(lh.x + this.leftHalf.inRightX , lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 2)
+            .lineTo(lh.x + this.leftHalf.inRightX + this.bulbSize * this.tradius, lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(xinwireBulb);
 
+
+        this.xinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.xinLight.container.x = lh.x + this.leftHalf.inRightX + this.bulbSize * this.tradius ;
+        this.xinLight.container.y = lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 1;
+        this.container.addChild(this.xinLight.container);
+
+
+        const yinwireBulb = new createjs.Shape();
+        yinwireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(lh.x + this.leftHalf.inLeftX , lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 2)
+            .lineTo(lh.x + this.leftHalf.inLeftX + this.bulbSize * this.tradius, lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(yinwireBulb);
+
+
+        this.yinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.yinLight.container.x = lh.x + this.leftHalf.inLeftX + this.bulbSize * this.tradius ;
+        this.yinLight.container.y = lh.y + this.leftHalf.height + this.bulbSize * this.tradius * 1;
+        this.container.addChild(this.yinLight.container);
 
 
 
