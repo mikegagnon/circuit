@@ -1488,6 +1488,43 @@ class FourBitAdder {
             this.x1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
+        if (this.inputY2) {
+            this.y2lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.y2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputX2) {
+            this.x2lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.x2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputY4) {
+            this.y4lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.y4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputX4) {
+            this.x4lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.x4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+        
+        if (this.inputY8) {
+            this.y8lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.y8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputX8) {
+            this.x8lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.x8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+        
+
         if (this.outputZ1) {
             this.z1lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
