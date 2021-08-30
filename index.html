@@ -260,7 +260,7 @@
 <script src="js/circuit.js"></script>
 <script src="js/pres.js"></script>
 <script type="text/javascript">
-  //jumpSlide(1, 4, 0);
+  jumpSlide(1, 4, 0);
 </script>
 <script type="text/javascript">
 function pres4() {
@@ -307,7 +307,60 @@ stage.addChild(rootContainer);
 stage.update();
 
 
+const children = recur(stage);
 
+// https://stackoverflow.com/questions/54398197/mouse-click-through-top-image
+stage.on("stagemouseup", function(event) {
+
+    var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+
+    //console.log(objs)
+
+    if (objs.length == 0) {
+        return;
+    }
+
+
+    //objs[0].rmCover();
+    //return objs[0];
+    const c = objs[0];
+    //console.log(c.name)
+
+    if (!c.name) {
+        return;
+    }
+
+
+    console.log(c.name)
+
+
+    if (c.name.startsWith("outline")) {
+        //console.log(1)
+            const [child, parent] = getStageItem(c.name, children);
+            //console.log(c, child)
+            parent.removeChild(child);
+            stage.update();
+
+        return;
+    }
+
+    if (!c.name.startsWith("cover-")) {
+        console.log("not cover")
+        return;
+    }
+
+    const children = recur(stage);
+    const [child, parent] = getStageItem(c.name + "-container", children);
+    //console.log(c, child)
+    parent.removeChild(child);
+    stage.update();
+    //console.log(objs[0]);
+    return;
+    /*(for (var i=0, l=objs.length; i<l; i++) {
+      var obj = objs[i];
+      if (obj == firstElement || obj == secondElement) { doSomething(); break; }
+    }*/
+});
 
 
 }
