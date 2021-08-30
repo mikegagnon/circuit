@@ -237,6 +237,22 @@
       </center>
     </div>
 
+
+    <div id="pres-4" style="display: none">
+      <div class="header">Adder</div>
+      <center>
+
+        <div>
+          <canvas id="pres-4-canvas"></canvas>
+        </div>
+
+
+        <button id="dissect-btn-4" class="btn btn-secondary" onclick="dissectSlide(4);">Dissect</button>
+
+
+      </center>
+    </div>
+
   </div>
 
 
@@ -244,7 +260,59 @@
 <script src="js/circuit.js"></script>
 <script src="js/pres.js"></script>
 <script type="text/javascript">
-  jumpSlide(1, 3, 0);
+  jumpSlide(1, 4, 0);
+</script>
+<script type="text/javascript">
+function pres4() {
+  const canvasId = "pres-4-canvas";
+  const CANVAS = document.getElementById(canvasId);
+
+  CANVAS.width = $(window).width();
+  CANVAS.height = $(window).height() - 300;//$("#dissect-btn-4").height();
+
+  const stage = new createjs.Stage(canvasId);
+  stage.enableMouseOver();
+
+  const rootContainer = new createjs.Container();
+
+
+  const board = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+  board.container.x = -board.width / 2;
+  board.container.y = -board.height / 2;
+  INIT_SCALE = 0.05;
+
+
+
+        const dragSurface = new createjs.Shape();
+        dragSurface
+            .graphics
+            .beginFill("white")
+            .drawRect(0, 0, CANVAS.width, CANVAS.height)
+
+stage.addChild(dragSurface);
+
+  rootContainer.addChild(board.container);
+
+
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, INIT_SCALE);
+
+
+
+
+stage.addChild(rootContainer);
+
+
+
+
+stage.update();
+
+
+
+
+
+}
+pres4();
+
 </script>
 </html>
 

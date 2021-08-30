@@ -310,7 +310,7 @@ class AndGate {
 
 
         if (this.useLights) {
-            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+            this.inputLight1 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
                 const input = !THIS.input1;
                 THIS.setInput(input, THIS.input2);
                 THIS.stage.update()
@@ -331,7 +331,7 @@ class AndGate {
             this.container.addChild(this.inputLight1.container);
 
 
-            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+            this.inputLight2 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
                 console.log(1);
                 const input = !THIS.input2;
                 THIS.setInput(THIS.input1, input);
@@ -356,7 +356,7 @@ class AndGate {
 
 
 
-            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.outputLight = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize);
             
             const outLightWire = new createjs.Shape();
             outLightWire
@@ -717,7 +717,7 @@ class OrGate {
 
 
         if (this.useLights) {
-            this.inputLight1 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+            this.inputLight1 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
                 const input = !THIS.input1;
                 THIS.setInput(input, THIS.input2);
                 THIS.stage.update()
@@ -738,7 +738,7 @@ class OrGate {
             this.container.addChild(this.inputLight1.container);
 
 
-            this.inputLight2 = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+            this.inputLight2 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
                 const input = !THIS.input2;
                 THIS.setInput(THIS.input1, input);
                 THIS.stage.update()
@@ -763,7 +763,7 @@ class OrGate {
 
 
 
-            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.outputLight = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize);
             
             const outLightWire = new createjs.Shape();
             outLightWire
@@ -1048,7 +1048,7 @@ class NotGate {
         this.container.addChild(outwire);
 
         if (this.useLights) {
-            this.inputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize, function() {
+            this.inputLight = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
                 const input = !THIS.input;
                 THIS.setInput(input);
                 THIS.stage.update()
@@ -1070,7 +1070,7 @@ class NotGate {
 
 
 
-            this.outputLight = new Light(this.tradius, this.strokeWidth, this.bulbSize);
+            this.outputLight = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize);
             
             const outLightWire = new createjs.Shape();
             outLightWire
@@ -1177,7 +1177,8 @@ class NotGate {
 
 class Light {
 
-    constructor(tradius, strokeWidth, size, func) {
+    constructor(stage, tradius, strokeWidth, size, func) {
+        this.stage = stage;
         this.tradius = tradius;
         this.radius = Math.floor(this.tradius * size);
         this.strokeWidth = strokeWidth;
@@ -1206,7 +1207,7 @@ class Light {
 
             this.bulb.cursor = "pointer";
         if (this.func) {
-            console.log("Asdf")
+            //console.log("Asdf")
             const THIS = this;
             /*const scope = null;
             const once = true;
@@ -1214,8 +1215,8 @@ class Light {
             const useCapture = false;*/
             this.bulb.cursor = "pointer";
             this.bulb.addEventListener("click", function(event){
-                console.log("saf")
-                var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+                //console.log("saf")
+                var objs = THIS.stage.getObjectsUnderPoint(event.stageX, event.stageY);
                 if (objs.length > 0 && objs[0].name == bulbName) {
                     THIS.func();
                 }
@@ -1544,7 +1545,7 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(zoutWire);
 
-        this.zOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.zOutLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.zOutLight.container.x = this.fullAdder.width / 2 - this.bulbSize * this.tradius ;
         this.zOutLight.container.y = - this.bulbSize * this.tradius * 4;
         this.container.addChild(this.zOutLight.container);
@@ -1559,7 +1560,7 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(coutWire);
 
-        this.cOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.cOutLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.cOutLight.container.x =  - this.bulbSize * this.tradius * 4;
         this.cOutLight.container.y = this.fullAdder.height / 2 - this.bulbSize * this.tradius;
         this.container.addChild(this.cOutLight.container);
@@ -1574,7 +1575,7 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(yinWire);
 
-        this.yInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.yInLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(!THIS.inputY, THIS.inputX, THIS.inputC);
             THIS.stage.update()
         });
@@ -1594,7 +1595,7 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(xinWire);
 
-        this.xInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.xInLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY, !THIS.inputX, THIS.inputC);
             THIS.stage.update()
         });
@@ -1614,7 +1615,7 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(cinWire);
 
-        this.cInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.cInLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
             THIS.stage.update()
         });
@@ -1862,7 +1863,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(y8wire);
 
-        this.y8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.y8lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(!THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1881,7 +1882,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(x8wire);
 
-        this.x8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.x8lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, !THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1904,7 +1905,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(y4wire);
 
-        this.y4lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.y4lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, !THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1923,7 +1924,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(x4wire);
 
-        this.x4lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.x4lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, !THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1949,7 +1950,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(y2wire);
 
-        this.y2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.y2lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, !THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1968,7 +1969,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(x2wire);
 
-        this.x2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.x2lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, !THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -1989,7 +1990,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(y1wire);
 
-        this.y1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.y1lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, !THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
@@ -2008,7 +2009,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(x1wire);
 
-        this.x1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+        this.x1lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
             THIS.stage.update();
         });
@@ -2034,7 +2035,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(z16wire);
 
-        this.z16lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z16lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
         this.z16lightBig.container.x = a8.x - Math.floor(this.adder8.width / 2) - this.bigBulbSize * this.tradius - interAdderSpan;
         this.z16lightBig.container.y = a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
         this.container.addChild(this.z16lightBig.container);
@@ -2052,7 +2053,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(z8wire);
 
-        this.z8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z8lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
         this.z8lightBig.container.x = a8.x + Math.floor(this.adder8.width / 2) - this.bigBulbSize * this.tradius;
         this.z8lightBig.container.y = a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
         this.container.addChild(this.z8lightBig.container);
@@ -2068,7 +2069,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(z4wire);
 
-        this.z4lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z4lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
         this.z4lightBig.container.x = a4.x + Math.floor(this.adder4.width / 2) - this.bigBulbSize * this.tradius;
         this.z4lightBig.container.y = a4.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
         this.container.addChild(this.z4lightBig.container);
@@ -2084,7 +2085,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(z2wire);
 
-        this.z2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z2lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
         this.z2lightBig.container.x = a2.x + Math.floor(this.adder2.width / 2) - this.bigBulbSize * this.tradius;
         this.z2lightBig.container.y = a2.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
         this.container.addChild(this.z2lightBig.container);
@@ -2100,7 +2101,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(z1wire);
 
-        this.z1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z1lightBig = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
         this.z1lightBig.container.x = a1.x + Math.floor(this.adder1.width / 2) - this.bigBulbSize * this.tradius;
         this.z1lightBig.container.y = a1.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
         this.container.addChild(this.z1lightBig.container);
@@ -2126,7 +2127,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(adder1_2_wire);
 
-        this.adder1_2_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+        this.adder1_2_bulb = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
             THIS.stage.update();
         });
@@ -2150,7 +2151,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(adder2_4_wire);
 
-        this.adder2_4_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+        this.adder2_4_bulb = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
             THIS.stage.update();
         });
@@ -2172,7 +2173,7 @@ class FourBitAdder {
             .endStroke();
         this.container.addChild(adder4_8_wire);
 
-        this.adder4_8_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+        this.adder4_8_bulb = new Light(this.stage, this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
             THIS.stage.update();
         });
@@ -2466,7 +2467,7 @@ class FullAdder {
         this.container.addChild(inoutwireBulb);
 
 
-        this.inoutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.inoutLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.inoutLight.container.x = lh.x + this.leftHalf.inRightX + this.bulbSize * this.tradius ;
         this.inoutLight.container.y = lh.y - this.bulbSize * this.tradius * 3;
         this.container.addChild(this.inoutLight.container);
@@ -2508,7 +2509,7 @@ class FullAdder {
             .endStroke();
         this.container.addChild(orInLeftWireBulb);
 
-        this.orInLeftLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orInLeftLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.orInLeftLight.container.x = og.x - Math.floor(this.orGate.height / 2);
         this.orInLeftLight.container.y = og.y + this.orGate.width * 1.5;
         this.container.addChild(this.orInLeftLight.container);
@@ -2538,7 +2539,7 @@ class FullAdder {
         this.container.addChild(orInRightWireBulb);
 
 
-        this.orInRightLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orInRightLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.orInRightLight.container.x = og.x + Math.floor(this.orGate.height);
         this.orInRightLight.container.y = og.y + this.orGate.width * 1.5;
         this.container.addChild(this.orInRightLight.container);
@@ -2556,7 +2557,7 @@ class FullAdder {
         this.container.addChild(orOutWireBulb);
 
 
-        this.orOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orOutLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.orOutLight.container.x = og.x + Math.floor(this.orGate.height / 2) + this.bulbSize * this.tradius ;
         this.orOutLight.container.y = og.y - this.bulbSize * this.tradius * 3;
         this.container.addChild(this.orOutLight.container);
@@ -2589,7 +2590,7 @@ class FullAdder {
         this.container.addChild(zOutWireBulb);
 
 
-        this.zOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.zOutLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
         this.zOutLight.container.x = rh.x +this.rightHalf.inRightX + this.bulbSize * this.tradius ;
         this.zOutLight.container.y = rh.y - this.bulbSize * this.tradius * 3;
         this.container.addChild(this.zOutLight.container);
@@ -2631,7 +2632,7 @@ class FullAdder {
         this.container.addChild(cinwireBulb);
 
 
-        this.cinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.cinLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
             THIS.stage.update();
         });
@@ -2683,7 +2684,7 @@ class FullAdder {
         this.container.addChild(xinwireBulb);
 
 
-        this.xinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.xinLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(THIS.inputY, !THIS.inputX, THIS.inputC);
             THIS.stage.update();
         });
@@ -2703,7 +2704,7 @@ class FullAdder {
         this.container.addChild(yinwireBulb);
 
 
-        this.yinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+        this.yinLight = new Light(this.stage, this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
             THIS.setInput(!THIS.inputY, THIS.inputX, THIS.inputC);
             THIS.stage.update();
         });
@@ -2889,7 +2890,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(leftOutwire2);
 
-        this.outLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightLeft = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
         this.outLightLeft.container.x = ag.x + Math.floor(this.andGate.height /2) - this.bulbSize * this.tradius * 3;
         this.outLightLeft.container.y = Math.floor(ag.y/2) - this.bulbSize * this.tradius;
         this.container.addChild(this.outLightLeft.container);
@@ -2922,7 +2923,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(leftInwire2);
 
-        this.inLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightLeft = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
         this.inLightLeft.container.x = ag.x + Math.floor(this.andGate.height /4) - this.bulbSize * this.tradius * 3;
         this.inLightLeft.container.y =  ag.y + this.andGate.width + this.bulbSize * this.tradius
         this.container.addChild(this.inLightLeft.container);
@@ -2955,7 +2956,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(rightInwire2);
 
-        this.inLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
         this.inLightRight.container.x = ag.x + Math.floor(this.andGate.height /4 * 3) - this.bulbSize * this.tradius * 3;
         this.inLightRight.container.y =  ag.y + this.andGate.width + this.bulbSize * this.tradius
         this.container.addChild(this.inLightRight.container);
@@ -2990,7 +2991,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(rightOutwire2);
 
-        this.outLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
         this.outLightRight.container.x = xorg.x + Math.floor(this.xorChip.width /2) - this.bulbSize * this.tradius * 3;
         this.outLightRight.container.y = Math.floor(xorg.y/2) - this.bulbSize * this.tradius;
         this.container.addChild(this.outLightRight.container);
@@ -3028,7 +3029,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(xorLeftInWire2);
 
-        this.xorInLightLeft = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+        this.xorInLightLeft = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
             const x = !THIS.input1;
             THIS.setInput(x, THIS.input2);
             THIS.stage.update();
@@ -3062,7 +3063,7 @@ class HalfAdder {
             .endStroke();
         this.container.addChild(xorRightInWire2);
 
-        this.xorInLightRight = new Light(this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
+        this.xorInLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize, function(){
             const x = !THIS.input2;
             THIS.setInput(THIS.input1, x);
             THIS.stage.update();
@@ -3234,7 +3235,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(outwire);
 
-        this.outLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.outLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const outwire2 = new createjs.Shape();
         outwire2
             .graphics
@@ -3247,7 +3248,7 @@ class XorChip {
 
 
 
-        this.outLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);       
+        this.outLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);       
         this.outLight.container.x = Math.floor(this.width / 2) - this.tradius * 3;
         this.outLight.container.y = this.tradius;
         this.container.addChild(this.outLight.container)
@@ -3297,7 +3298,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(andNotLeftwire);
 
-        this.andNotLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.andNotLeftLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const andNotLeftwire2 = new createjs.Shape();
         andNotLeftwire2
             .graphics
@@ -3330,7 +3331,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(andLeftwire2);
 
-        this.andLeftLight2 = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.andLeftLight2 = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const andLeftwire22 = new createjs.Shape();
         andLeftwire22
             .graphics
@@ -3362,7 +3363,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(andNotRightwire);
 
-        this.andNotRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.andNotRightLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const andNotRightwire2 = new createjs.Shape();
         andNotRightwire2
             .graphics
@@ -3392,7 +3393,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(andRightwire9);
 
-        this.andRightLight9 = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.andRightLight9 = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const andRightwire92 = new createjs.Shape();
         andRightwire92
             .graphics
@@ -3424,7 +3425,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(orInLeftWire1);
 
-        this.orInLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.orInLeftLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const orInLeftWire2 = new createjs.Shape();
         orInLeftWire2
             .graphics
@@ -3473,7 +3474,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(orInRightWire1);
 
-        this.orInRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize);
+        this.orInRightLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize);
         const orInRightWire2 = new createjs.Shape();
         orInRightWire2
             .graphics
@@ -3551,7 +3552,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(inLeft4);
 
-        this.inLeftLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize, function(){
+        this.inLeftLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize, function(){
             const input = !THIS.input1;
             THIS.setInput(input, THIS.input2);
             THIS.stage.update();
@@ -3608,7 +3609,7 @@ class XorChip {
             .endStroke();
         this.container.addChild(inRight4);
 
-        this.inRightLight = new Light(this.tradius, this.primStrokeWidth, this.bulbSize, function(){
+        this.inRightLight = new Light(this.stage, this.tradius, this.primStrokeWidth, this.bulbSize, function(){
             const input = !THIS.input2;
             THIS.setInput(THIS.input1, input);
             THIS.stage.update();
@@ -4121,8 +4122,8 @@ CANVAS.width = $(window).width();
 CANVAS.height = $(window).height();
 
 
-const CANVAS_WIDTH = CANVAS.width;
-const CANVAS_HEIGHT = 500;
+//const CANVAS_WIDTH = CANVAS.width;
+//const CANVAS_HEIGHT = 500;
 
 
 
@@ -4155,7 +4156,7 @@ stage.on("stagemouseup", function(event) {
 
     var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
 
-    console.log(objs)
+    //console.log(objs)
 
     if (objs.length == 0) {
         return;
@@ -4165,7 +4166,7 @@ stage.on("stagemouseup", function(event) {
     //objs[0].rmCover();
     //return objs[0];
     const c = objs[0];
-    console.log(c.name)
+    //console.log(c.name)
 
     if (!c.name) {
         return;
