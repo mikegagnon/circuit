@@ -1477,6 +1477,25 @@ class FourBitAdder {
         this.outputZ8 = this.adder8.outputZ;
         this.outputZ16 = this.adder8.outputC;
 
+
+        if (this.adder1.outputC) {
+            this.adder1_2_bulb.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.adder1_2_bulb.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.adder2.outputC) {
+            this.adder2_4_bulb.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.adder2_4_bulb.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.adder4.outputC) {
+            this.adder4_8_bulb.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.adder4_8_bulb.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
         let x = 0;
         let y = 0;
         let z = 0;
@@ -1573,6 +1592,8 @@ class FourBitAdder {
         } else {
             this.z16lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
+
+
 
 
         this.xNum.text = x;
@@ -1943,7 +1964,47 @@ class FourBitAdder {
 
 
 
+        const adder2_4_wire = new createjs.Shape();
+        adder2_4_wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a4.x  + this.adder4.width, a4.y + Math.floor(this.adder4.height / 2))
+            .lineTo(a2.x, a4.y + Math.floor(this.adder4.height / 2))
+            .moveTo(a2.x - Math.floor(interAdderSpan / 2), a4.y + Math.floor(this.adder4.height / 2))
+            .lineTo(a2.x - Math.floor(interAdderSpan / 2), a4.y + Math.floor(this.adder4.height / 2) - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(adder2_4_wire);
 
+        this.adder2_4_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
+            THIS.stage.update();
+        });
+        this.adder2_4_bulb.container.x = a2.x - Math.floor(interAdderSpan / 2) - this.bulbSize * this.tradius;
+        this.adder2_4_bulb.container.y = a4.y + Math.floor(this.adder4.height / 2) - this.bulbSize * this.tradius * 3; 
+        this.container.addChild(this.adder2_4_bulb.container);
+
+
+
+        const adder4_8_wire = new createjs.Shape();
+        adder4_8_wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a8.x  + this.adder4.width, a8.y + Math.floor(this.adder4.height / 2))
+            .lineTo(a4.x, a8.y + Math.floor(this.adder4.height / 2))
+            .moveTo(a4.x - Math.floor(interAdderSpan / 2), a8.y + Math.floor(this.adder4.height / 2))
+            .lineTo(a4.x - Math.floor(interAdderSpan / 2), a8.y + Math.floor(this.adder4.height / 2) - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(adder4_8_wire);
+
+        this.adder4_8_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
+            THIS.stage.update();
+        });
+        this.adder4_8_bulb.container.x = a4.x - Math.floor(interAdderSpan / 2) - this.bulbSize * this.tradius;
+        this.adder4_8_bulb.container.y = a8.y + Math.floor(this.adder4.height / 2) - this.bulbSize * this.tradius * 3; 
+        this.container.addChild(this.adder4_8_bulb.container);
 
 
 
