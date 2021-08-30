@@ -1915,7 +1915,7 @@ class FourBitAdder {
 
         const dash = 80;
 
-        const lightPadding = this.bigBulbSize * Math.floor(this.tradius / 2);
+        const lightPadding = this.bigBulbSize * Math.floor(this.tradius / 8);
 
 
         this.zOutline = new createjs.Shape();
@@ -1931,6 +1931,39 @@ class FourBitAdder {
 
                 //this.z1lightBig.container.x, this.z1lightBig.container.y)
         this.container.addChild(this.zOutline);
+
+
+        this.yOutline = new createjs.Shape();
+        this.yOutline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(
+                this.y8lightBig.container.x - lightPadding, this.y8lightBig.container.y - lightPadding,
+                this.y1lightBig.container.x - this.y8lightBig.container.x + this.y1lightBig.radius * 2 + lightPadding * 2, this.y1lightBig.radius * 2 + lightPadding * 2)
+
+                //this.z1lightBig.container.x, this.z1lightBig.container.y)
+        this.container.addChild(this.yOutline);
+
+
+
+        this.xOutline = new createjs.Shape();
+        this.xOutline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(
+                this.x8lightBig.container.x - lightPadding, this.x8lightBig.container.y - lightPadding,
+                this.x1lightBig.container.x - this.x8lightBig.container.x + this.x1lightBig.radius * 2 + lightPadding * 2, this.x1lightBig.radius * 2 + lightPadding * 2)
+
+                //this.z1lightBig.container.x, this.z1lightBig.container.y)
+        this.container.addChild(this.xOutline);
+
+
 
         this.outline = new createjs.Shape();
         this.outline
