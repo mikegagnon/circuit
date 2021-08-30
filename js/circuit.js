@@ -1915,6 +1915,23 @@ class FourBitAdder {
 
         const dash = 80;
 
+        const lightPadding = this.bigBulbSize * Math.floor(this.tradius / 2);
+
+
+        this.zOutline = new createjs.Shape();
+        this.zOutline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(
+                this.z16lightBig.container.x - lightPadding, this.z16lightBig.container.y - lightPadding,
+                this.z1lightBig.container.x - this.z16lightBig.container.x + this.z1lightBig.radius * 2 + lightPadding * 2, this.z1lightBig.radius * 2 + lightPadding * 2)
+
+                //this.z1lightBig.container.x, this.z1lightBig.container.y)
+        this.container.addChild(this.zOutline);
+
         this.outline = new createjs.Shape();
         this.outline
             .graphics
