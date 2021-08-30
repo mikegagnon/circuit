@@ -1489,6 +1489,12 @@ class FullAdder {
             this.inoutLight.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
+        if (this.leftHalf.output1) {
+            this.orInLeftLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.orInLeftLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
 
 
     }
