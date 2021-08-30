@@ -1504,6 +1504,58 @@ class HalfAdderBoard {
 
 
 
+        const rightOutwire2 = new createjs.Shape();
+        rightOutwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ha.x + this.halfAdder.inRightX, 0)
+            .lineTo(ha.x + this.halfAdder.inRightX, -this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(rightOutwire2);
+
+        this.outLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightRight.container.x = ha.x + this.halfAdder.inRightX - this.bulbSize * this.tradius;
+        this.outLightRight.container.y = -this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.outLightRight.container);
+
+
+        const leftInwire2 = new createjs.Shape();
+        leftInwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ha.x + this.halfAdder.inLeftX, this.halfAdder.height)
+            .lineTo(ha.x + this.halfAdder.inLeftX, this.halfAdder.height  + this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(leftInwire2);
+
+        this.outLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightRight.container.x = ha.x + this.halfAdder.inLeftX - this.bulbSize * this.tradius;
+        this.outLightRight.container.y = this.halfAdder.height  + this.bulbSize * this.tradius;
+        this.container.addChild(this.outLightRight.container);
+
+
+
+        const rightInwire2 = new createjs.Shape();
+        rightInwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ha.x + this.halfAdder.inRightX, this.halfAdder.height)
+            .lineTo(ha.x + this.halfAdder.inRightX, this.halfAdder.height  + this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(rightInwire2);
+
+        this.inLightRight = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.inLightRight.container.x = ha.x + this.halfAdder.inRightX - this.bulbSize * this.tradius;
+        this.inLightRight.container.y = this.halfAdder.height  + this.bulbSize * this.tradius;
+        this.container.addChild(this.inLightRight.container);
+
+
+
+
+
     }
 
 
