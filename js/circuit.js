@@ -41,6 +41,7 @@ const MIN_ZOOM = 0.01;
 const XOR_BULB_SIZE = 1;
 const HALF_ADDER_BULB_SIZE = 2;
 const FULL_ADDER_BULB_SIZE = 4;
+const FOUR_BIT_ADDER_BULB_SIZE = 8;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
@@ -48,6 +49,7 @@ const STROKE_WIDTH = 1;
 const XOR_STROKE_WIDTH = STROKE_WIDTH * 3;
 const HALF_ADDER_STROKE_WIDTH = STROKE_WIDTH * 6;
 const FULL_ADDER_STROKE_WIDTH = STROKE_WIDTH * 12;
+const FOUR_BIT_ADDER_STROKE_WIDTH = STROKE_WIDTH * 24;
 const DASH = 6;
 
 class AndGate {
@@ -1452,6 +1454,158 @@ class Circuit {
   }*/
 }
 
+class FourBitAdder {
+    setInput(y8, y4, y2, y1, x8, x4, x2, x1) {
+
+    }
+
+    constructor(stage, tradius, fourBitAdderStrokeWidth, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
+        const THIS = this;
+        this.stage = stage;
+        this.coverColor = "#f4d03f";
+        this.coverName = "cover-" + (Math.random() * 99999999).toString();
+        this.tradius = tradius
+
+        this.inputY8 = false;
+        this.inputY4 = false;
+        this.inputY2 = false;
+        this.inputY1 = false;
+        this.inputX8 = false;
+        this.inputX4 = false;
+        this.inputX2 = false;
+        this.inputX1 = false;
+
+        this.output16 = false;
+        this.output8 = false;
+        this.output4 = false;
+        this.output2 = false;
+        this.output1 = false;
+
+        this.bulbSize = FOUR_BIT_ADDER_BULB_SIZE;
+        this.fourBitAdderStrokeWidth = fourBitAdderStrokeWidth
+        this.fullAdderStrokeWidth = fullAdderStrokeWidth;
+        this.halfAdderStrokeWidth = halfAdderStrokeWidth;
+        this.primStrokeWidth = primStrokeWidth;
+        this.strokeWidth = subStrokeWidth;
+
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+
+        this.container = new createjs.Container();
+
+        const interAdderSpan = this.bulbSize * this.tradius * 3
+
+        this.adder8 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+        const a8 = this.adder8.container;
+        a8.x = interAdderSpan;
+        a8.y = interAdderSpan;
+        this.container.addChild(a8);
+
+        this.adder4 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+        const a4 = this.adder4.container;
+        a4.x = a8.x + this.adder8.width + interAdderSpan;
+        a4.y = a8.y;
+        this.container.addChild(a4);
+
+        this.adder2 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+        const a2 = this.adder2.container;
+        a2.x = a4.x + this.adder4.width + interAdderSpan;
+        a2.y = a8.y;
+        this.container.addChild(a2);
+
+        this.adder1 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+        const a1 = this.adder1.container;
+        a1.x = a2.x + this.adder2.width + interAdderSpan;
+        a1.y = a8.y;
+        this.container.addChild(a1);
+
+
+        this.width = a1.x + this.adder1.width +  interAdderSpan; 
+        this.height = a4.y + this.adder4.height + interAdderSpan;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const dash = 80;
+
+        this.outline = new createjs.Shape();
+        this.outline
+            .graphics
+            .beginStroke("gray")
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .setStrokeDash([dash, dash], 0)
+            .beginFill("rgba(255, 255, 255, 0.01")
+            .drawRect(0, 0, this.width, this.height)
+        this.outline.name = "outline-" + this.coverName
+        this.container.addChild(this.outline);
+
+
+
+
+        this.coverContainer = new createjs.Container();
+        this.coverContainer.name = this.coverName + "-container";
+        this.cover = new createjs.Shape();
+        this.cover.name = this.coverName;
+        this.cover.graphics
+            .beginStroke("black")
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            //.setStrokeDash([dash, dash], 0)
+            .beginFill(this.coverColor)
+            .drawRect(0, 0, this.width, this.height)
+        this.coverContainer.addChild(this.cover);
+
+
+        var text = new createjs.Text("Computer", this.tradius * 30 + "px Arial", "black");
+        text.x = this.tradius * 27;
+        text.y = this.tradius * 110;
+        text.textBaseline = "alphabetic"
+        //text.rotation = 90
+        this.coverContainer.addChild(text)
+
+
+        //this.cover.on("click", function(event) { console.log("clicked"); }, null, false, null, true)
+        //this.cover.on("click", function(event) { console.log("clicked"); })
+
+        this.container.addChild(this.coverContainer)
+
+
+
+
+
+
+
+        this.setInput(this.input1, this.input2);
+
+    }
+}
+
 class FullAdder {
     setInput(y, x, c) {
         this.inputY = y;
@@ -1858,7 +2012,7 @@ class FullAdder {
         this.outline
             .graphics
             .beginStroke("gray")
-            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .setStrokeStyle(this.fullAdderStrokeWidth)
             .setStrokeDash([dash, dash], 0)
             .beginFill("rgba(255, 255, 255, 0.01")
             .drawRect(0, 0, this.width, this.height)
@@ -1874,7 +2028,7 @@ class FullAdder {
         this.cover.name = this.coverName;
         this.cover.graphics
             .beginStroke("black")
-            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .setStrokeStyle(this.fullAdderStrokeWidth)
             //.setStrokeDash([dash, dash], 0)
             .beginFill(this.coverColor)
             .drawRect(0, 0, this.width, this.height)
@@ -3243,7 +3397,8 @@ stage.enableMouseOver();
 //stage.addChild(orChip.container)
 
 
-const xorChip = new FullAdder(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+//const xorChip = new FullAdder(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+const xorChip = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
 
 
 //const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
@@ -3271,7 +3426,7 @@ const CANVAS = document.getElementById("circuit-canvas-1");
         //dragSurface.addChild(dragSurfaceOutline);
 stage.addChild(dragSurface);
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.1);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.05);
 
 
 
