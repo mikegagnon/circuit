@@ -13,5 +13,17 @@ body {
     text-align: center;
     font-size: 80pt;
     font-weight: bold;
+}
 
+.small-light {
+    height: 40px;
+    width: 40px;
+}
+
+.binNumber {
+    font-size: 40pt;
+    margin-left: 20px;
+}
+
+.bin-row {
 }
