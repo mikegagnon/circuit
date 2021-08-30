@@ -494,6 +494,7 @@ class OrGate {
     draw() {
 
         this.inLeftX = Math.floor(this.height / 4);
+        this.inRightX = Math.floor(this.height / 4 * 3);
         const THIS = this;
 
         this.container = new createjs.Container();
@@ -1567,6 +1568,17 @@ class FullAdder {
         this.orOutLight.container.x = og.x - Math.floor(this.orGate.height / 2);
         this.orOutLight.container.y = og.y + this.orGate.width * 1.5;
         this.container.addChild(this.orOutLight.container);
+
+
+        const orInRightWire1 = new createjs.Shape();
+        orInRightWire1
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + this.orGate.inRightX, og.y + this.orGate.width)
+            .lineTo(og.x + this.orGate.inRightX, og.y + this.orGate.width + this.bulbSize * this.tradius * 3)
+            .endStroke();
+        this.container.addChild(orInRightWire1);
 
 
 
