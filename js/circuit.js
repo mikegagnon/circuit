@@ -1530,8 +1530,24 @@ class FourBitAdder {
         } else {
             this.z1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
-        
 
+        if (this.outputZ2) {
+            this.z2lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.z2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.outputZ4) {
+            this.z4lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.z4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+        
+        if (this.outputZ8) {
+            this.z8lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.z8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
 
 
 
