@@ -1458,7 +1458,44 @@ class Circuit {
 class AdderBoard {
 
     setInput(y, x, c) {
+        this.inputY = y;
+        this.inputX = x;
+        this.inputC = c;
 
+        this.fullAdder.setInput(this.inputY, this.inputX, this.inputC);
+
+        this.outputC = this.fullAdder.outputC;
+        this.outputZ = this.fullAdder.outputZ;
+
+        if (this.inputY) {
+            this.yInLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.yInLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputX) {
+            this.xInLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.xInLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputC) {
+            this.cInLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.cInLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.outputC) {
+            this.cOutLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.cOutLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.outputZ) {
+            this.zOutLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.zOutLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
     }
 
     constructor(stage, tradius, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
@@ -1471,6 +1508,7 @@ class AdderBoard {
         this.inputC = false;
         this.outputC = false;
         this.outputZ = false;
+
 
         this.bulbSize = FULL_ADDER_BULB_SIZE * 3;
         this.fullAdderStrokeWidth = fullAdderStrokeWidth;
@@ -1485,6 +1523,8 @@ class AdderBoard {
         this.container = new createjs.Container();
 
         this.fullAdder = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+
+
 
         const fh = this.fullAdder.container;
         fh.x = 0
@@ -1534,7 +1574,10 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(yinWire);
 
-        this.yInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.yInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(!THIS.inputY, THIS.inputX, THIS.inputC);
+            THIS.stage.update()
+        });
         this.yInLight.container.x = this.fullAdder.width / 3 - this.bulbSize * this.tradius ;
         this.yInLight.container.y = this.fullAdder.height + this.bulbSize * this.tradius * 2;
         this.container.addChild(this.yInLight.container);
@@ -1551,7 +1594,10 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(xinWire);
 
-        this.xInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.xInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.inputY, !THIS.inputX, THIS.inputC);
+            THIS.stage.update()
+        });
         this.xInLight.container.x = this.fullAdder.width / 3 * 2 - this.bulbSize * this.tradius ;
         this.xInLight.container.y = this.fullAdder.height + this.bulbSize * this.tradius * 2;
         this.container.addChild(this.xInLight.container);
@@ -1568,10 +1614,16 @@ class AdderBoard {
             .endStroke();
         this.container.addChild(cinWire);
 
-        this.cInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.cInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update()
+        });
         this.cInLight.container.x = this.fullAdder.width + this.bulbSize * this.tradius * 2;
         this.cInLight.container.y = this.fullAdder.height / 2 - this.bulbSize * this.tradius;
         this.container.addChild(this.cInLight.container);
+
+
+                this.setInput(false, false, false);
 
     }
 
