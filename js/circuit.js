@@ -1934,6 +1934,7 @@ class FourBitAdder {
 
 
         const dash = 80;
+        const bigdash = 200;
 
         const lightPadding = this.bigBulbSize * Math.floor(this.tradius / 8);
 
@@ -1943,7 +1944,7 @@ class FourBitAdder {
             .graphics
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
-            .setStrokeDash([dash, dash], 0)
+            .setStrokeDash([bigdash, bigdash], 0)
             .drawRect(
                 this.z16lightBig.container.x - lightPadding, this.z16lightBig.container.y - lightPadding,
                 this.z1lightBig.container.x - this.z16lightBig.container.x + this.z1lightBig.radius * 2 + lightPadding * 2, this.z1lightBig.radius * 2 + lightPadding * 2)
@@ -1957,7 +1958,7 @@ class FourBitAdder {
             .graphics
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
-            .setStrokeDash([dash, dash], 0)
+            .setStrokeDash([bigdash, bigdash], 0)
             .drawRect(
                 this.y8lightBig.container.x - lightPadding, this.y8lightBig.container.y - lightPadding,
                 this.y1lightBig.container.x - this.y8lightBig.container.x + this.y1lightBig.radius * 2 + lightPadding * 2, this.y1lightBig.radius * 2 + lightPadding * 2)
@@ -1972,7 +1973,7 @@ class FourBitAdder {
             .graphics
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
-            .setStrokeDash([dash, dash], 0)
+            .setStrokeDash([bigdash, bigdash], 0)
             .drawRect(
                 this.x8lightBig.container.x - lightPadding, this.x8lightBig.container.y - lightPadding,
                 this.x1lightBig.container.x - this.x8lightBig.container.x + this.x1lightBig.radius * 2 + lightPadding * 2, this.x1lightBig.radius * 2 + lightPadding * 2)
