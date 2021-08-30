@@ -1,6 +1,12 @@
 const SCROLL_TIME = 100;
 
 function nextSlide(target) {
+    const prev = target - 1;
+    $('#pres-' + target).css('display', 'block');
+    $('#pres-' + prev).css('display', 'none');
+}
+
+function dissectSlide(target) {
   jumpSlide(target - 1, target)
 }
 

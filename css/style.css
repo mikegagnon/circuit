@@ -33,3 +33,18 @@ body {
 .btn {
     font-family: Helvetica;
 }
+
+.cell-num {
+    text-align: center;
+    width: 50px;
+    /*border: 1px solid black;*/
+      display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.carry-num {
+    color: white;
+    cursor: pointer;
+    /*visibility: hidden;*/
+}
