@@ -3920,7 +3920,7 @@ class Camera {
 
 
 
-$("#pres").css("height", $(window).height());
+$("#spacer").css("height", $(window).height());
 
 const INIT_SCALE = 0.042;
 const canvasId = "circuit-canvas-1";

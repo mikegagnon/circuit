@@ -4,4 +4,14 @@
 
 body {
     margin: 0px;
+    font-family: "CMU Serif";
+}
+
+.header {
+    font-family: "Helvetica";
+    margin-top: 100px;
+    text-align: center;
+    font-size: 80pt;
+    font-weight: bold;
+
 }
