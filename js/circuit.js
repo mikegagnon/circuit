@@ -1716,6 +1716,35 @@ class FullAdder {
 
 
 
+        this.inLeftX = Math.floor(this.width / 3);
+        this.inRightX = Math.floor(this.width / 3 * 2);
+
+
+        const yinWire = new createjs.Shape();
+        yinWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.inLeftX, this.height)
+            .lineTo(lh.x + this.leftHalf.inLeftX, this.height - this.bulbSize * this.tradius)
+            .lineTo(lh.x + this.leftHalf.inLeftX, lh.y + this.leftHalf.height)
+            .endStroke();
+        this.container.addChild(yinWire);
+
+        const xinWire = new createjs.Shape();
+        xinWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.inRightX, this.height)
+            .lineTo(lh.x + this.leftHalf.inRightX, this.height - this.bulbSize * this.tradius * 3)
+            .lineTo(lh.x + this.leftHalf.inRightX, lh.y + this.leftHalf.height)
+            .endStroke();
+        this.container.addChild(xinWire);
+
+
+
+
 
 
 
