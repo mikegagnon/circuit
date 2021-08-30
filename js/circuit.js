@@ -1476,49 +1476,62 @@ class FourBitAdder {
         this.outputZ8 = this.adder8.outputZ;
         this.outputZ16 = this.adder8.outputC;
 
+        let x = 0;
+        let y = 0;
+        let z = 0;
+
+
         if (this.inputY1) {
             this.y1lightBig.fillCommand.style = LIGHT_ON_COLOR;
+            y += 1;
         } else {
             this.y1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputX1) {
+            x += 1;
             this.x1lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.x1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputY2) {
+            y += 2;
             this.y2lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.y2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputX2) {
+            x += 2;
             this.x2lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.x2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputY4) {
+            y += 4;
             this.y4lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.y4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputX4) {
+            x += 4;
             this.x4lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.x4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
         
         if (this.inputY8) {
+            y += 8;
             this.y8lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.y8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.inputX8) {
+            x += 8;
             this.x8lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.x8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
@@ -1526,37 +1539,44 @@ class FourBitAdder {
         
 
         if (this.outputZ1) {
+            z += 1;
             this.z1lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.z1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.outputZ2) {
+            z += 2;
             this.z2lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.z2lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.outputZ4) {
+            z += 4;
             this.z4lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.z4lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
         
         if (this.outputZ8) {
+            z += 8;
             this.z8lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.z8lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
         if (this.outputZ16) {
+            z += 16;
             this.z16lightBig.fillCommand.style = LIGHT_ON_COLOR;
         } else {
             this.z16lightBig.fillCommand.style = LIGHT_OFF_COLOR;
         }
 
 
-
+        this.xNum.text = x;
+        this.yNum.text = y;
+        this.zNum.text = z;
 
     }
 
@@ -1924,7 +1944,6 @@ class FourBitAdder {
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
             .setStrokeDash([dash, dash], 0)
-            .beginFill("rgba(255, 255, 255, 0.01")
             .drawRect(
                 this.z16lightBig.container.x - lightPadding, this.z16lightBig.container.y - lightPadding,
                 this.z1lightBig.container.x - this.z16lightBig.container.x + this.z1lightBig.radius * 2 + lightPadding * 2, this.z1lightBig.radius * 2 + lightPadding * 2)
@@ -1939,7 +1958,6 @@ class FourBitAdder {
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
             .setStrokeDash([dash, dash], 0)
-            .beginFill("rgba(255, 255, 255, 0.01")
             .drawRect(
                 this.y8lightBig.container.x - lightPadding, this.y8lightBig.container.y - lightPadding,
                 this.y1lightBig.container.x - this.y8lightBig.container.x + this.y1lightBig.radius * 2 + lightPadding * 2, this.y1lightBig.radius * 2 + lightPadding * 2)
@@ -1955,7 +1973,6 @@ class FourBitAdder {
             .beginStroke("gray")
             .setStrokeStyle(this.fourBitAdderStrokeWidth * 2)
             .setStrokeDash([dash, dash], 0)
-            .beginFill("rgba(255, 255, 255, 0.01")
             .drawRect(
                 this.x8lightBig.container.x - lightPadding, this.x8lightBig.container.y - lightPadding,
                 this.x1lightBig.container.x - this.x8lightBig.container.x + this.x1lightBig.radius * 2 + lightPadding * 2, this.x1lightBig.radius * 2 + lightPadding * 2)
