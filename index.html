@@ -264,8 +264,8 @@
 </script>
 <script type="text/javascript">
 
-function launch(func, initScale){ 
-  const canvasId = "pres-4-canvas";
+function launch(func, initScale, canvasId){ 
+  //const canvasId = "pres-4-canvas";
   const CANVAS = document.getElementById(canvasId);
 
   CANVAS.width = $(window).width();
@@ -373,7 +373,7 @@ pres4();*/
 launch(function(stage) {
   return new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
    //INIT_SCALE = 0.08;
-}, 0.08)
+}, 0.08, "pres-4-canvas");
 
 </script>
 </html>
