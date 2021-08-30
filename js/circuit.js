@@ -1493,7 +1493,7 @@ class FullAdder {
         this.leftHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const lh = this.leftHalf.container;
         lh.x = this.bulbSize * this.tradius * 6; 
-        lh.y = rh.y + this.rightHalf.height + this.bulbSize * 3 * this.tradius;
+        lh.y = rh.y + this.rightHalf.height + this.bulbSize * 4 * this.tradius;
         this.container.addChild(lh);
 
         this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
@@ -1528,6 +1528,26 @@ class FullAdder {
             .lineTo(rh.x + this.rightHalf.inLeftX, rh.y + this.rightHalf.height)
             .endStroke();
         this.container.addChild(inoutwire);
+
+
+
+        const inoutwireBulb = new createjs.Shape();
+        inoutwireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(lh.x + this.leftHalf.inRightX , lh.y - this.bulbSize * this.tradius * 2)
+            .lineTo(lh.x + this.leftHalf.inRightX + this.bulbSize * this.tradius, lh.y - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(inoutwireBulb);
+
+
+        this.inoutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.inoutLight.container.x = lh.x + this.leftHalf.inRightX + this.bulbSize * this.tradius ;
+        this.inoutLight.container.y = lh.y - this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.inoutLight.container);
+
+
 
         const orInLeftWire = new createjs.Shape();
         orInLeftWire
@@ -1667,6 +1687,8 @@ class FullAdder {
             .lineTo(rh.x + this.rightHalf.inRightX , rh.y + this.rightHalf.height)
             .endStroke();
         this.container.addChild(cinWire);
+
+
 
 
 
