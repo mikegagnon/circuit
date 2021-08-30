@@ -9,16 +9,7 @@
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/createjs.min.js"></script>
   <script type="text/javascript">
-    const SCROLL_TIME = 100;
 
-    function nextSlide(target) {
-      const prev = target - 1;
-      setTimeout(function() {
-        $('#pres-' + target).css('display', 'block');
-        $('#pres-' + prev).css('display', 'none');
-      }, 1000);
-      $('html, body').animate({scrollTop : 0}, SCROLL_TIME);
-    }
   </script>
 </head>
 <body>
@@ -290,8 +281,9 @@
 
 </body>
 <script src="js/circuit.js"></script>
+<script src="js/pres.js"></script>
 <script type="text/javascript">
-//  main();
+  //jumpSlide(1, 2, 0);
 </script>
 </html>
 
