@@ -2007,7 +2007,32 @@ class FourBitAdder {
 
 
 
+        this.zNum = new createjs.Text("0", this.tradius * 70 + "px Arial", "black");
+        this.zNum.x = this.width - this.bigBulbSize * this.tradius * 2;
+        this.zNum.y = -this.bigBulbSize * this.tradius * 2.2;
+        this.zNum.textBaseline = "alphabetic"
+        //text.rotation = 90
+        this.coverContainer.addChild(this.zNum)
 
+
+
+
+        this.yNum = new createjs.Text("0", this.tradius * 70 + "px Arial", "black");
+        this.yNum.x = this.width - this.bigBulbSize * this.tradius * 2;
+        this.yNum.y = this.height + this.bigBulbSize * this.tradius * 3.2;
+        this.yNum.textBaseline = "alphabetic"
+        //text.rotation = 90
+        this.coverContainer.addChild(this.yNum)
+
+
+
+
+        this.xNum = new createjs.Text("0", this.tradius * 70 + "px Arial", "black");
+        this.xNum.x = this.width - this.bigBulbSize * this.tradius * 1;
+        this.xNum.y = this.height + this.bigBulbSize * this.tradius * 6.2;
+        this.xNum.textBaseline = "alphabetic"
+        //text.rotation = 90
+        this.coverContainer.addChild(this.xNum)
 
 
 
