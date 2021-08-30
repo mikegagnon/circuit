@@ -1495,7 +1495,7 @@ class FourBitAdder {
 
         this.container = new createjs.Container();
 
-        const interAdderSpan = this.bulbSize * this.tradius * 3
+        const interAdderSpan = this.bulbSize * this.tradius * 6;
 
         this.adder8 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const a8 = this.adder8.container;
