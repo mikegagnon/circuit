@@ -9,16 +9,17 @@ body {
 
 .header {
     font-family: "Helvetica";
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     text-align: center;
     font-size: 80pt;
     font-weight: bold;
 }
 
 .small-light {
-    height: 40px;
+    height: 70px;
     width: 40px;
+    padding-bottom: 30px;
 }
 
 .binNumber {
@@ -27,4 +28,8 @@ body {
 }
 
 .bin-row {
+}
+
+.btn {
+    font-family: Helvetica;
 }
