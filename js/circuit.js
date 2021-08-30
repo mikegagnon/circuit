@@ -2788,6 +2788,7 @@ class Camera {
         };
 
         this.dragSurface.on("pressmove", function(evt) {
+            //console.log("asdf")
             THIS.pressmove(evt);
         });
 
@@ -2825,7 +2826,7 @@ class Camera {
         this.center = newCameraCenter;
         //console.log(this.viz.camera.center);
 
-        //this.placeCamera();
+        this.placeCamera();
         this.stage.update();
 
     }
@@ -2981,11 +2982,11 @@ const CANVAS = document.getElementById("circuit-canvas-1");
 
         //console.log(dragSurface)
         //dragSurface.addChild(dragSurfaceOutline);
+stage.addChild(dragSurface);
 
 const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.1);
 
 
-stage.addChild(dragSurface);
 
 
 stage.addChild(rootContainer);
