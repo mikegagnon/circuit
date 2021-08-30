@@ -1540,6 +1540,36 @@ class FullAdder {
 
 
 
+        const orOutWire1 = new createjs.Shape();
+        orOutWire1
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + Math.floor(this.orGate.height / 2), og.y)
+            .lineTo(og.x + Math.floor(this.orGate.height / 2), og.y - this.bulbSize * this.tradius * 3)
+            .lineTo(og.x - this.bulbSize * this.tradius * 3, og.y - this.bulbSize * this.tradius * 3)
+            .lineTo(og.x - this.bulbSize * this.tradius * 3, Math.floor(this.height / 2))
+            .lineTo(0, Math.floor(this.height / 2))
+            .endStroke();
+        this.container.addChild(orOutWire1);
+
+        const orInLeftWireBulb = new createjs.Shape();
+        orInLeftWireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x - Math.floor(this.orGate.height / 2), og.y + this.orGate.width * 2)
+            .lineTo(og.x + this.orGate.inLeftX, og.y + this.orGate.width * 2)
+            .endStroke();
+        this.container.addChild(orInLeftWireBulb);
+
+        this.orOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orOutLight.container.x = og.x - Math.floor(this.orGate.height / 2);
+        this.orOutLight.container.y = og.y + this.orGate.width * 1.5;
+        this.container.addChild(this.orOutLight.container);
+
+
+
 
 
 
