@@ -1992,7 +1992,7 @@ class FourBitAdder {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Computer", this.tradius * 30 + "px Arial", "black");
+        var text = new createjs.Text("Computer", this.tradius * 70 + "px Arial", "black");
         text.x = this.tradius * 27;
         text.y = this.tradius * 110;
         text.textBaseline = "alphabetic"
