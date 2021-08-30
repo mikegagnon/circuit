@@ -1465,7 +1465,38 @@ class FourBitAdder {
         this.inputX2 = x2;
         this.inputX1 = x1;
 
+        this.adder1.setInput(this.inputY1, this.inputX1, false);
+        this.adder2.setInput(this.inputY2, this.inputX2, this.adder1.outputC);
+        this.adder4 .setInput(this.inputY4, this.inputX8, this.adder2.outputC);
+        this.adder8.setInput(this.inputY8, this.inputX8, this.adder4.outputC);
+
+        this.outputZ1 = this.adder1.outputZ;
+        this.outputZ2 = this.adder2.outputZ;
+        this.outputZ4 = this.adder4.outputZ;
+        this.outputZ8 = this.adder8.outputZ;
+        this.outputZ16 = this.adder1.outputC;
+
+        if (this.inputY1) {
+            this.y1lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.y1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.inputX1) {
+            this.x1lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.x1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.outputZ1) {
+            this.z1lightBig.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.z1lightBig.fillCommand.style = LIGHT_OFF_COLOR;
+        }
         
+
+
+
 
 
     }
