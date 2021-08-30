@@ -4238,12 +4238,17 @@ class Camera {
     }
 }
 
-function launch(func, initScale, canvasId){ 
+function launch(func, initScale, canvasId, canvasShrink){ 
     //const canvasId = "pres-4-canvas";
     const CANVAS = document.getElementById(canvasId);
 
     CANVAS.width = $(window).width();
-    CANVAS.height = $(window).height() - 100;//$("#dissect-btn-4").height();
+
+    if (canvasShrink == undefined) {
+        canvasShrink = 0;
+    }
+
+    CANVAS.height = $(window).height() - canvasShrink;//$("#dissect-btn-4").height();
 
     const stage = new createjs.Stage(canvasId);
     stage.enableMouseOver();
