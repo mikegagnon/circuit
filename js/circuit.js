@@ -1614,6 +1614,91 @@ class FourBitAdder {
 
 
 
+        const y2wire = new createjs.Shape();
+        y2wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a2.x + this.adder2.inLeftX, a2.y + this.adder2.height)
+            .lineTo(a2.x + this.adder2.inLeftX, this.height + interAdderSpan)
+            .endStroke();
+        this.container.addChild(y2wire);
+
+        this.y2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.y2lightBig.container.x = a2.x + this.adder2.inLeftX - this.bigBulbSize * this.tradius;
+        this.y2lightBig.container.y = this.height + interAdderSpan;
+        this.container.addChild(this.y2lightBig.container);
+
+
+        const x2wire = new createjs.Shape();
+        x2wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a2.x + this.adder2.inRightX, a2.y + this.adder2.height)
+            .lineTo(a2.x + this.adder2.inRightX, this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3)
+            .endStroke();
+        this.container.addChild(x2wire);
+
+        this.x2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.x2lightBig.container.x = a2.x + this.adder2.inRightX - this.bigBulbSize * this.tradius;
+        this.x2lightBig.container.y = this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3;
+        this.container.addChild(this.x2lightBig.container);
+
+
+
+
+        const y1wire = new createjs.Shape();
+        y1wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a1.x + this.adder1.inLeftX, a1.y + this.adder1.height)
+            .lineTo(a1.x + this.adder1.inLeftX, this.height + interAdderSpan)
+            .endStroke();
+        this.container.addChild(y1wire);
+
+        this.y1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.y1lightBig.container.x = a1.x + this.adder1.inLeftX - this.bigBulbSize * this.tradius;
+        this.y1lightBig.container.y = this.height + interAdderSpan;
+        this.container.addChild(this.y1lightBig.container);
+
+
+        const x1wire = new createjs.Shape();
+        x1wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a1.x + this.adder1.inRightX, a1.y + this.adder1.height)
+            .lineTo(a1.x + this.adder1.inRightX, this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3)
+            .endStroke();
+        this.container.addChild(x1wire);
+
+        this.x1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.x1lightBig.container.x = a1.x + this.adder1.inRightX - this.bigBulbSize * this.tradius;
+        this.x1lightBig.container.y = this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3;
+        this.container.addChild(this.x1lightBig.container);
+
+
+
+
+
+
+
+
+
 
 
 
