@@ -1455,6 +1455,128 @@ class Circuit {
   }*/
 }
 
+class AdderBoard {
+
+    setInput(y, x, c) {
+
+    }
+
+    constructor(stage, tradius, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
+        const THIS = this;
+        this.stage = stage;
+        this.tradius = tradius;
+
+        this.inputY = false;
+        this.inputX = false;
+        this.inputC = false;
+        this.outputC = false;
+        this.outputZ = false;
+
+        this.bulbSize = FULL_ADDER_BULB_SIZE * 3;
+        this.fullAdderStrokeWidth = fullAdderStrokeWidth;
+        this.halfAdderStrokeWidth = halfAdderStrokeWidth;
+        this.primStrokeWidth = primStrokeWidth;
+        this.strokeWidth = subStrokeWidth;
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+
+        this.container = new createjs.Container();
+
+        this.fullAdder = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
+
+        const fh = this.fullAdder.container;
+        fh.x = 0
+        fh.y = 0
+        this.container.addChild(fh);
+
+        this.height = this.fullAdder.height;
+        this.width = this.fullAdder.width;
+
+        const zoutWire = new createjs.Shape();
+        zoutWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.fullAdder.width / 2, 0)
+            .lineTo(this.fullAdder.width / 2, - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(zoutWire);
+
+        this.zOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.zOutLight.container.x = this.fullAdder.width / 2 - this.bulbSize * this.tradius ;
+        this.zOutLight.container.y = - this.bulbSize * this.tradius * 4;
+        this.container.addChild(this.zOutLight.container);
+
+        const coutWire = new createjs.Shape();
+        coutWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(0, this.fullAdder.height / 2)
+            .lineTo( - this.bulbSize * this.tradius * 2, this.fullAdder.height / 2)
+            .endStroke();
+        this.container.addChild(coutWire);
+
+        this.cOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.cOutLight.container.x =  - this.bulbSize * this.tradius * 4;
+        this.cOutLight.container.y = this.fullAdder.height / 2 - this.bulbSize * this.tradius;
+        this.container.addChild(this.cOutLight.container);
+
+        const yinWire = new createjs.Shape();
+        yinWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.fullAdder.width / 3, this.fullAdder.height)
+            .lineTo(this.fullAdder.width / 3, this.fullAdder.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(yinWire);
+
+        this.yInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.yInLight.container.x = this.fullAdder.width / 3 - this.bulbSize * this.tradius ;
+        this.yInLight.container.y = this.fullAdder.height + this.bulbSize * this.tradius * 2;
+        this.container.addChild(this.yInLight.container);
+
+
+
+        const xinWire = new createjs.Shape();
+        xinWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.fullAdder.width / 3 * 2, this.fullAdder.height)
+            .lineTo(this.fullAdder.width / 3 * 2, this.fullAdder.height + this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(xinWire);
+
+        this.xInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.xInLight.container.x = this.fullAdder.width / 3 * 2 - this.bulbSize * this.tradius ;
+        this.xInLight.container.y = this.fullAdder.height + this.bulbSize * this.tradius * 2;
+        this.container.addChild(this.xInLight.container);
+
+
+
+        const cinWire = new createjs.Shape();
+        cinWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(this.fullAdder.width, this.fullAdder.height / 2)
+            .lineTo(this.fullAdder.width + this.bulbSize * this.tradius * 2, this.fullAdder.height / 2)
+            .endStroke();
+        this.container.addChild(cinWire);
+
+        this.cInLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.cInLight.container.x = this.fullAdder.width + this.bulbSize * this.tradius * 2;
+        this.cInLight.container.y = this.fullAdder.height / 2 - this.bulbSize * this.tradius;
+        this.container.addChild(this.cInLight.container);
+
+    }
+
+}
+
 class FourBitAdder {
     setInput(y8, y4, y2, y1, x8, x4, x2, x1) {
         this.inputY8 = y8;
@@ -3922,29 +4044,24 @@ class Camera {
 
 $("#spacer").css("height", $(window).height());
 
-const INIT_SCALE = 0.042;
+let INIT_SCALE = 0.042;
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
 stage.enableMouseOver();
-//const xorChip = new NotNotChip(stage, TRADIUS, STROKE_WIDTH);
-//const xorChip = new AndChip(stage, TRADIUS, STROKE_WIDTH);
-//notNotChip.container.x = 100;
-//stage.addChild(notNotChip.container);
 
-//const xorChip = new OrChip(stage, TRADIUS, STROKE_WIDTH)
-//stage.addChild(orChip.container)
+const rootContainer = new createjs.Container();
 
-
-//const xorChip = new FullAdder(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
 const computer = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
-
-
-//const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
 computer.container.x = -computer.width / 2;
 computer.container.y = -computer.height / 2;
 
-const rootContainer = new createjs.Container();
-rootContainer.addChild(computer.container);
+const adderBoard = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+adderBoard.container.x = -adderBoard.width / 2;
+adderBoard.container.y = -adderBoard.height / 2;
+INIT_SCALE = 0.1;
+
+
+rootContainer.addChild(adderBoard.container);
 
 const CANVAS = document.getElementById("circuit-canvas-1");
 
