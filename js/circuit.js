@@ -1484,21 +1484,21 @@ class FullAdder {
 
         this.rightHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const rh = this.rightHalf.container;
-        rh.x = this.tradius * 37;
-        rh.y = this.bulbSize * 10 * this.tradius;
+        rh.x = this.tradius * 53;
+        rh.y = this.bulbSize * 13 * this.tradius;
         this.container.addChild(rh);
 
 
         this.leftHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const lh = this.leftHalf.container;
-        lh.x = this.bulbSize * this.tradius * 2; 
+        lh.x = this.bulbSize * this.tradius * 6; 
         lh.y = rh.y + this.rightHalf.height + this.bulbSize * 3 * this.tradius;
         this.container.addChild(lh);
 
         this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true);
         const og = this.orGate.container;
-        og.x = this.tradius * 16;
-        og.y = this.bulbSize * 2 * this.tradius;
+        og.x = this.tradius * 32;
+        og.y = this.bulbSize * 6 * this.tradius;
         this.container.addChild(og);
 
 
@@ -1511,7 +1511,7 @@ class FullAdder {
 
 
 
-        this.width = rh.x + this.rightHalf.width +  this.bulbSize * this.tradius * 2; 
+        this.width = rh.x + this.rightHalf.width +  this.bulbSize * this.tradius * 6; 
         this.height = lh.y + this.leftHalf.height + this.bulbSize * 8 * this.tradius;
 
 
