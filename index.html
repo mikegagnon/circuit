@@ -263,7 +263,8 @@
   jumpSlide(1, 4, 0);
 </script>
 <script type="text/javascript">
-function pres4() {
+
+function launch(func, initScale){ 
   const canvasId = "pres-4-canvas";
   const CANVAS = document.getElementById(canvasId);
 
@@ -276,10 +277,11 @@ function pres4() {
   const rootContainer = new createjs.Container();
 
 
-  const board = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+  const board = func(stage);
+
   board.container.x = -board.width / 2;
   board.container.y = -board.height / 2;
-  INIT_SCALE = 0.08;
+ 
 
 
 
@@ -294,7 +296,7 @@ stage.addChild(dragSurface);
   rootContainer.addChild(board.container);
 
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, INIT_SCALE);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, initScale);
 
 
 
@@ -363,7 +365,15 @@ stage.on("stagemouseup", function(event) {
 
 
 }
-pres4();
+
+/*function pres4() {
+  
+}
+pres4();*/
+launch(function(stage) {
+  return new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+   //INIT_SCALE = 0.08;
+}, 0.08)
 
 </script>
 </html>
