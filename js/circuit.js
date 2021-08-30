@@ -1881,9 +1881,9 @@ class FullAdder {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Adder", this.tradius * 15 + "px Arial", "black");
-        text.x = this.tradius * 15;
-        text.y = this.tradius * 30;
+        var text = new createjs.Text("Adder", this.tradius * 30 + "px Arial", "black");
+        text.x = this.tradius * 27;
+        text.y = this.tradius * 110;
         text.textBaseline = "alphabetic"
         //text.rotation = 90
         this.coverContainer.addChild(text)
