@@ -1804,8 +1804,11 @@ class FourBitAdder {
             .graphics
             .setStrokeStyle(this.fourBitAdderStrokeWidth)
             .beginStroke("black")
-            .moveTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y)
-            .lineTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 2)
+            .moveTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 2)
+            .lineTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y + this.adder8.height / 2)
+            .lineTo(a8.x, a8.y + this.adder8.height / 2)
+
+
             .endStroke();
         this.container.addChild(z16wire);
 
