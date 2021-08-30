@@ -1605,7 +1605,7 @@ class FourBitAdder {
     constructor(stage, tradius, fourBitAdderStrokeWidth, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
         const THIS = this;
         this.stage = stage;
-        this.coverColor = "#d7bde2";
+        this.coverColor = "#82e0aa";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
         this.tradius = tradius
 
@@ -3920,6 +3920,9 @@ class Camera {
 
 
 
+$("#pres").css("height", $(window).height());
+
+
 const canvasId = "circuit-canvas-1";
 const stage = new createjs.Stage(canvasId);
 stage.enableMouseOver();
@@ -3943,10 +3946,14 @@ xorChip.container.y = -xorChip.height / 2;
 const rootContainer = new createjs.Container();
 rootContainer.addChild(xorChip.container);
 
-const CANVAS_WIDTH = 1000;
-const CANVAS_HEIGHT = 500;
 const CANVAS = document.getElementById("circuit-canvas-1");
 
+CANVAS.width = $(window).width();
+CANVAS.height = $(window).height();
+
+
+const CANVAS_WIDTH = CANVAS.width;
+const CANVAS_HEIGHT = 500;
 
 
 
