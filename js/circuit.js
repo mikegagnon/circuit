@@ -1799,6 +1799,22 @@ class FourBitAdder {
 
 
 
+        const z16wire = new createjs.Shape();
+        z16wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y)
+            .lineTo(a8.x - Math.floor(this.adder8.width / 2)- interAdderSpan, a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(z16wire);
+
+        this.z16lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize);
+        this.z16lightBig.container.x = a8.x - Math.floor(this.adder8.width / 2) - this.bigBulbSize * this.tradius - interAdderSpan;
+        this.z16lightBig.container.y = a8.y - interAdderSpan - this.bigBulbSize * this.tradius * 4;
+        this.container.addChild(this.z16lightBig.container);
+
+
 
 
         const z8wire = new createjs.Shape();
