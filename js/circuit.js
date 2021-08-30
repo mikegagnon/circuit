@@ -1456,6 +1456,17 @@ class Circuit {
 
 class FourBitAdder {
     setInput(y8, y4, y2, y1, x8, x4, x2, x1) {
+        this.inputY8 = y8;
+        this.inputY4 = y4;
+        this.inputY2 = y2;
+        this.inputY1 = y1;
+        this.inputX8 = x8;
+        this.inputX4 = x4;
+        this.inputX2 = x2;
+        this.inputX1 = x1;
+
+        
+
 
     }
 
@@ -1527,6 +1538,14 @@ class FourBitAdder {
         this.height = a4.y + this.adder4.height + interAdderSpan;
 
 
+
+
+
+
+
+
+
+
         const y8wire = new createjs.Shape();
         y8wire
             .graphics
@@ -1538,7 +1557,7 @@ class FourBitAdder {
         this.container.addChild(y8wire);
 
         this.y8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(!THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.y8lightBig.container.x = a8.x + this.adder8.inLeftX - this.bigBulbSize * this.tradius;
@@ -1557,7 +1576,7 @@ class FourBitAdder {
         this.container.addChild(x8wire);
 
         this.x8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, !THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.x8lightBig.container.x = a8.x + this.adder8.inRightX - this.bigBulbSize * this.tradius;
@@ -1580,7 +1599,7 @@ class FourBitAdder {
         this.container.addChild(y4wire);
 
         this.y4lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, !THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.y4lightBig.container.x = a4.x + this.adder4.inLeftX - this.bigBulbSize * this.tradius;
@@ -1599,7 +1618,7 @@ class FourBitAdder {
         this.container.addChild(x4wire);
 
         this.x4lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, !THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.x4lightBig.container.x = a4.x + this.adder4.inRightX - this.bigBulbSize * this.tradius;
@@ -1625,7 +1644,7 @@ class FourBitAdder {
         this.container.addChild(y2wire);
 
         this.y2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, !THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.y2lightBig.container.x = a2.x + this.adder2.inLeftX - this.bigBulbSize * this.tradius;
@@ -1644,7 +1663,7 @@ class FourBitAdder {
         this.container.addChild(x2wire);
 
         this.x2lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, !THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.x2lightBig.container.x = a2.x + this.adder2.inRightX - this.bigBulbSize * this.tradius;
@@ -1665,7 +1684,7 @@ class FourBitAdder {
         this.container.addChild(y1wire);
 
         this.y1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, !THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, THIS.inputX1);
             THIS.stage.update();
         });
         this.y1lightBig.container.x = a1.x + this.adder1.inLeftX - this.bigBulbSize * this.tradius;
@@ -1684,7 +1703,7 @@ class FourBitAdder {
         this.container.addChild(x1wire);
 
         this.x1lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
-            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
             THIS.stage.update();
         });
         this.x1lightBig.container.x = a1.x + this.adder1.inRightX - this.bigBulbSize * this.tradius;
