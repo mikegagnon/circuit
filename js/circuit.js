@@ -4108,13 +4108,13 @@ const computer = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, F
 computer.container.x = -computer.width / 2;
 computer.container.y = -computer.height / 2;
 
-const adderBoard = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+/*const adderBoard = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
 adderBoard.container.x = -adderBoard.width / 2;
 adderBoard.container.y = -adderBoard.height / 2;
-INIT_SCALE = 0.1;
+INIT_SCALE = 0.1;*/
 
 
-rootContainer.addChild(adderBoard.container);
+rootContainer.addChild(computer.container);
 
 const CANVAS = document.getElementById("circuit-canvas-1");
 

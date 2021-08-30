@@ -239,7 +239,7 @@
 
 
     <div id="pres-4" style="display: none">
-      <div class="header">Adder</div>
+      <!--<div class="header">Adder</div>-->
       <center>
 
         <div>
@@ -268,7 +268,7 @@ function pres4() {
   const CANVAS = document.getElementById(canvasId);
 
   CANVAS.width = $(window).width();
-  CANVAS.height = $(window).height() - 300;//$("#dissect-btn-4").height();
+  CANVAS.height = $(window).height() - 100;//$("#dissect-btn-4").height();
 
   const stage = new createjs.Stage(canvasId);
   stage.enableMouseOver();
@@ -279,7 +279,7 @@ function pres4() {
   const board = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
   board.container.x = -board.width / 2;
   board.container.y = -board.height / 2;
-  INIT_SCALE = 0.05;
+  INIT_SCALE = 0.08;
 
 
 
