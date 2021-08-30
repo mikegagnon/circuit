@@ -1456,6 +1456,60 @@ class Circuit {
   }*/
 }
 
+class HalfAdderBoard {
+    setInput(value1, value2) {
+
+    }
+
+    constructor(stage, tradius, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
+        const THIS = this;
+        this.stage = stage;
+        this.tradius = tradius;
+
+        this.input1 = false;
+        this.input2 = false;
+        this.output1 = false;
+        this.output2 = false;
+
+        this.bulbSize = HALF_ADDER_BULB_SIZE * 2;
+        this.halfAdderStrokeWidth = halfAdderStrokeWidth;
+        this.primStrokeWidth = primStrokeWidth;
+        this.strokeWidth = subStrokeWidth;
+
+        this.container = new createjs.Container();
+
+        this.halfAdder = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.strokeWidth);
+        const ha = this.halfAdder.container;
+        ha.x = 0
+        ha.y = 0
+        this.container.addChild(ha);
+
+        this.width = this.halfAdder.width;
+        this.height = this.halfAdder.height;
+
+        const leftOutwire2 = new createjs.Shape();
+        leftOutwire2
+            .graphics
+            .setStrokeStyle(this.halfAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(ha.x + this.halfAdder.inLeftX, 0)
+            .lineTo(ha.x + this.halfAdder.inLeftX, -this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(leftOutwire2);
+
+        this.outLightLeft = new Light(this.stage, this.tradius, this.halfAdderStrokeWidth, this.bulbSize);
+        this.outLightLeft.container.x = ha.x + this.halfAdder.inLeftX - this.bulbSize * this.tradius;
+        this.outLightLeft.container.y = -this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.outLightLeft.container);
+
+
+
+    }
+
+
+}
+
+
 class AdderBoard {
 
     setInput(y, x, c) {

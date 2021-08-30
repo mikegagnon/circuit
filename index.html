@@ -253,6 +253,21 @@
       </center>
     </div>
 
+
+    <div id="pres-5" style="display: none">
+      <center>
+
+        <div>
+          <canvas id="pres-5-canvas"></canvas>
+        </div>
+
+
+        <button class="btn btn-secondary" onclick="dissectSlide(6);">Dissect</button>
+
+
+      </center>
+    </div>
+
   </div>
 
 
@@ -260,13 +275,17 @@
 <script src="js/circuit.js"></script>
 <script src="js/pres.js"></script>
 <script type="text/javascript">
-  jumpSlide(1, 4, 0);
+  jumpSlide(1, 5, 0);
 </script>
 <script type="text/javascript">
 
 launch(function(stage) {
   return new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
 }, 0.08, "pres-4-canvas");
+
+launch(function(stage) {
+  return new HalfAdderBoard(stage, TRADIUS, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+}, 0.2, "pres-5-canvas");
 
 </script>
 </html>
