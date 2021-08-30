@@ -1696,6 +1696,26 @@ class FullAdder {
 
 
 
+        const cinwireBulb = new createjs.Shape();
+        cinwireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(rh.x + this.rightHalf.inRightX , lh.y - this.bulbSize * this.tradius * 2)
+            .lineTo(rh.x + this.rightHalf.inRightX + this.bulbSize * this.tradius, lh.y - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(cinwireBulb);
+
+
+        this.cinLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.cinLight.container.x = rh.x + this.rightHalf.inRightX + this.bulbSize * this.tradius ;
+        this.cinLight.container.y = lh.y - this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.cinLight.container);
+
+
+
+
+
 
 
 
