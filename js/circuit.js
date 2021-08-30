@@ -1486,7 +1486,7 @@ class FullAdder {
         this.rightHalf = new HalfAdder(this.stage, this.tradius, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const rh = this.rightHalf.container;
         rh.x = this.tradius * 53;
-        rh.y = this.bulbSize * 13 * this.tradius;
+        rh.y = this.bulbSize * 16 * this.tradius;
         this.container.addChild(rh);
 
 
@@ -1564,10 +1564,10 @@ class FullAdder {
             .endStroke();
         this.container.addChild(orInLeftWireBulb);
 
-        this.orOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
-        this.orOutLight.container.x = og.x - Math.floor(this.orGate.height / 2);
-        this.orOutLight.container.y = og.y + this.orGate.width * 1.5;
-        this.container.addChild(this.orOutLight.container);
+        this.orInLeftLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orInLeftLight.container.x = og.x - Math.floor(this.orGate.height / 2);
+        this.orInLeftLight.container.y = og.y + this.orGate.width * 1.5;
+        this.container.addChild(this.orInLeftLight.container);
 
 
         const orInRightWire1 = new createjs.Shape();
@@ -1576,9 +1576,28 @@ class FullAdder {
             .setStrokeStyle(this.fullAdderStrokeWidth)
             .beginStroke("black")
             .moveTo(og.x + this.orGate.inRightX, og.y + this.orGate.width)
-            .lineTo(og.x + this.orGate.inRightX, og.y + this.orGate.width + this.bulbSize * this.tradius * 3)
+            .lineTo(og.x + this.orGate.inRightX, og.y + this.orGate.width + this.bulbSize * this.tradius * 5)
+            .lineTo(rh.x + this.rightHalf.inLeftX, og.y + this.orGate.width + this.bulbSize * this.tradius * 5)
+            .lineTo(rh.x + this.rightHalf.inLeftX, rh.y)
             .endStroke();
         this.container.addChild(orInRightWire1);
+
+
+        const orInRightWireBulb = new createjs.Shape();
+        orInRightWireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + Math.floor(this.orGate.height), og.y + this.orGate.width * 2)
+            .lineTo(og.x + this.orGate.inRightX, og.y + this.orGate.width * 2)
+            .endStroke();
+        this.container.addChild(orInRightWireBulb);
+
+
+        this.orInRightLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orInRightLight.container.x = og.x + Math.floor(this.orGate.height);
+        this.orInRightLight.container.y = og.y + this.orGate.width * 1.5;
+        this.container.addChild(this.orInRightLight.container);
 
 
 
