@@ -4093,141 +4093,105 @@ class Camera {
     }
 }
 
+function launch(func, initScale, canvasId){ 
+    //const canvasId = "pres-4-canvas";
+    const CANVAS = document.getElementById(canvasId);
+
+    CANVAS.width = $(window).width();
+    CANVAS.height = $(window).height() - 100;//$("#dissect-btn-4").height();
+
+    const stage = new createjs.Stage(canvasId);
+    stage.enableMouseOver();
+
+    const rootContainer = new createjs.Container();
+
+
+    const board = func(stage);
+
+    board.container.x = -board.width / 2;
+    board.container.y = -board.height / 2;
+
+
+    const dragSurface = new createjs.Shape();
+    dragSurface
+        .graphics
+        .beginFill("white")
+        .drawRect(0, 0, CANVAS.width, CANVAS.height)
+
+    stage.addChild(dragSurface);
+
+    rootContainer.addChild(board.container);
+
+
+    const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, initScale);
+
+
+    stage.addChild(rootContainer);
+
+    stage.update();
+
+
+    const children = recur(stage);
+
+    // https://stackoverflow.com/questions/54398197/mouse-click-through-top-image
+    stage.on("stagemouseup", function(event) {
+
+        var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+
+        //console.log(objs)
+
+        if (objs.length == 0) {
+            return;
+        }
+
+
+        //objs[0].rmCover();
+        //return objs[0];
+        const c = objs[0];
+        //console.log(c.name)
+
+        if (!c.name) {
+            return;
+        }
+
+
+        console.log(c.name)
+
+
+        if (c.name.startsWith("outline")) {
+            //console.log(1)
+                const [child, parent] = getStageItem(c.name, children);
+                //console.log(c, child)
+                parent.removeChild(child);
+                stage.update();
+
+            return;
+        }
+
+        if (!c.name.startsWith("cover-")) {
+            console.log("not cover")
+            return;
+        }
+
+        const [child, parent] = getStageItem(c.name + "-container", children);
+        //console.log(c, child)
+        parent.removeChild(child);
+        stage.update();
+        //console.log(objs[0]);
+        return;
+        /*(for (var i=0, l=objs.length; i<l; i++) {
+          var obj = objs[i];
+          if (obj == firstElement || obj == secondElement) { doSomething(); break; }
+        }*/
+    });
+
+
+}
+
 
 
 $("#spacer").css("height", $(window).height());
 
-let INIT_SCALE = 0.042;
-const canvasId = "circuit-canvas-1";
-const stage = new createjs.Stage(canvasId);
-stage.enableMouseOver();
-
-const rootContainer = new createjs.Container();
-
-const computer = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
-computer.container.x = -computer.width / 2;
-computer.container.y = -computer.height / 2;
-
-/*const adderBoard = new AdderBoard(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
-adderBoard.container.x = -adderBoard.width / 2;
-adderBoard.container.y = -adderBoard.height / 2;
-INIT_SCALE = 0.1;*/
-
-
-rootContainer.addChild(computer.container);
-
-const CANVAS = document.getElementById("circuit-canvas-1");
-
-CANVAS.width = $(window).width();
-CANVAS.height = $(window).height();
-
-
-//const CANVAS_WIDTH = CANVAS.width;
-//const CANVAS_HEIGHT = 500;
-
-
-
-        const dragSurface = new createjs.Shape();
-        dragSurface
-            .graphics
-            .beginFill("white")//"rgba(255, 255, 0, 0.51")
-            .drawRect(0, 0, CANVAS.width, CANVAS.height)
-            //.drawRect(-100, -100, 1000, 1000)
-
-        //console.log(dragSurface)
-        //dragSurface.addChild(dragSurfaceOutline);
-stage.addChild(dragSurface);
-
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, INIT_SCALE);
-
-
-
-
-stage.addChild(rootContainer);
-
-
-
-
-stage.update();
-
-
-// https://stackoverflow.com/questions/54398197/mouse-click-through-top-image
-stage.on("stagemouseup", function(event) {
-
-    var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
-
-    //console.log(objs)
-
-    if (objs.length == 0) {
-        return;
-    }
-
-
-    //objs[0].rmCover();
-    //return objs[0];
-    const c = objs[0];
-    //console.log(c.name)
-
-    if (!c.name) {
-        return;
-    }
-
-
-    console.log(c.name)
-
-
-    if (c.name.startsWith("outline")) {
-        //console.log(1)
-            const children = recur(stage);
-            const [child, parent] = getStageItem(c.name, children);
-            //console.log(c, child)
-            parent.removeChild(child);
-            stage.update();
-
-        return;
-    }
-
-    if (!c.name.startsWith("cover-")) {
-        console.log("not cover")
-        return;
-    }
-
-    const children = recur(stage);
-    const [child, parent] = getStageItem(c.name + "-container", children);
-    //console.log(c, child)
-    parent.removeChild(child);
-    stage.update();
-    //console.log(objs[0]);
-    return;
-    /*(for (var i=0, l=objs.length; i<l; i++) {
-      var obj = objs[i];
-      if (obj == firstElement || obj == secondElement) { doSomething(); break; }
-    }*/
-});
-
-
-//let circuit1;
-//function main() {
-
-    //circuit1 = new Circuit(500, 300, "circuit-canvas-1", TRADIUS, STROKE_WIDTH);
-    //const t1 = new TransistorGraphic(10, 10);
-    //circuit1.addItem(t1);
-
-    /*const t = circuit1.transistorGraphic.container.clone(true);
-    t.x = 100;
-    t.y = 100;
-    //circuit1.stage.addChild(t);*/
-
-    /*
-    const n = circuit1.notGateGraphic.container.clone(true);
-    n.x = 200;
-    n.y = 100;
-    circuit1.stage.addChild(n);
-
-    const n2 = circuit1.notGateGraphic.container.clone(true);
-    n2.x = 500;
-    n2.y = 100;
-    circuit1.stage.addChild(n2);*/
-
-    //circuit1.stage.update();
-//}
+launch(function(stage) {
+    return new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+}, 0.042, "circuit-canvas-1");
