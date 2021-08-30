@@ -2092,7 +2092,7 @@ class FourBitAdder {
         this.coverContainer.addChild(this.cover);
 
 
-        var text = new createjs.Text("Computer", this.tradius * 70 + "px Arial", "black");
+        var text = new createjs.Text("Computer chip", this.tradius * 70 + "px Arial", "black");
         text.x = this.tradius * 27;
         text.y = this.tradius * 110;
         text.textBaseline = "alphabetic"
@@ -3936,15 +3936,15 @@ stage.enableMouseOver();
 
 
 //const xorChip = new FullAdder(stage, TRADIUS, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
-const xorChip = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
+const computer = new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
 
 
 //const xorChip = new XorChip(stage, TRADIUS, XOR_STROKE_WIDTH, STROKE_WIDTH, true)
-xorChip.container.x = -xorChip.width / 2;
-xorChip.container.y = -xorChip.height / 2;
+computer.container.x = -computer.width / 2;
+computer.container.y = -computer.height / 2;
 
 const rootContainer = new createjs.Container();
-rootContainer.addChild(xorChip.container);
+rootContainer.addChild(computer.container);
 
 const CANVAS = document.getElementById("circuit-canvas-1");
 
