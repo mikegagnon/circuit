@@ -10,6 +10,15 @@
   <script src="js/createjs.min.js"></script>
   <script type="text/javascript">
     const SCROLL_TIME = 100;
+
+    function nextSlide(target) {
+      const prev = target - 1;
+      setTimeout(function() {
+        $('#pres-' + target).css('display', 'block');
+        $('#pres-' + prev).css('display', 'none');
+      }, 1000);
+      $('html, body').animate({scrollTop : 0}, SCROLL_TIME);
+    }
   </script>
 </head>
 <body>
@@ -143,7 +152,7 @@
         </div>
 
         <button class="btn btn-secondary"
-          onclick="setTimeout(function(){$('#pres-2').css('display', 'block'); $('#pres-1').css('display', 'none');}, 1000); $('html, body').animate({scrollTop : 0}, SCROLL_TIME); " 
+          onclick="nextSlide(2);" 
           >Dissect</button>
       </center>
     </div>
