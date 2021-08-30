@@ -41,7 +41,8 @@ const MIN_ZOOM = 0.01;
 const XOR_BULB_SIZE = 1;
 const HALF_ADDER_BULB_SIZE = 2;
 const FULL_ADDER_BULB_SIZE = 4;
-const FOUR_BIT_ADDER_BULB_SIZE = 8;
+const FOUR_BIT_ADDER_BULB_SIZE = 15;
+const FOUR_BIT_ADDER_BIG_BULB_SIZE = 8 * 4;
 const LIGHT_ON_COLOR = "#f66";
 const LIGHT_OFF_COLOR = "#fdd";
 const TRADIUS = 20;
@@ -1603,7 +1604,7 @@ class FourBitAdder {
         this.output1 = false;
 
         this.bulbSize = FOUR_BIT_ADDER_BULB_SIZE;
-        this.bigBulbSize = FOUR_BIT_ADDER_BULB_SIZE * 4;
+        this.bigBulbSize = FOUR_BIT_ADDER_BIG_BULB_SIZE;
         this.fourBitAdderStrokeWidth = fourBitAdderStrokeWidth
         this.fullAdderStrokeWidth = fullAdderStrokeWidth;
         this.halfAdderStrokeWidth = halfAdderStrokeWidth;
@@ -1617,7 +1618,7 @@ class FourBitAdder {
 
         this.container = new createjs.Container();
 
-        const interAdderSpan = this.bulbSize * this.tradius * 6;
+        const interAdderSpan = this.bulbSize * this.tradius * 4;
 
         this.adder8 = new FullAdder(this.stage, this.tradius, this.fullAdderStrokeWidth, this.halfAdderStrokeWidth, this.primStrokeWidth, this.strokeWidth);
         const a8 = this.adder8.container;
@@ -1918,6 +1919,26 @@ class FourBitAdder {
 
 
 
+        const adder1_2_wire = new createjs.Shape();
+        adder1_2_wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a2.x  + this.adder2.width, a2.y + Math.floor(this.adder2.height / 2))
+            .lineTo(a1.x, a2.y + Math.floor(this.adder2.height / 2))
+            .moveTo(a1.x - Math.floor(interAdderSpan / 2), a2.y + Math.floor(this.adder2.height / 2))
+            .lineTo(a1.x - Math.floor(interAdderSpan / 2), a2.y + Math.floor(this.adder2.height / 2) - this.bulbSize * this.tradius * 2)
+            .endStroke();
+        this.container.addChild(adder1_2_wire);
+
+        this.adder1_2_bulb = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bulbSize, function(){
+            THIS.setInput(THIS.inputY8, THIS.inputY4, THIS.inputY2, THIS.inputY1, THIS.inputX8, THIS.inputX4, THIS.inputX2, !THIS.inputX1);
+            THIS.stage.update();
+        });
+        this.adder1_2_bulb.container.x = a1.x - Math.floor(interAdderSpan / 2) - this.bulbSize * this.tradius;
+        this.adder1_2_bulb.container.y = a2.y + Math.floor(this.adder2.height / 2) - this.bulbSize * this.tradius * 3; 
+        this.container.addChild(this.adder1_2_bulb.container);
+
 
 
 
@@ -2030,7 +2051,7 @@ class FourBitAdder {
         this.zNum.y = -this.bigBulbSize * this.tradius * 2.2;
         this.zNum.textBaseline = "alphabetic"
         //text.rotation = 90
-        this.coverContainer.addChild(this.zNum)
+        this.container.addChild(this.zNum)
 
 
 
@@ -2040,7 +2061,7 @@ class FourBitAdder {
         this.yNum.y = this.height + this.bigBulbSize * this.tradius * 3.2;
         this.yNum.textBaseline = "alphabetic"
         //text.rotation = 90
-        this.coverContainer.addChild(this.yNum)
+        this.container.addChild(this.yNum)
 
 
 
@@ -2050,7 +2071,7 @@ class FourBitAdder {
         this.xNum.y = this.height + this.bigBulbSize * this.tradius * 6.2;
         this.xNum.textBaseline = "alphabetic"
         //text.rotation = 90
-        this.coverContainer.addChild(this.xNum)
+        this.container.addChild(this.xNum)
 
 
 
