@@ -1601,6 +1601,35 @@ class FullAdder {
 
 
 
+        const orOutWireBulb = new createjs.Shape();
+        orOutWireBulb
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + this.bulbSize * this.tradius * 2, og.y - Math.floor(this.orGate.height / 2))
+            .lineTo(og.x + this.bulbSize * this.tradius * 3, og.y - Math.floor(this.orGate.height / 2))
+            .endStroke();
+        this.container.addChild(orOutWireBulb);
+
+
+        this.orOutLight = new Light(this.tradius, this.fullAdderStrokeWidth, this.bulbSize);
+        this.orOutLight.container.x = og.x + Math.floor(this.orGate.height / 2) + this.bulbSize * this.tradius ;
+        this.orOutLight.container.y = og.y - this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.orOutLight.container);
+
+
+
+
+        const zoutWire = new createjs.Shape();
+        zoutWire
+            .graphics
+            .setStrokeStyle(this.fullAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(rh.x + this.rightHalf.inRightX, rh.y)
+            .lineTo(rh.x + this.rightHalf.inRightX, rh.y - this.bulbSize * this.tradius * 3)
+            .lineTo(Math.floor(this.width / 2),0)
+            .endStroke();
+        this.container.addChild(zoutWire);
 
 
 
