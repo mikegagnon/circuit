@@ -2763,6 +2763,7 @@ class NotNotChip {
 
 class Camera {
     constructor(stage, container, canvas, dragSurface, scale) {
+        this.foo = false;
         this.stage = stage;
         this.container = container;
         this.canvas = canvas;
@@ -2824,7 +2825,7 @@ class Camera {
         this.center = newCameraCenter;
         //console.log(this.viz.camera.center);
 
-        this.placeCamera();
+        //this.placeCamera();
         this.stage.update();
 
     }
@@ -2835,8 +2836,32 @@ class Camera {
     }
 
     wheel(event) {
+
+
+        if (this.foo) {
+            return;
+        }
+
         // TODO: If stage tween then disable zoom
         event.preventDefault();
+
+
+
+        var x = event.pageX - $('#' + this.canvas.id).offset().left;
+        var y = event.pageY - $('#' + this.canvas.id).offset().top;
+
+
+        console.log("x,y", x,y)
+
+        //this.container.regX = 0;
+        //this.container.regY = 0;
+
+        //https://createjs.com/tutorials/HitTest/
+        var containerPt = this.container.globalToLocal(x, y);
+        console.log("cp", containerPt.x, containerPt.y);
+
+        //this.container.regX = containerPt.x;
+        //this.container.regY = containerPt.y;
 
         let scale = this.scale;
         scale += event.deltaY * 0.001;
@@ -2845,8 +2870,57 @@ class Camera {
         scale = Math.min(Math.max(MIN_ZOOM, scale), MAX_ZOOM);
 
         //this.viz.pan();
-        this.placeCamera();
+        //this.placeCamera();
         this.zoom(scale);
+
+
+
+
+        const containerPtAfter = this.container.globalToLocal(x, y);
+
+        //const dx = containerPtAfter.x - containerPt.x;
+        //const dy = containerPtAfter.y - containerPt.y;
+
+
+
+        console.log("After", containerPtAfter.x, containerPtAfter.y);
+        
+        const dx = containerPtAfter.x - containerPt.x;
+        const dy = containerPtAfter.y - containerPt.y;
+
+        console.log("d", dx, dy);
+
+        // this.container.x += dx;
+        // this.container.y += dy;
+
+
+        const containerPtAfter2 = this.container.globalToLocal(x, y);
+
+        console.log("2", containerPtAfter2.x, containerPtAfter2.y);
+
+
+        //const dglobal = this.container.localToGlobal(dx, dy, this.stage)
+        const dglobal = this.container.localToGlobal(containerPt.x, containerPt.y)//, this.stage)
+        console.log("global", dglobal.x, dglobal.y);
+        
+
+        console.log("diff", containerPtAfter.x - containerPt.x);
+
+            console.log()
+
+
+
+        this.container.x += (containerPtAfter.x - containerPt.x) * this.scale;
+        this.container.y += (containerPtAfter.y - containerPt.y) * this.scale;
+        //this.container.x -= dglobal.x;
+        //this.container.y -= dglobal.y;
+
+        //this.container.x = x;
+        //this.container.y = y;
+
+
+        //this.foo = true;
+
         this.stage.update();
         //this.viz.stage.update();
 
@@ -2926,6 +3000,8 @@ stage.update();
 stage.on("stagemouseup", function(event) {
 
     var objs = stage.getObjectsUnderPoint(event.stageX, event.stageY);
+
+    console.log(objs)
 
     if (objs.length == 0) {
         return;
