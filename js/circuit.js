@@ -1462,7 +1462,7 @@ class FourBitAdder {
     constructor(stage, tradius, fourBitAdderStrokeWidth, fullAdderStrokeWidth, halfAdderStrokeWidth, primStrokeWidth, subStrokeWidth) {
         const THIS = this;
         this.stage = stage;
-        this.coverColor = "#f4d03f";
+        this.coverColor = "#d7bde2";
         this.coverName = "cover-" + (Math.random() * 99999999).toString();
         this.tradius = tradius
 
@@ -1482,6 +1482,7 @@ class FourBitAdder {
         this.output1 = false;
 
         this.bulbSize = FOUR_BIT_ADDER_BULB_SIZE;
+        this.bigBulbSize = FOUR_BIT_ADDER_BULB_SIZE * 4;
         this.fourBitAdderStrokeWidth = fourBitAdderStrokeWidth
         this.fullAdderStrokeWidth = fullAdderStrokeWidth;
         this.halfAdderStrokeWidth = halfAdderStrokeWidth;
@@ -1526,8 +1527,42 @@ class FourBitAdder {
         this.height = a4.y + this.adder4.height + interAdderSpan;
 
 
+        const y8wire = new createjs.Shape();
+        y8wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a8.x + this.adder8.inLeftX, a8.y + this.adder8.height)
+            .lineTo(a8.x + this.adder8.inLeftX, this.height + interAdderSpan)
+            .endStroke();
+        this.container.addChild(y8wire);
+
+        this.y8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.y8lightBig.container.x = a8.x + this.adder8.inLeftX - this.bigBulbSize * this.tradius;
+        this.y8lightBig.container.y = this.height + interAdderSpan;
+        this.container.addChild(this.y8lightBig.container);
 
 
+        const x8wire = new createjs.Shape();
+        x8wire
+            .graphics
+            .setStrokeStyle(this.fourBitAdderStrokeWidth)
+            .beginStroke("black")
+            .moveTo(a8.x + this.adder8.inRightX, a8.y + this.adder8.height)
+            .lineTo(a8.x + this.adder8.inRightX, this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3)
+            .endStroke();
+        this.container.addChild(x8wire);
+
+        this.x8lightBig = new Light(this.tradius, this.fourBitAdderStrokeWidth, this.bigBulbSize, function(){
+            //THIS.setInput(THIS.inputY, THIS.inputX, !THIS.inputC);
+            THIS.stage.update();
+        });
+        this.x8lightBig.container.x = a8.x + this.adder8.inRightX - this.bigBulbSize * this.tradius;
+        this.x8lightBig.container.y = this.height + interAdderSpan + this.bigBulbSize * this.tradius * 3;
+        this.container.addChild(this.x8lightBig.container);
 
 
 
@@ -3306,7 +3341,7 @@ class Camera {
         //this.container.regY = containerPt.y;
 
         let scale = this.scale;
-        scale += event.deltaY * 0.001;
+        scale += event.deltaY * 0.0003;
 
         // Restrict scale
         scale = Math.min(Math.max(MIN_ZOOM, scale), MAX_ZOOM);
@@ -3426,7 +3461,7 @@ const CANVAS = document.getElementById("circuit-canvas-1");
         //dragSurface.addChild(dragSurfaceOutline);
 stage.addChild(dragSurface);
 
-const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.05);
+const camera = new Camera(stage, rootContainer, CANVAS, dragSurface, 0.03);
 
 
 
