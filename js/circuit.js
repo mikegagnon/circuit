@@ -4340,7 +4340,6 @@ function launch(func, initScale, canvasId, canvasShrink){
 
 
 
-$("#spacer").css("height", $(window).height());
 
 launch(function(stage) {
     return new FourBitAdder(stage, TRADIUS, FOUR_BIT_ADDER_STROKE_WIDTH, FULL_ADDER_STROKE_WIDTH, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);

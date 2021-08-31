@@ -1,3 +1,5 @@
+$(".spacer").css("height", $(window).height());
+
 const SCROLL_TIME = 100;
 
 function nextSlide(target) {

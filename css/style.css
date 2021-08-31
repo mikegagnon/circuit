@@ -16,6 +16,12 @@ body {
     font-weight: bold;
 }
 
+.title {
+    font-size: 90pt;
+    /*padding-bottom: 300px*/
+    font-weight: bolder;
+}
+
 .small-light {
     height: 70px;
     width: 40px;
