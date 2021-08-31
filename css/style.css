@@ -54,3 +54,10 @@ body {
     cursor: pointer;
     /*visibility: hidden;*/
 }
+
+.bin-num-marker {
+     font-size: 25pt;
+     font-family: "Helvetica";
+     margin-left: 20px;
+     font-style: italic;
+}
