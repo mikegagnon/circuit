@@ -441,6 +441,8 @@ class AndGate {
     }
 }
 
+
+
 class OrGate {
     constructor(stage, tradius, strokeWidth, transistorGraphic, resistorGraphic, groundGraphic, useLights) {
         this.stage = stage;
@@ -1454,6 +1456,120 @@ class Circuit {
   /*addItem(item) {
     item.draw(this.strokeWidth);
   }*/
+}
+
+class OrBoard {
+    setInput(value1, value2) {
+        this.input1 = value1;
+        this.input2 = value2;
+
+        this.orGate.setInput(this.input1, this.input2);
+
+        this.output = this.orGate.getOutput();
+
+        if (this.input1) {
+            this.inLight1.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLight1.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.input2) {
+            this.inLight2.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.inLight2.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+
+        if (this.output) {
+            this.outLight.fillCommand.style = LIGHT_ON_COLOR;
+        } else {
+            this.outLight.fillCommand.style = LIGHT_OFF_COLOR;
+        }
+    }
+
+
+    constructor(stage, tradius, strokeWidth) {
+        const THIS = this;
+        this.stage = stage;
+
+        this.tradius = tradius;
+        this.input1 = false;
+        this.input2 = false;
+        this.output = false;
+
+        this.strokeWidth = strokeWidth;
+        this.bulbSize = XOR_BULB_SIZE * 2;
+
+
+        this.transistorGraphic = new TransistorGraphic(this.tradius, this.strokeWidth);
+        this.resistorGraphic = new ResistorGraphic(this.tradius, this.strokeWidth);
+        this.groundGraphic = new GroundGraphic(this.tradius, this.strokeWidth);
+
+        this.container = new createjs.Container();
+
+        this.orGate = new OrGate(this.stage, this.tradius, this.strokeWidth, this.transistorGraphic, this.resistorGraphic, this.groundGraphic, true, true);
+        const og = this.orGate.container;
+        og.x = 0;
+        og.y = 0;
+        this.container.addChild(og);
+
+        this.height = this.orGate.width;
+        this.width = this.orGate.height;
+
+        const outwire = new createjs.Shape();
+        outwire
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + this.orGate.height / 2, 0)
+            .lineTo(og.x + this.orGate.height / 2, -this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(outwire);
+
+        this.outLight = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize);
+        this.outLight.container.x = og.x + this.orGate.height / 2 - this.bulbSize * this.tradius;
+        this.outLight.container.y = -this.bulbSize * this.tradius * 3;
+        this.container.addChild(this.outLight.container);
+
+
+        const inwire1 = new createjs.Shape();
+        inwire1
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + this.orGate.height / 4, this.orGate.width)
+            .lineTo(og.x + this.orGate.height / 4, this.orGate.width + this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(inwire1);
+
+        this.inLight1 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
+                THIS.setInput(!THIS.input1, THIS.input2);
+                THIS.stage.update()
+            });
+        this.inLight1.container.x = og.x + this.orGate.height / 4 - this.bulbSize * this.tradius;
+        this.inLight1.container.y = this.orGate.width +  this.bulbSize * this.tradius ;
+        this.container.addChild(this.inLight1.container);
+
+
+        const inwire2 = new createjs.Shape();
+        inwire2
+            .graphics
+            .setStrokeStyle(this.strokeWidth)
+            .beginStroke("black")
+            .moveTo(og.x + this.orGate.height / 4 * 3, this.orGate.width)
+            .lineTo(og.x + this.orGate.height / 4 * 3, this.orGate.width + this.bulbSize * this.tradius)
+            .endStroke();
+        this.container.addChild(inwire2);
+
+        this.inLight2 = new Light(this.stage, this.tradius, this.strokeWidth, this.bulbSize, function() {
+                THIS.setInput(THIS.input1, !THIS.input2);
+                THIS.stage.update()
+            });
+        this.inLight2.container.x = og.x + this.orGate.height / 4 * 3 - this.bulbSize * this.tradius;
+        this.inLight2.container.y = this.orGate.width +  this.bulbSize * this.tradius ;
+        this.container.addChild(this.inLight2.container);
+
+        this.setInput(false, false);
+    }
 }
 
 class HalfAdderBoard {

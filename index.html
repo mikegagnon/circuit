@@ -332,7 +332,7 @@
 <script src="js/circuit.js"></script>
 <script src="js/pres.js"></script>
 <script type="text/javascript">
-  jumpSlide(0, 4, 0);
+  jumpSlide(0, 5, 0);
 </script>
 <script type="text/javascript">
 
@@ -343,8 +343,16 @@ launch(function(stage) {
 }, 0.08, "pres-4-canvas", CANVAS_SHRINK);
 
 launch(function(stage) {
+  return new OrBoard(stage, TRADIUS, XOR_STROKE_WIDTH);
+}, 1, "pres-5-canvas", CANVAS_SHRINK);
+
+
+/*
+launch(function(stage) {
   return new HalfAdderBoard(stage, TRADIUS, HALF_ADDER_STROKE_WIDTH, XOR_STROKE_WIDTH, STROKE_WIDTH);
-}, 0.2, "pres-5-canvas", CANVAS_SHRINK);
+}, 0.2, "pres-6-canvas", CANVAS_SHRINK);
+*/
+
 
 </script>
 </html>
